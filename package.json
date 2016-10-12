@@ -7,6 +7,10 @@
     "start": "node server.js",
     "test": "./node_modules/.bin/mocha --recursive --slow 2000 --timeout 5000"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com:husu/training.git"
+  },
   "keywords": [
     "node",
     "LeanCloud",

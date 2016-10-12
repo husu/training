@@ -62,9 +62,6 @@ router.post('/',function(req,res){
 
     trainObj.status=util.TRAININGSTATUS.REQUIREMENT;
 
-
-
-
     trainObj.creator = req.currentUser;
 
     ts.save(trainObj).then(function(obj){
@@ -76,6 +73,8 @@ router.post('/',function(req,res){
         return res.send(result);
     });
 });
+
+
 
 
 
