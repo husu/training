@@ -23,7 +23,7 @@ router.post('/:trainId',function(req,res){
 
     cs.canThumbUp(comment.trainId,req.currentUser).then(function(thumbable){
         if(thumbable){
-            comment.creator = req.currentUser;
+            comment.author = req.currentUser;
             comment.type = util.COMMENTTYPE.THUMB_UP;
             cs.saveComment(comment).then(function(obj){
                 result.message ='保存成功';
@@ -34,6 +34,10 @@ router.post('/:trainId',function(req,res){
                 result.message = e.message;
                 return res.send(result);
             });
+        } else{
+            result.code = myUtil.ERROR.DATA_DUPLICATE;
+            result.message = '数据重复';
+            return res.send(result);
         }
     }).fail(function(e){
         result.code = e.errorCode;

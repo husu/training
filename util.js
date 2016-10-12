@@ -90,6 +90,10 @@ util.ERROR = {
     PARAMETER_MISSING:{
         errorCode:-1,
         message:'参数缺失'
+    },
+    DATA_DUPLICATE:{
+        errorCode:-4,
+        message:'数据重复'
     }
 };
 

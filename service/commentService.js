@@ -72,11 +72,12 @@ module.exports = {
     canThumbUp:function(trainId,user){
         var query  = new AV.Query("Comment");
         query.equalTo("author",user);
+        query.equalTo("type",myUtil.COMMENTTYPE.THUMB_UP);
         query.equalTo("training",AV.Object.createWithoutData('Training',trainId));
         // result 为 0 表示不存在
 
         return query.find().then(function(result){
-            if(!result && result.length>0){
+            if(!result || result.length>0){
                 return 0;
             }
             return 1;
