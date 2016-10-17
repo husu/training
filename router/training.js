@@ -79,7 +79,7 @@ router.post('/',function(req,res){
 
     trainObj.creator = req.currentUser;
 
-    ts.save(trainObj).then(function(obj){
+    return ts.save(trainObj).then(function(obj){
         result ={
             code:0,
             message:'保存成功',

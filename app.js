@@ -28,9 +28,11 @@ require('./cloud');
 app.use(AV.express());
 app.use(AV.Cloud.CookieSession({secret: 'training', maxAge: 3600000 * 48, fetchUser: true}));
 // 设置默认超时时间
-app.all(/(?!login[.]).*html$/, function (req, res, next) {
+app.all(/\/(?!login|index[.]).*html$/, function (req, res, next) {
+  var url = req.originalUrl;
+  console.log(url);
   if (!req.currentUser) {
-    res.redirect("/login.html");
+    res.redirect("/index.html");
   } else {
     next();
   }
@@ -64,8 +66,8 @@ app.use('/v1/thumbUp', require('./router/thumbUp'));
 
 
 app.use(function(req,res,next){
-  var url = req.originalUrl;
-  console.log(url);
+  //var url = req.originalUrl;
+  //console.log(url);
   next();
 });
 
