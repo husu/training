@@ -15,7 +15,7 @@ const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 
 
-describe('测试培训需求的 RESTful API',function() {
+describe.skip('测试培训需求的 RESTful API',function() {
     const request = chai.request.agent('http://localhost:3261');
     before(function(){
         return request.post(`/login`).send({"username":"test","password":"123456"}).then(()=> {

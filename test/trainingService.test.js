@@ -42,17 +42,13 @@ describe('测试关于培训的RESTful API',function() {
                 return res;
 
             }).then(function(res0){
-                var para = {
-                    page:1,
-                    pageSize:10,
-                    tags:'test111'
-                };
-                return request.get('/v1/training/list').send(para).then(res=>{
+
+                return request.get(`/v1/training/list?pageSize=1&page＝1`).send({}).then(res=>{
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an("object", "返回对象");
                     expect(res.body).haveOwnProperty("code");
                     expect(res.body).haveOwnProperty("result");
-                    assert.ok(res.body.result.length>0,'测试列表查询是否正确');
+                    assert.equal(res.body.result.length,1,'测试列表查询是否正确');
 
                     return res0;
                 })
