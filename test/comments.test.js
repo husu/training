@@ -18,7 +18,7 @@ chai.use(chaiHttp);
 
 
 
-describe('测试评论、点赞的接口',function(){
+describe.skip('测试评论、点赞的接口',function(){
     let request = chai.request.agent('http://localhost:3261');
     let  trainId;
 

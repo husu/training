@@ -17,7 +17,7 @@ chai.use(chaiHttp);
 
 
 
-describe.skip('测试关于培训的RESTful API',function() {
+describe('测试关于培训的RESTful API',function() {
     const request = chai.request.agent('http://localhost:3261');
 
 
@@ -46,7 +46,7 @@ describe.skip('测试关于培训的RESTful API',function() {
 
             }).then(function(res0){
 
-                return request.get(`/v1/training/list?pageSize=1&page＝1`).send({}).then(res=>{
+                return request.get(`/v1/training/list`).send({page:1,pageSize:1}).then(res=>{
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an("object", "返回对象");
                     expect(res.body).haveOwnProperty("code");
