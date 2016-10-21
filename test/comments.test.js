@@ -18,7 +18,7 @@ chai.use(chaiHttp);
 
 
 
-describe.skip('测试评论、点赞的接口',function(){
+describe('测试评论、点赞的接口',function(){
     let request = chai.request.agent('http://localhost:3261');
     let  trainId;
 
@@ -72,6 +72,10 @@ describe.skip('测试评论、点赞的接口',function(){
                 expect(res.body).haveOwnProperty("code");
                 expect(res.body).haveOwnProperty("result");
                 assert.ok(res.body.result.length>0,'返回列表大小大于0');
+
+                assert.equal(res.body.result[0].creator,'test','验证发表者用户名');
+
+
                 console.log(res.body);
                 done();
             }).catch(function(e){
