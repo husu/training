@@ -10,8 +10,20 @@ var util =  require('../util');
  * 获得一个培训的信息
  */
 router.get('/detail/:id', function(req, res) {
-   var id  = req.params.id;
-    res.send({hello:id});
+    var id  = req.params.id;
+    let result ={
+    };
+
+    ts.get(id).then(obj=>{
+        result.code = 0;
+        result.result=obj;
+        return res.send(result);
+    }).fail(e=>{
+        return res.send({
+            code: e.errorCode,
+            message: e.message
+        })
+    });
 });
 
 /**
@@ -35,7 +47,7 @@ router.get('/list',function(req,res){
     }).fail(function(e){
         return res.send({
             code: e.errorCode,
-            message: e.message
+            message:e.message
         });
     });
 

@@ -32,7 +32,7 @@ describe('测试关于培训的RESTful API',function() {
 
         request.post(`/login`).send({"username":"test","password":"123456"}).then((resUser)=> {
 
-            console.log(resUser.body);
+            //console.log(resUser.body);
 
 
             request.post(`/v1/training`).send(t).then(res=>{
@@ -42,9 +42,6 @@ describe('测试关于培训的RESTful API',function() {
                 expect(res.body).haveOwnProperty("message");
                 expect(res.body).haveOwnProperty("result");
                 assert.equal(res.body.result.title,'测试Restful API新增','测试保存的title是否正确');
-
-
-
                 return res;
 
             }).then(function(res0){
@@ -60,13 +57,24 @@ describe('测试关于培训的RESTful API',function() {
                 })
             }).then(function(res1){
                 let tid= res1.body.result.objectId;
-                request.delete(`/v1/training/${tid}`).then(res1=>{
-                    expect(res1.body).haveOwnProperty("code");
-                    expect(res1.body).haveOwnProperty("message");
-                    expect(res1.body.code).to.be.equal(0,'测试是否返回删除成功的状态值');
-                    done();
-                }).catch(e1=>{
-                    done(e1);
+
+                return request.get(`/v1/training/detail/${tid}`).send({}).then(resDetail=>{
+                    expect(resDetail.body).haveOwnProperty("code");
+                    expect(resDetail.body.code).to.be.equal(0,'测试是否返回查询成功的状态值');
+                    console.log(resDetail.body);
+                    return res1;
+                }).then(res1=>{
+                    let tid= res1.body.result.objectId;
+                    request.delete(`/v1/training/${tid}`).then(res1=>{
+                        expect(res1.body).haveOwnProperty("code");
+                        expect(res1.body).haveOwnProperty("message");
+                        expect(res1.body.code).to.be.equal(0,'测试是否返回删除成功的状态值');
+                        done();
+                    }).catch(e1=>{
+                        done(e1);
+                    });
+                }).catch(e=>{
+                    done(e);
                 });
 
             }).catch(e=> {
