@@ -38,6 +38,17 @@ app.all(/\/(?!login|index[.]).*html$/, function (req, res, next) {
   }
 });
 
+app.all(/\/(?!login|index[.]).*html$/, function (req, res, next) {
+
+  if (!req.currentUser) {
+    return res.send({
+
+    });
+  } else {
+    next();
+  }
+});
+
 app.use(express.static('public'));
 
 app.use(bodyParser.json());

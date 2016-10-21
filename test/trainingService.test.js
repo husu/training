@@ -30,15 +30,21 @@ describe('测试关于培训的RESTful API',function() {
         };
 
 
-        request.post(`/login`).send({"username":"test","password":"123456"}).then(()=> {
+        request.post(`/login`).send({"username":"test","password":"123456"}).then((resUser)=> {
+
+            console.log(resUser.body);
+
+
             request.post(`/v1/training`).send(t).then(res=>{
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.an("object", "返回对象");
                 expect(res.body).haveOwnProperty("code");
                 expect(res.body).haveOwnProperty("message");
                 expect(res.body).haveOwnProperty("result");
-
                 assert.equal(res.body.result.title,'测试Restful API新增','测试保存的title是否正确');
+
+
+
                 return res;
 
             }).then(function(res0){

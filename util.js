@@ -88,12 +88,16 @@ util.ERROR = {
         message:'列表查询错误'
     },
     PARAMETER_MISSING:{
-        errorCode:-1,
+        errorCode:-6,
         message:'参数缺失'
     },
     DATA_DUPLICATE:{
         errorCode:-4,
         message:'数据重复'
+    },
+    LOGIN_TIMEOUT:{
+        errorCode:-5,
+        message:'登录过期'
     }
 };
 
