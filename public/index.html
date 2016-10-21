@@ -5,60 +5,77 @@
     <title>秒差距小课堂</title>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/login.js"></script>
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
-    <!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">-->
-
-
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
-    <style type="text/css">
-        body {
-            padding-top: 50px;
-        }
-        .starter-template {
-            padding: 40px 15px;
-            text-align: center;
-        }
-    </style>
-
+    <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">秒差距小课堂</a>
+    <nav>
+        <p>
+            <a href="#">秒差距小课堂</a>
+            <a href="#">登录</a>
+        </p>
+    </nav>
+    <header class="text-center">
+        <img src="imgs/big-picture.png" alt=""/>
+    </header>
+    <section>
+        <ul class="tabs">
+            <li><a href="#courses"  class="active-tabs">教你做人</a></li>
+            <li><a href="#demand">资不资磁</a></li>
+            <li><a href="#about">不要打脸</a></li>
+        </ul>
+        <div class="main">
+            <div id="courses">
+                <div>
+                    <dl>
+                        <dt><a href="#"><img src="imgs/img-01.png" alt="..."></a></dt>
+                        <dd>标题</dd>
+                        <dd>时间</dd>
+                        <dd>主讲人</dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="#"><img src="imgs/img-02.png" alt="..."></a></dt>
+                        <dd>标题</dd>
+                        <dd>时间</dd>
+                        <dd>主讲人</dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="#"><img src="imgs/img-03.png" alt="..."></a></dt>
+                        <dd>标题</dd>
+                        <dd>时间</dd>
+                        <dd>主讲人</dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="#"><img src="imgs/img-01.png" alt="..."></a></dt>
+                        <dd>标题</dd>
+                        <dd>时间</dd>
+                        <dd>主讲人</dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="#"><img src="imgs/img-02.png" alt="..."></a></dt>
+                        <dd>标题</dd>
+                        <dd>时间</dd>
+                        <dd>主讲人</dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="#"><img src="imgs/img-03.png" alt="..."></a></dt>
+                        <dd>标题</dd>
+                        <dd>时间</dd>
+                        <dd>主讲人</dd>
+                    </dl>
+                </div>
+                <p class="pages text-center">
+                    <a href="#" class="hide">上一页</a>
+                    <a href="#">下一页</a>
+                </p>
+            </div>
+            <div id="demand" class="hide">资不资磁</div>
+            <div id="about" class="hide">不要打脸</div>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">教你做人</a></li>
-                <li><a href="#about">滋不滋瓷</a></li>
-                <li><a href="#contact">不要打脸</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-
-
-</nav>
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron" style="background-image: url('img/banner.png')">
-    <div class="container">
-        <!--<h1>秒差距小课堂</h1>-->
-        <!--<p );">This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>-->
-        <!--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
-    </div>
-</div>
-
-
-
+    </section>
+    <footer>
+        <p>重庆秒差距科技公司</p>
+        <p><span>Copyright 2016 &copy;parsec.com</span><a href="http://www.miitbeian.gov.cn/" style="margin-left:20px;display:inline-block;border:none;" target="_blank">渝ICP备13005505号</a></p>
+    </footer>
+    <script src="js/index.js"></script>
 </body>
 </html>
