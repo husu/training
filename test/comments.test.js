@@ -18,7 +18,7 @@ chai.use(chaiHttp);
 
 
 
-describe.skip('测试评论、点赞的接口',function(){
+describe('测试评论、点赞的接口',function(){
     let request = chai.request.agent('http://localhost:3261');
     let  trainId;
 
@@ -60,6 +60,9 @@ describe.skip('测试评论、点赞的接口',function(){
             expect(res.body).haveOwnProperty("message");
             expect(res.body).haveOwnProperty("result");
             expect(res.body.code).to.equal(0);
+
+            //console.log(res.body);
+
             return res;
 
         }).then((res1)=>{
@@ -69,6 +72,7 @@ describe.skip('测试评论、点赞的接口',function(){
                 expect(res.body).haveOwnProperty("code");
                 expect(res.body).haveOwnProperty("result");
                 assert.ok(res.body.result.length>0,'返回列表大小大于0');
+                console.log(res.body);
                 done();
             }).catch(function(e){
                 done(e);

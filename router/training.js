@@ -30,8 +30,8 @@ router.get('/detail/:id', function(req, res) {
  * 获得一个培训列表
  */
 router.get('/list',function(req,res){
-    var pageSize = req.query.pageSize || 10;
-    var page = req.query.page || 1;
+    var pageSize = req.body.pageSize || 10;
+    var page = req.body.page || 1;
     var params = {
         tags:req.params.tags,
         title:req.params.title,
