@@ -15,7 +15,7 @@ function updateList(list){
             </dl>
         `);
     }
-    $('#courses>div').html(frag);
+    $('#courses .train_list').html(frag);
 }
 //update培训详情
 function updateDetail(){}
@@ -55,15 +55,7 @@ $(function(){
             window.sessionStorage.getItem('parsec_user')&&$('.modal').hide();
             pages.page=1;
             var json=JSON.stringify(pages);
-            $.ajax({
-                type:'GET',
-                url:'v1/training/list',
-                data:json,
-                contentType:'application/json',
-                success:function(data){
-                    updateList(data.result);
-                }
-            });
+            $.get('v1/training/list',json,function(data){ updateList(data.result);});
         }
     );
     $('.pages a').click(function (e) {
