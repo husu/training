@@ -32,6 +32,7 @@ module.exports = {
         query.equalTo('training',training);
         query.equalTo('type',myUtil.COMMENTTYPE.COMMENT);
         query.skip((page-1)*pageSize);
+        query.include("creator");
         query.limit(pageSize);
         return query.find();
 
