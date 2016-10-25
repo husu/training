@@ -52,7 +52,7 @@ describe('测试关于培训的RESTful API',function() {
                     expect(res.body).haveOwnProperty("code");
                     expect(res.body).haveOwnProperty("result");
                     assert.equal(res.body.result.length,4,'测试列表查询是否正确');
-                    assert.equal(res.body.result[0].user.username,'test','Test creator');
+                    assert.equal(res.body.result[0].creator.username,'test','Test creator');
 
                     return res0;
                 })
@@ -62,7 +62,8 @@ describe('测试关于培训的RESTful API',function() {
                 return request.get(`/v1/training/detail/${tid}`).send({}).then(resDetail=>{
                     expect(resDetail.body).haveOwnProperty("code");
                     expect(resDetail.body.code).to.be.equal(0,'测试是否返回查询成功的状态值');
-                    console.log(resDetail.body);
+                    assert.equal(resDetail.body.result.creator.username,'test','Test training detail creator');
+                    //console.log(resDetail.body);
                     return res1;
                 }).then(res1=>{
                     let tid= res1.body.result.objectId;
