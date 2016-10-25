@@ -32,8 +32,8 @@ router.get('/detail/:id',function(req,res){
  */
 router.get('/list/:id',function(req,res){
     let id = req.params.id;
-    let page = req.body.page;
-    let pageSize = req.body.pageSize;
+    let page = req.query.page;
+    let pageSize = req.query.pageSize;
     let para = {
         trainId:id
     };

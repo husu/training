@@ -28,6 +28,7 @@
     "ejs": "2.3.1",
     "express": "4.12.3",
     "leanengine": "^1.0.0-beta",
+    "lodash": "^4.16.4",
     "mocha": "^2.4.5",
     "supertest": "^1.2.0",
     "underscore": "^1.8.3",

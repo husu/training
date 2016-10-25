@@ -3,6 +3,8 @@
  */
 'use strict';
 var validator = require('validator');
+var _ = require('lodash');
+
 
 function util(){
 
@@ -111,6 +113,22 @@ util.COMMENTTYPE={
     COMMENT:0,
     THUMB_UP:1
 
+};
+
+/**
+ * 将AV.Object转换为纯json对象，同时处理日期
+ * @param obj 待转换的对象
+ * @param omitFields 要隐藏的字段
+ */
+ util.avObjectToJson=function(obj, omitFields) {
+    let d = obj.toJSON();
+    d.createdAt = +obj.createdAt;
+    d.updatedAt = +obj.updatedAt;
+    _.each(d, (v, k)=> {
+        if (_.isObject(v) && v.__type === "Date") d[k] = +new Date(v.iso);
+    });
+
+    return _.isEmpty(omitFields) ? d : _.omit(d, omitFields);
 };
 
 //noinspection JSUnresolvedVariable

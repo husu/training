@@ -57,7 +57,8 @@ $(function(){
             $.ajax({
                 type:'GET',
                 url:'v1/training/list',
-                data:json,
+                data:pages,
+                dataType:'json',
                 contentType:'application/json',
                 success:function(data){
                     updateList(data.result);

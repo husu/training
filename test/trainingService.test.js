@@ -33,25 +33,26 @@ describe('测试关于培训的RESTful API',function() {
         request.post(`/login`).send({"username":"test","password":"123456"}).then((resUser)=> {
 
             //console.log(resUser.body);
+             request.post(`/v1/training`).send(t).then(res=>{
+                 expect(res).to.have.status(200);
+                 expect(res.body).to.be.an("object", "返回对象");
+                 expect(res.body).haveOwnProperty("code");
+                 expect(res.body).haveOwnProperty("message");
+                 expect(res.body).haveOwnProperty("result");
+                 assert.equal(res.body.result.title,'测试Restful API新增','测试保存的title是否正确');
 
 
-            request.post(`/v1/training`).send(t).then(res=>{
-                expect(res).to.have.status(200);
-                expect(res.body).to.be.an("object", "返回对象");
-                expect(res.body).haveOwnProperty("code");
-                expect(res.body).haveOwnProperty("message");
-                expect(res.body).haveOwnProperty("result");
-                assert.equal(res.body.result.title,'测试Restful API新增','测试保存的title是否正确');
-                return res;
+                 return res;
 
             }).then(function(res0){
-
-                return request.get(`/v1/training/list`).send({page:1,pageSize:1}).then(res=>{
+                 var r = new Date().getTime();
+                 return request.get(`/v1/training/list?d=${r}`).send({page:1,pageSize:5}).then(res=>{
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an("object", "返回对象");
                     expect(res.body).haveOwnProperty("code");
                     expect(res.body).haveOwnProperty("result");
-                    assert.equal(res.body.result.length,1,'测试列表查询是否正确');
+                    assert.equal(res.body.result.length,5,'测试列表查询是否正确');
+                    assert.equal(res.body.result[0].user.username,'test','Test creator');
 
                     return res0;
                 })

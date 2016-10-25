@@ -5,6 +5,7 @@
 var router = require('express').Router();
 var ts = require('../service/trainingService');
 var util =  require('../util');
+var _= require('lodash');
 
 /**
  * 获得一个培训的信息
@@ -30,15 +31,25 @@ router.get('/detail/:id', function(req, res) {
  * 获得一个培训列表
  */
 router.get('/list',function(req,res){
-    var pageSize = req.body.pageSize || 10;
-    var page = req.body.page || 1;
+    var pageSize = req.query.pageSize || 10;
+    var page = req.query.page || 1;
     var params = {
         tags:req.params.tags,
         title:req.params.title,
         status:util.TRAININGSTATUS.TRAINING
     };
 
-    ts.list(params,page,pageSize).then(function(list){
+    return ts.list(params,page,pageSize).then(function(list){
+
+        _.map(list,o=>{
+            var user  = o.get('creator');
+            o.creator = {
+                id:user.id,
+                username:user.get('username')
+            };
+            return _.pick(util.avObjectToJson(o),['commentNum','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
+        });
+
         let resultObj = {
             code:0,
             result:list

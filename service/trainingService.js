@@ -68,6 +68,7 @@ module.exports ={
         query.limit(pageSize);
         query.addDescending('thumbUpNum');
         query.addDescending('createdAt');
+        query.include('creator');
         query.skip(pageSize*(pageNo-1));
         if(params.tags){
             query.containsAll("tag",params.tags);
