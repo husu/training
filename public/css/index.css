@@ -48,26 +48,9 @@ section{background:#ddd;padding-top:10px;width:100%;}
 #courses dl dd:nth-child(2){font-weight: bold;}
 .pages a{background:#f7f7f7;margin:20px;border:1px solid #aaa;padding:6px 15px;font-weight:bold;}
 .pages a:hover{background:#fff;}
-/*主体.教你做人.培训详情、、*/
-.train_detail{
-    width:1000px;
-    position: fixed;
-    top:10%;
-    left:50%;
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
-}
-.comment_list{
-
-}
-.comment_msg{}
 /*主体.资不资磁*/
 /*主体.不要打脸*/
 /*主体.英雄榜*/
-
 /*底部*/
 footer{padding:20px;text-align: center;background: #ddd;color:#4E585B;}
 footer p{margin:6px 0;}

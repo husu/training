@@ -19,7 +19,7 @@ function updateList(list){
 }
 //update培训详情
 function updateDetail(){}
-var pages={page:0,pageSize:6};//获取培训列表
+var pages={page:1,pageSize:6};//获取培训列表
 var flag=false//是否有管理员权限
 $(function(){
     //登录验证
@@ -53,9 +53,16 @@ $(function(){
     $(document).ready(
         function(){
             window.sessionStorage.getItem('parsec_user')&&$('.modal').hide();
-            pages.page=1;
             var json=JSON.stringify(pages);
-            $.get('v1/training/list',json,function(data){ updateList(data.result);});
+            $.ajax({
+                type:'GET',
+                url:'v1/training/list',
+                data:json,
+                contentType:'application/json',
+                success:function(data){
+                    updateList(data.result);
+                }
+            });
         }
     );
     $('.pages a').click(function (e) {
@@ -80,10 +87,5 @@ $(function(){
         }
     });
     //培训详情
-    $('#courses>div').on('click','a',function(e){
-        e.preventDefault();
-        $.get('v1/training/detail/'+$(this).attr('href'), function (data) {
-            console.log(data);
-        })
-    });
+
 });
