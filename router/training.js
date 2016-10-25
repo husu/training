@@ -31,8 +31,8 @@ router.get('/detail/:id', function(req, res) {
  * 获得一个培训列表
  */
 router.get('/list',function(req,res){
-    var pageSize = req.query.pageSize || 10;
-    var page = req.query.page || 1;
+    var pageSize = req.query.pageSize || req.body.pageSize ||10;
+    var page = req.query.page || req.body.page || 1;
     var params = {
         tags:req.params.tags,
         title:req.params.title,
@@ -41,18 +41,20 @@ router.get('/list',function(req,res){
 
     return ts.list(params,page,pageSize).then(function(list){
 
-        _.map(list,o=>{
+       var trainList =  _.map(list,o=>{
             var user  = o.get('creator');
-            o.creator = {
-                id:user.id,
-                username:user.get('username')
-            };
-            return _.pick(util.avObjectToJson(o),['commentNum','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
-        });
+
+           o= _.pick(util.avObjectToJson(o),['commentNum','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
+             o.creator = {
+               id:user.id,
+               username:user.get('username')
+           };
+           return o;
+       });
 
         let resultObj = {
             code:0,
-            result:list
+            result:trainList
         };
         return res.send(resultObj);
     }).fail(function(e){

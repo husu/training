@@ -46,12 +46,12 @@ describe('测试关于培训的RESTful API',function() {
 
             }).then(function(res0){
                  var r = new Date().getTime();
-                 return request.get(`/v1/training/list?d=${r}`).send({page:1,pageSize:5}).then(res=>{
+                 return request.get(`/v1/training/list?d=${r}`).send({page:1,pageSize:4}).then(res=>{
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an("object", "返回对象");
                     expect(res.body).haveOwnProperty("code");
                     expect(res.body).haveOwnProperty("result");
-                    assert.equal(res.body.result.length,5,'测试列表查询是否正确');
+                    assert.equal(res.body.result.length,4,'测试列表查询是否正确');
                     assert.equal(res.body.result[0].user.username,'test','Test creator');
 
                     return res0;
