@@ -4,14 +4,26 @@
     <meta charset="UTF-8">
     <title>秒差距小课堂</title>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-    <script src="js/login.js"></script>
     <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h2 class="text-center">用户登录</h2>
+                <form id="login">
+                    <input type="text" name="username" placeholder="请输入用户名"/>
+                    <input type="password" name="password" placeholder="请输入密码"/>
+                    <input type="button" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录"/>
+                </form>
+                <p class="msg_login"></p>
+            </div>
+        </div>
+    </div>
     <nav>
         <p>
             <a href="#">秒差距小课堂</a>
-            <a href="#">登录</a>
+            <a href="#">未登录</a>
         </p>
     </nav>
     <header class="text-center">
@@ -20,55 +32,18 @@
     <section>
         <ul class="tabs">
             <li><a href="#courses"  class="active-tabs">教你做人</a></li>
-            <li><a href="#demand">资不资磁</a></li>
+            <li><a href="#rankList">英雄榜</a></li>
             <li><a href="#about">不要打脸</a></li>
         </ul>
         <div class="main">
             <div id="courses">
-                <div>
-                    <dl>
-                        <dt><a href="#"><img src="imgs/img-01.png" alt="..."></a></dt>
-                        <dd>标题</dd>
-                        <dd>时间</dd>
-                        <dd>主讲人</dd>
-                    </dl>
-                    <dl>
-                        <dt><a href="#"><img src="imgs/img-02.png" alt="..."></a></dt>
-                        <dd>标题</dd>
-                        <dd>时间</dd>
-                        <dd>主讲人</dd>
-                    </dl>
-                    <dl>
-                        <dt><a href="#"><img src="imgs/img-03.png" alt="..."></a></dt>
-                        <dd>标题</dd>
-                        <dd>时间</dd>
-                        <dd>主讲人</dd>
-                    </dl>
-                    <dl>
-                        <dt><a href="#"><img src="imgs/img-01.png" alt="..."></a></dt>
-                        <dd>标题</dd>
-                        <dd>时间</dd>
-                        <dd>主讲人</dd>
-                    </dl>
-                    <dl>
-                        <dt><a href="#"><img src="imgs/img-02.png" alt="..."></a></dt>
-                        <dd>标题</dd>
-                        <dd>时间</dd>
-                        <dd>主讲人</dd>
-                    </dl>
-                    <dl>
-                        <dt><a href="#"><img src="imgs/img-03.png" alt="..."></a></dt>
-                        <dd>标题</dd>
-                        <dd>时间</dd>
-                        <dd>主讲人</dd>
-                    </dl>
-                </div>
+                <div></div>
                 <p class="pages text-center">
                     <a href="#" class="hide">上一页</a>
                     <a href="#">下一页</a>
                 </p>
             </div>
-            <div id="demand" class="hide">资不资磁</div>
+            <div id="rankList" class="hide">英雄榜</div>
             <div id="about" class="hide">不要打脸</div>
         </div>
     </section>

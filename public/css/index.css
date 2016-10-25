@@ -1,32 +1,58 @@
 /*重置样式或通用样式*/
 *{box-sizing:border-box;}
+body{margin:0;padding:0;padding-top:70px;}
 p,ul,ol,h1,h2,h3,h4,h5,h6,dl,dt,dd{margin:0; padding:0; list-style:none;}
 .lf{float:left;}
 .rt{float:right;}
 .clear{clear:both;}
 a{text-decoration:none;color:#777;}
-body{margin:0;padding:0;  padding-top:70px;}
 .text-center{text-align:center;}
 .hide{display:none;}
 .show{display:block;}
+
 /*头部*/
 nav p{width:1200px;margin:0 auto;}
 nav{height:70px;width:100%;background:#049ACB;position:fixed;top:0;}
 nav a{font-size:20px;color:#fff;line-height:70px;font-weight: bold;}
 nav a:last-child{float:right;}
+
+/*用户登录*/
+.modal {position: fixed;left: 0;right: 0;top: 0;bottom: 0;background: rgba(0,0,0, .7);  z-index: 999;}
+.modal-dialog {position: absolute;top:40%;left:50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+.modal-content {background:#fff;  border: 1px solid #aaa;  border-radius: 3px;  box-shadow: 0 0 5px #aaa;  padding:20px 15px 10px;}
+.modal-content h2{color:#049ACB;}
+.msg_login{height:15px;padding-right:40px;font-size:14px;text-align:right;color:red;}
+#login{margin:15px 30px; }
+#login input{display:block;width:300px;border:1px solid #049ACB;border-radius:4px;padding:8px 0;font-size:18px;margin-bottom:25px;}
+#login input:not([type='button']){padding-left:50px;background:url(../imgs/login_small.png) no-repeat 10px 6px;}
+#login input:first-child{background-position:10px -34px; }
+#login input[type='button']{background:#049ACB;color:#fff;border:0;cursor:pointer;font-weight:bold;margin:0;padding:8px 0;}
 /*主体.导航标签页*/
-section{background:#ddd;padding-top:10px;}
-.tabs{width:1200px;text-align:center;overflow:hidden;background:#fff;margin:30px auto;}
+section{background:#ddd;padding-top:10px;width:100%;}
+.tabs{width:1200px;text-align:center;overflow:hidden;background:#fff;margin:30px auto;letter-spacing:6px;}
 .tabs li a{width:33.3%;float:left;padding:25px 0;font-size:18px;font-weight: bold;}
 .active-tabs{background:url('../imgs/font-bag.png') no-repeat center center;color:#fff;}
+
 /*主体.教你做人、、*/
-.main{width:1200px;background:#fff;margin:0 auto;padding-bottom:50px;}
-#courses>div{overflow:hidden;padding-bottom:20px;}
-#courses dl{float:left;width:33.3%;padding:30px 0;text-align: center;}
-#courses dt{margin:0 auto;widtdh:288px;}
-#courses dd{text-align: left;padding-left:50px;}
+.main{width:1200px;background:#fff;margin:0 auto;padding:10px 0 50px;}
+#courses>div{overflow:hidden;height:770px;}
+#courses dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
+#courses dt{margin:10px auto;}
+#courses dd{text-align: left;padding-left:60px;margin-top:20px;}
 #courses dl dd:nth-child(2){font-weight: bold;}
-.pages  a{background:#f7f7f7;margin:20px;border:1px solid #aaa;padding:6px 15px;}
+.pages a{background:#f7f7f7;margin:20px;border:1px solid #aaa;padding:6px 15px;font-weight:bold;}
+.pages a:hover{background:#fff;}
+/*主体.资不资磁*/
+/*主体.不要打脸*/
+/*主体.英雄榜*/
+
+/*底部*/
 footer{padding:20px;text-align: center;background: #ddd;color:#4E585B;}
 footer p{margin:6px 0;}
 
