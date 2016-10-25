@@ -17,7 +17,7 @@ chai.use(chaiHttp);
 
 
 
-describe.skip('测试关于培训的RESTful API',function() {
+describe('测试关于培训的RESTful API',function() {
     const request = chai.request.agent('http://localhost:3261');
 
 
