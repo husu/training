@@ -6,8 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var training = require('./router/training');
 var AV = require('leanengine');
+var util = require('util');
 const user = require('./router/user');
 const requirements = require('./router/requirements');
+var fs = require('fs');
+
+//var multipart = require('connect-multiparty');
 
 
 var app = global.app = express();
@@ -16,6 +20,7 @@ var app = global.app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(timeout('25s'));
+//app.use(multipart({ uploadDir: __dirname + '/v1/upload' })) // Replace for depricated connect.bodyParser()
 
 
 
@@ -38,11 +43,11 @@ app.all(/\/(?!login|index[.]).*html$/, function (req, res, next) {
   }
 });
 
-app.all(/\/(?!login|index[.]).*html$/, function (req, res, next) {
-
+app.all(/\/v1\/.*$/, function (req, res, next) {
   if (!req.currentUser) {
     return res.send({
-
+        code:util.ERROR.LOGIN_TIMEOUT,
+        message:'请先登录后再操作'
     });
   } else {
     next();
@@ -51,8 +56,9 @@ app.all(/\/(?!login|index[.]).*html$/, function (req, res, next) {
 
 app.use(express.static('public'));
 
+app.use(bodyParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
 
 //app.get('/', function(req, res) {
@@ -70,7 +76,7 @@ app.use('/v1/requirements', requirements);
 app.use('/v1/willingness', require('./router/willingness'));
 app.use('/v1/comments', require('./router/comments'));
 app.use('/v1/thumbUp', require('./router/thumbUp'));
-
+app.use('/v1/upload',require('./router/uploadImg'));
 
 
 
@@ -93,6 +99,12 @@ app.use(function(req, res, next) {
   }
 });
 
+
+
+
+
+
+
 // error handlers
 app.use(function(err, req, res, next) { // jshint ignore:line
   var statusCode = err.status || 500;
@@ -114,7 +126,6 @@ app.use(function(err, req, res, next) { // jshint ignore:line
     error: error
   });
 });
-
 
 
 

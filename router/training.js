@@ -157,6 +157,13 @@ router.delete('/:id',function(req,res){
 
 });
 
+/**
+ * 安排一个培训
+ */
+router.post("/plan",function(req,res){
+    var obj = req.body;
+
+});
 
 
 
