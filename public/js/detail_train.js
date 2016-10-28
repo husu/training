@@ -23,7 +23,7 @@ function updateDetail(res){
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
                 <h3>${res.title}</h3>
-                <p>主讲人：${res.creator.className}&nbsp;&nbsp;培训时间：${preTime(res.trainDate.iso,true)}</p>
+                <p>主讲人：${res.creator.username}&nbsp;&nbsp;培训时间：${preTime(res.trainDate,true)}</p>
                 <p>${res.content}</p>
             </div>
         </div>
@@ -38,11 +38,11 @@ function updateComment(list){
            <div>
             <img src="../imgs/user.png" alt=""/>
             <div class="rt">
-                <p><span>${list[i].creator.className}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
+                <p><span>${list[i].creator.username}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
                     ${list[i].replayWho?('<li style="border-left:2px solid #ddd">'+list[i].replayWho+'</li>'):""}
                     <li>${list[i].content}</li>
-                    <li><a href="${list[i].creator.className}">回&nbsp;应</a></li>
+                    <li><a href="${list[i].creator.username}">回&nbsp;应</a></li>
                 </ul>
             </div>
         </div>
@@ -66,10 +66,10 @@ $(function(){
         e.preventDefault();
         var that=$(this);
         $.get(`v1/thumbUp/${trainId}`,function (data) {
-            console.log(data);
             if (!data.result) {
+                console.log(data);
                 $.post(`v1/thumbUp/${trainId}`,function (data) {
-                    console.log(data);
+
                     if(!data.code){
                         that.attr('class','praise');
                         that.find('b').html(data.result.thumbUpNum);
