@@ -16,8 +16,17 @@ router.get('/detail/:id', function(req, res) {
     };
 
     ts.get(id).then(obj=>{
+
+        var training =  util.avObjectToJson(obj);
+        var creator = obj.get('creator');
+        training.creator = {
+            objectId:creator.id,
+            username:creator.get('username')
+        };
+
+
         result.code = 0;
-        result.result=obj;
+        result.result=training;
         return res.send(result);
     }).fail(e=>{
         return res.send({
@@ -148,6 +157,13 @@ router.delete('/:id',function(req,res){
 
 });
 
+/**
+ * 安排一个培训
+ */
+router.post("/plan",function(req,res){
+    var obj = req.body;
+
+});
 
 
 

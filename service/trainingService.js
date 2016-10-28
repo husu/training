@@ -95,7 +95,10 @@ module.exports ={
         if(!id){
             return AV.Promise.error(myUtil.ERROR.OBJECT_ID_IS_EMPTY);
         }
-        return AV.Object.createWithoutData('Training',id).fetch();
+
+        var query  =  new AV.Query("Training");
+        query.include('creator');
+        return query.get(id);
     }
 };
 

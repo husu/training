@@ -72,6 +72,7 @@ describe('测试评论、点赞的接口',function(){
                 expect(res.body).haveOwnProperty("code");
                 expect(res.body).haveOwnProperty("result");
                 assert.ok(res.body.result.length>0,'返回列表大小大于0');
+                assert.ok(res.body.result[0].creator.username,'test','返回列表大小大于0');
 
                 //assert.equal(res.body.result[0].creator,'test','验证发表者用户名');
 

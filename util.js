@@ -4,8 +4,6 @@
 'use strict';
 var validator = require('validator');
 var _ = require('lodash');
-
-
 function util(){
 
 }

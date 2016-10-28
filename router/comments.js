@@ -5,6 +5,7 @@
 var router = require('express').Router();
 var cs = require('../service/commentService');
 var util =  require('../util');
+var _= require('lodash');
 
 
 /**
@@ -41,7 +42,20 @@ router.get('/list/:id',function(req,res){
         code:0
     };
     cs.list(para,page,pageSize).then(function(list){
-        returnObj.result  = list;
+
+
+
+        var commentList = _.map(list,o=>{
+            var curObj= util.avObjectToJson(o);
+            var user = o.get('creator');
+            curObj.creator = {
+                objectId:user.id,
+                username:user.get('username')
+            };
+            return curObj;
+        });
+
+        returnObj.result  = commentList;
         return res.send(returnObj);
     }).catch(function(e){
         returnObj.result = e.errorCode;
