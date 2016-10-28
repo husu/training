@@ -3,13 +3,14 @@
  */
 var trainId=null;//培训id
 var resname=null;//回复谁的评论
-var username=null//用户名
-var replay={content:"",replayWho:""}//评论参数
+var username=null;//用户名
+var comments={page:1,pageSize:6};//查看更多评论
+var replay={content:"",replayWho:""};//评论参数
 //时间格式化 t:任意时间格式 f:默认为flase  yy-mm-dd，true yy年mm月dd日;
 function preTime(t,f){
     function strTwo(T){return (T+100+'').slice(1);}
     var time=new Date(t);
-    var year=time.getFullYear()
+    var year=time.getFullYear();
     var month=strTwo(time.getMonth()+1);
     var date=strTwo(time.getDate());
     var hours=strTwo(time.getHours());
@@ -18,7 +19,7 @@ function preTime(t,f){
 }
 //update detail
 function updateDetail(res){
-    $('.detail').html(`
+    $('.detail').prepend(`
         <div>
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
@@ -27,7 +28,6 @@ function updateDetail(res){
                 <p>${res.content}</p>
             </div>
         </div>
-        <p><a href="#" class="praise-def">点赞<b>${res.thumbUpNum}<\/b><\/a><a href="#">评论<b>${res.commentNum}<\/b><\/a></p>
     `);
 }
 //update comments
@@ -48,7 +48,7 @@ function updateComment(list){
         </div>
         `);
     }
-    $('.comment').append(frag);
+    $('.comment>p').before(frag);
 }
 $(function(){
     //页面初始化
@@ -56,31 +56,39 @@ $(function(){
     username&&$('nav a:last').html(username);
     trainId=window.sessionStorage.getItem('train_id');
     $.get(`v1/training/detail/${trainId}`,function(data){
-        updateDetail(data.result);
+        var res=data.result;
+        updateDetail(res);
+        $('.detail a:first').find('b').html(res.thumbUpNum);
+        $('.detail a:last').find('b').html(res.commentNum);
     });
-    $.get(`v1/comments/list/${trainId}`,{page:1,pageSize:10},function(data){
+    $.get(`v1/comments/list/${trainId}`,comments,function(data){
         updateComment(data.result);
+        data.result.length<6&&$('.comment>p').hide();
+    });
+    $.get(`v1/thumbUp/${trainId}`,function(data){
+        !data.result&&$('.detail a:first').addClass('a-disable');
+    });
+    //查看更多评论
+    $('.comment>p a').click(function (e) {
+        e.preventDefault();
+        comments.page+=1;
+        $.get(`v1/comments/list/${trainId}`,comments,function(data){
+            updateComment(data.result);
+            data.result.length<6&&$('.comment>p a').addClass('b-disable').html('没有更多评论');
+        });
     });
     //点赞
-    $('.detail').on('click', 'a:contains("点赞")', function (e) {
+    $('.detail a:contains("点赞")').click(function (e) {
         e.preventDefault();
         var that=$(this);
-        $.get(`v1/thumbUp/${trainId}`,function (data) {
-            if (!data.result) {
-                console.log(data);
-                $.post(`v1/thumbUp/${trainId}`,function (data) {
-
-                    if(!data.code){
-                        that.attr('class','praise');
-                        that.find('b').html(data.result.thumbUpNum);
-                    }
-                });
-            }else{that.addClass('a-disable');}
+        $.post(`v1/thumbUp/${trainId}`,function (data) {
+                that.addClass('a-disable praise');
+                that.find('b').html(parseInt(that.find('b').html())+1);
         });
     });
     //评论或回复
     //点击评论
-    $('.detail').on('click', 'a:contains("评论")', function (e) {
+    $('.detail a:contains("评论")').click(function (e) {
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
@@ -88,7 +96,7 @@ $(function(){
         $('#resBox').focus();
     });
     //点击回应
-    $('.comment').on('click','a', function (e) {
+    $('.comment').on('click','div a', function (e) {
         e.preventDefault();
         resname=$(this).attr('href');
         $('#replayWho').html(resname);
@@ -110,6 +118,7 @@ $(function(){
             $.post(`v1/comments/${trainId}`,replay, function (data) {
                 reMsg(data.message);
                 $('#resBox').val("");
+                if(!data.code){var elem=$('.detail b:last');elem.html(parseInt(elem.html())+1);}
             });
         }else{reMsg('回复内容不能为空')}
         //回复提示信息

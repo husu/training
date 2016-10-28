@@ -10,7 +10,7 @@ a{text-decoration:none;color:#777;}
 .hide{display:none;}
 .show{display:block;}
 /*头部*/
-nav p{width:1200px;margin:0 auto;}
+nav p{width:1200px;margin:0 auto;max-width:100%;padding:0 15px;}
 nav{height:70px;width:100%;background:#049ACB;position:fixed;top:0;}
 nav a{font-size:20px;color:#fff;line-height:70px;font-weight: bold;}
 nav a:last-child{float:right;}
