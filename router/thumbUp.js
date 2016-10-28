@@ -35,7 +35,7 @@ router.post('/:trainId',function(req,res){
                 return res.send(result);
             });
         } else{
-            result.code = myUtil.ERROR.DATA_DUPLICATE;
+            result.code = util.ERROR.DATA_DUPLICATE;
             result.message = '数据重复';
             return res.send(result);
         }

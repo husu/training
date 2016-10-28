@@ -1,7 +1,4 @@
 /**
- * Created by husu on 16/9/5.
- */
-/**
  * Created by husu on 16/8/23.
  */
 'use strict';
@@ -98,6 +95,8 @@ describe('测试评论、点赞的接口',function(){
             expect(res.body).to.be.an("object", "返回对象");
             expect(res.body).haveOwnProperty("code");
             expect(res.body).haveOwnProperty("result");
+            expect(res.body.message).to.equal('保存成功');
+
             return res;
         }).then(()=>{
             request.get(`/v1/thumbUp/${trainId}`).then(res=>{
