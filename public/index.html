@@ -5,9 +5,10 @@
     <title>秒差距小课堂</title>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
 </head>
 <body>
-    <div class="modal">
+    <div class="modal hide">
         <div class="modal-dialog">
             <div class="modal-content">
                 <h2 class="text-center">用户登录</h2>
@@ -22,7 +23,7 @@
     </div>
     <nav>
         <p>
-            <a href="#">秒差距小课堂</a>
+            <a href="index.html">秒差距小课堂</a>
             <a href="#">未登录</a>
         </p>
     </nav>
@@ -32,8 +33,8 @@
     <section>
         <ul class="tabs">
             <li><a href="#courses"  class="active-tabs">教你做人</a></li>
+            <li><a href="#about">资不资瓷</a></li>
             <li><a href="#rankList">英雄榜</a></li>
-            <li><a href="#about">不要打脸</a></li>
         </ul>
         <div class="main">
             <div id="courses">
@@ -43,8 +44,8 @@
                     <a href="#">下一页</a>
                 </p>
             </div>
+            <div id="about" class="hide">资不资瓷</div>
             <div id="rankList" class="hide">英雄榜</div>
-            <div id="about" class="hide">不要打脸</div>
         </div>
     </section>
     <footer>
@@ -52,7 +53,5 @@
         <p><span>Copyright 2016 &copy;parsec.com</span><a href="http://www.miitbeian.gov.cn/" style="margin-left:20px;display:inline-block;border:none;" target="_blank">渝ICP备13005505号</a></p>
     </footer>
     <script src="js/index.js"></script>
-<script>
-</script>
 </body>
 </html>

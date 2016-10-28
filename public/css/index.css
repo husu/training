@@ -1,21 +1,3 @@
-/*重置样式或通用样式*/
-*{box-sizing:border-box;}
-body{margin:0;padding:0;padding-top:70px;}
-p,ul,ol,h1,h2,h3,h4,h5,h6,dl,dt,dd{margin:0; padding:0; list-style:none;}
-.lf{float:left;}
-.rt{float:right;}
-.clear{clear:both;}
-a{text-decoration:none;color:#777;}
-.text-center{text-align:center;}
-.hide{display:none;}
-.show{display:block;}
-
-/*头部*/
-nav p{width:1200px;margin:0 auto;}
-nav{height:70px;width:100%;background:#049ACB;position:fixed;top:0;}
-nav a{font-size:20px;color:#fff;line-height:70px;font-weight: bold;}
-nav a:last-child{float:right;}
-
 /*用户登录*/
 .modal {position: fixed;left: 0;right: 0;top: 0;bottom: 0;background: rgba(0,0,0, .7);  z-index: 999;}
 .modal-dialog {position: absolute;top:40%;left:50%;
@@ -51,7 +33,4 @@ section{background:#ddd;padding-top:10px;width:100%;}
 /*主体.资不资磁*/
 /*主体.不要打脸*/
 /*主体.英雄榜*/
-/*底部*/
-footer{padding:20px;text-align: center;background: #ddd;color:#4E585B;}
-footer p{margin:6px 0;}
 

@@ -1,0 +1,34 @@
+body{background:#eee;}
+.main{width:1000px;margin:0 auto;padding:20px 30px 50px;background:#fff;}
+/*培训详情*/
+.detail>div{overflow:hidden;border-radius:6px;padding:20px 15px;box-shadow:0 0 5px 3px #ddd inset;}
+.detail .lf p{font-size:18px;margin-top:20px;}
+.detail .rt{width:64%; }
+.detail .rt p{margin:10px 0;font-size:18px;}
+.detail>p{padding:20px 0;}
+.detail>p a{color:#333;padding:10px 7px;padding-left:50px;border:1px solid #ddd;display:inline-block;margin-right:80px;border-radius:4px;background:url('../imgs/login_small.png') no-repeat 7px -137px #f7f7f7;}
+.detail>p a:last-child{background:url('../imgs/login_small.png') no-repeat 7px -104px #f7f7f7;}
+.detail>p a b{display:inline-block;margin:0 10px;}
+.praise{background:url('../imgs/login_small.png') no-repeat 7px -169px #f7f7f7; }
+/*点赞按钮禁用*/
+.a-disable{ pointer-events: none;cursor:default;}
+/*评论列表*/
+.comment>div{padding:20px;padding-right:0;border-top:1px solid #ddd;overflow: hidden;}
+.comment div.rt{width:88%;}
+.comment div.rt p{padding:8px ;font-size:18px;background:#F0F6F4;}
+.comment div.rt span{color:#049ACB;}
+.comment div.rt ul li{padding:5px;margin-top:15px;}
+.comment div.rt ul li:last-child{padding-right:50px;text-align: right;}
+.comment a{color:#aaa;font-size:18px;font-weight:bold;}
+/*回复框*/
+.replay{width:80%;margin:20px auto;position:relative;}
+.replay a{color:#049ACB;}
+#resBox{width:100%;height:150px;margin:10px 0;font-size:18px;padding:10px;resize:none;border-radius:3px;}
+.replay a.rt{margin-right:20px; border-radius:4px;padding:6px 10px;font-weight:bold;background:#049ACB;color:#fff;}
+#msg{position:absolute;top:50%;left:50%;border:1px solid #ddd;
+    z-index:10;font-size:18px;text-align: center;display:none;border-radius: 4px;padding:8px 15px;background:rgba(255,255,255,0.7);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);}
