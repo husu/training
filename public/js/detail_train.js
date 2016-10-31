@@ -1,22 +1,9 @@
 /**
  * Created by Taohailin on 2016/10/26.
  */
-var trainId=null;//培训id
 var resname=null;//回复谁的评论
-var username=null;//用户名
 var comments={page:1,pageSize:6};//查看更多评论
 var replay={content:"",replayWho:""};//评论参数
-//时间格式化 t:任意时间格式 f:默认为flase  yy-mm-dd，true yy年mm月dd日;
-function preTime(t,f){
-    function strTwo(T){return (T+100+'').slice(1);}
-    var time=new Date(t);
-    var year=time.getFullYear();
-    var month=strTwo(time.getMonth()+1);
-    var date=strTwo(time.getDate());
-    var hours=strTwo(time.getHours());
-    var minute=strTwo(time.getMinutes());
-    return f?(year+'年'+month+'月'+date+'日\t\t'+hours+':'+minute):(year+'-'+month+'-'+date+'\t\t'+hours+':'+minute);
-}
 //update detail
 function updateDetail(res){
     $('.detail').prepend(`
@@ -66,7 +53,7 @@ $(function(){
         data.result.length<6&&$('.comment>p').hide();
     });
     $.get(`v1/thumbUp/${trainId}`,function(data){
-        !data.result&&$('.detail a:first').addClass('a-disable');
+        data.result||$('.detail a:first').addClass('a-disable');
     });
     //查看更多评论
     $('.comment>p a').click(function (e) {
@@ -118,7 +105,10 @@ $(function(){
             $.post(`v1/comments/${trainId}`,replay, function (data) {
                 reMsg(data.message);
                 $('#resBox').val("");
-                if(!data.code){var elem=$('.detail b:last');elem.html(parseInt(elem.html())+1);}
+                if(!data.code){
+                    var elem=$('.detail b:last');elem.html(parseInt(elem.html())+1);
+                    updateComment(data.result);
+                }
             });
         }else{reMsg('回复内容不能为空')}
         //回复提示信息
