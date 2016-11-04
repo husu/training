@@ -6,7 +6,7 @@ var AV = require('leanengine');
 AV.Promise._isPromisesAPlusCompliant = false;
 var ts= require('../service/trainingService');
 var assert = require('assert');
-
+var dateformat = require('dateformat');
 
 
 const chai = require("chai");
@@ -17,8 +17,12 @@ chai.use(chaiHttp);
 
 
 
+
+
 describe('测试关于培训的RESTful API',function() {
     const request = chai.request.agent('http://localhost:3261');
+
+
 
 
     it('测试RESTful API',function(done){
@@ -45,6 +49,40 @@ describe('测试关于培训的RESTful API',function() {
                  return res;
 
             }).then(function(res0){
+                 var now = new Date();
+                 let t={
+                     trainDate:dateformat(now,'yyyy-mm-dd hh:MM:ss')
+                 };
+                 return request.get('/v1/training/trainByTime').send(t).then(res=>{
+                     expect(res).to.have.status(200);
+                     expect(res.body).to.be.an("object", "返回对象");
+                     expect(res.body).haveOwnProperty("code");
+                     expect(res.body).haveOwnProperty("message");
+                     expect(res.body).haveOwnProperty("result");
+                     assert.equal(res.body.result,1,'测试当天有培训');
+
+                     return res0;
+                 }).catch(e=>{
+                     done(e);
+                 })
+
+             }).then(res0=>{
+                 let t={
+                     trainDate:'2021-03-21 08:09:09'
+                 };
+                 return request.get('/v1/training/trainByTime').send(t).then(res=>{
+                     expect(res).to.have.status(200);
+                     expect(res.body).to.be.an("object", "返回对象");
+                     expect(res.body).haveOwnProperty("code");
+                     expect(res.body).haveOwnProperty("message");
+                     expect(res.body).haveOwnProperty("result");
+                     assert.equal(res.body.result,0,'测试当天无培训');
+
+                     return res0;
+                 }).catch(e=>{
+                     done(e);
+                 })
+             }).then(function(res0){
                  var r = new Date().getTime();
                  return request.get(`/v1/training/list?d=${r}`).send({page:1,pageSize:4}).then(res=>{
                     expect(res).to.have.status(200);

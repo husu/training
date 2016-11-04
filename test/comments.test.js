@@ -13,17 +13,12 @@ let util = require('../util');
 
 chai.use(chaiHttp);
 
-
-
 describe('测试评论、点赞的接口',function(){
     let request = chai.request.agent('http://localhost:3261');
     let  trainId;
-
     before(function(){
         return request.post(`/login`).send({"username":"test","password":"123456"}).then(()=> {
             console.log('登录成功');
-
-
         }).then(function(res1){
             let user =   request.currentUser;
             let t = {
@@ -49,7 +44,6 @@ describe('测试评论、点赞的接口',function(){
             content:'测试回复',
             author:request.currentUser
         };
-
         request.post(`/v1/comments/${trainId}`).send(comment).then((res)=>{
             expect(res).to.have.status(200);
             expect(res.body).to.be.an("object", "返回对象");
@@ -57,11 +51,8 @@ describe('测试评论、点赞的接口',function(){
             expect(res.body).haveOwnProperty("message");
             expect(res.body).haveOwnProperty("result");
             expect(res.body.code).to.equal(0);
-
             //console.log(res.body);
-
             return res;
-
         }).then((res1)=>{
             request.get(`/v1/comments/list/${trainId}`).send({page:1,pageSize:10}).then(res =>{
                 expect(res).to.have.status(200);
@@ -96,7 +87,6 @@ describe('测试评论、点赞的接口',function(){
             expect(res.body).haveOwnProperty("code");
             expect(res.body).haveOwnProperty("result");
             expect(res.body.message).to.equal('保存成功');
-
             return res;
         }).then(()=>{
             request.get(`/v1/thumbUp/${trainId}`).then(res=>{
@@ -114,8 +104,6 @@ describe('测试评论、点赞的接口',function(){
         })
 
     });
-
-
 
     after(function(){
         /**

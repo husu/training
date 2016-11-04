@@ -98,6 +98,10 @@ util.ERROR = {
     LOGIN_TIMEOUT:{
         errorCode:-5,
         message:'登录过期'
+    },
+    PARAMETER_IS_NOT_CORRECT:{
+        errorCode:-7,
+        message:'参数数据非法'
     }
 };
 

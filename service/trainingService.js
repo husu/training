@@ -100,5 +100,29 @@ module.exports ={
         query.include('creator');
         return query.get(id);
     }
+    ,
+    /**
+     * 查询某天是否有培训
+     * @param trainDate
+     * @returns {*}
+     */
+    queryTrainingByTime:function(trainDate){
+        if(!trainDate){
+            return AV.Promise.error(myUtil.ERROR.PARAMETER_MISSING);
+        }
+
+        if(!(trainDate instanceof Date)){
+            return AV.Promise.error(myUtil.ERROR.PARAMETER_IS_NOT_CORRECT);
+        }
+
+        let dateFrom  = trainDate.getFullYear() + "-" + (trainDate.getMonth()+1) + "-" + trainDate.getDate() + " 00:00:00";
+        let dateTo = trainDate.getFullYear() + "-" + (trainDate.getMonth()+1) + "-" + trainDate.getDate() + " 23:59:59";
+
+        var query = new AV.Query("Training");
+        query.greaterThan('trainDate',new Date(dateFrom));
+        query.lessThanOrEqualTo('trainDate',new Date(dateTo));
+        query.equalTo('status',myUtil.TRAININGSTATUS.TRAINING);
+        return query.first();
+    }
 };
 

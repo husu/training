@@ -161,9 +161,95 @@ router.delete('/:id',function(req,res){
  * 安排一个培训
  */
 router.post("/plan",function(req,res){
-    var obj = req.body;
+    var trainObj = req.body;
+
+    let result ={
+    };
+
+    if(!trainObj.trainDate){
+        result.code = util.ERROR.PARAMETER_MISSING.errorCode;
+        result.message =   '培训时间不可为空';
+        result.errors =  [util.ERROR.PARAMETER_MISSING];
+        return res.send(result);
+    }
+
+    if(!trainObj.objectId){
+        result.code = util.ERROR.PARAMETER_MISSING.errorCode;
+        result.errors = [util.ERROR.PARAMETER_MISSING];
+        result.message = '培训信息丢失';
+        return res.send(result);
+    }
+
+
+    if(trainObj.trainDate.getTime()<=(new Date()).getTime()){
+        result.code = util.ERROR.PARAMETER_IS_NOT_CORRECT.errorCode;
+        result.message = "培训时间不得小于当前时间";
+        result.errors = [util.ERROR.PARAMETER_IS_NOT_CORRECT];
+        return res.send(result);
+    }
+
+    ts.get(trainObj.objectId).then(t=>{
+
+
+        t.trainDate =  trainObj.trainDate;
+        t.status=util.TRAININGSTATUS.TRAINING;
+        t.creator = req.currentUser;
+
+        return ts.save(t).then(function(obj){
+            result ={
+                code:0,
+                message:'保存成功',
+                result:obj
+            };
+            return res.send(result);
+        });
+
+    });
+
+
 
 });
+
+
+
+/**
+ * 安排一个培训
+ */
+router.get("/trainByTime",function(req,res) {
+    var trainDate = req.query.trainDate || req.body.trainDate;
+
+    let result ={
+        code:0
+    };
+
+
+    var paraDate;
+    if(trainDate){
+        paraDate = new Date(trainDate);
+    }
+
+
+    ts.queryTrainingByTime(paraDate).then(function(obj){
+
+        if(obj){
+            result.message = '当天已经有培训安排';
+            result.result = 1;
+        }else{
+            result.message ='';
+            result.result = 0;
+        }
+
+        return res.send(result);
+
+    }).fail(e=>{
+        result.code = e.errorCode;
+        result.message = e.message;
+        result.errors=[e];
+        return res.send(result);
+    })
+
+});
+
 
 
 
