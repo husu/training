@@ -2,7 +2,6 @@
  * Created by Taohailin on 2016/10/19.
  */
 var pagesTrain={page:1,pageSize:6};//获取列表
-var flag=false//是否有管理员权限
 $(function(){
     username?$('nav a:last').html(username):$('.modal').show();
     $.get('v1/training/list',pagesTrain,function(data){

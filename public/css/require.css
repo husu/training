@@ -1,0 +1,33 @@
+section{background:#f7f7f7;width:100%;}
+.main{width:1200px;background:#fff;margin:0 auto;padding:10px 0 50px;}
+.main>p{text-align: center; padding:25px;border-bottom:1px solid #ddd;}
+.main>p a,.main>div p:first-child{margin:0 100px;border-radius:5px;padding:10px 20px;background:#049ACB;color:#fff;font-size: 25px;font-weight: bold; }
+.main>div{padding:20px;overflow:hidden;}
+.main>div p:first-child{font-size:20px;padding:10px;margin:0;margin-bottom:20px;}
+.main>div p:last-child{margin-top:10px;}
+/*列表*/
+.main dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
+.main dt{margin:10px auto;}
+.main dd{text-align: left;padding-left:60px;margin-top:20px;}
+.main dl dd:nth-child(2){font-weight: bold;}
+.pages a{background:#f7f7f7;margin:20px;border:1px solid #aaa;padding:6px 15px;font-weight:bold;}
+.pages a:hover{background:#fff;}
+.main dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
+.main dt{margin:10px auto;}
+.main dd{text-align: left;padding-left:60px;margin-top:20px;}
+.main dl dd:nth-child(2){font-weight: bold;}
+/*新增培新需求*/
+.add_train{position: fixed;top:40%;left:50%;padding:20px;border-radius: 5px;z-index:10;background:#ddd;width:700px;border:1px solid #049ACB;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);}
+.add_train>p{position: absolute;bottom:10px;right:20px;color:red;}
+.default_img{position:absolute;left:0;bottom:30%;width:100%;padding:10px;overflow:auto;z-index: 100;background:#fff;border-top:1px solid #049ACB;
+    border-bottom:1px solid #049ACB;height:60%;}
+.default_img img{float:left;width:40%;margin:20px;margin-left:35px;border:2px solid #ddd;cursor: pointer;}
+#add{padding-top:10px;}
+#add input,#add button{width:100%;display:block;padding:10Px 6px;border-radius:4px;border:1px solid #049ACB;font-size:18px;margin-bottom:20px;}
+#add button{background:#049ACB;font-weight: bold;color:#fff;cursor: pointer;}
+#add textarea{width:100%;height:200px;font-size:18px;padding:10px;resize:none;border-radius:4px;margin-bottom:20px;}
