@@ -42,7 +42,7 @@ function updateList(list,jq){
         var time=preTime(list[i].trainDate,true);
         $(frag).append(`
             <dl>
-                <dt><a href="detail_train.html" target="_blank" data-id="${list[i].objectId}"><img src="${list[i].imgURL||'../imgs/default_course.png'}"/><\/a><\/dt>
+                <dt><a href="detail_train.html" data-id="${list[i].objectId}"><img src="${list[i].imgURL||'../imgs/default_course.png'}"/><\/a><\/dt>
                 <dd>${list[i].title}</dd>
                 ${time?('<dd>时间：'+time+'</dd>'):""}
                 ${list[i].creator.username?('<dd>主讲：'+list[i].creator.username+'</dd>'):""}
