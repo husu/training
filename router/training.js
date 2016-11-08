@@ -181,6 +181,8 @@ router.post("/plan",function(req,res){
     }
 
 
+    trainObj.trainDate = new Date(trainObj.trainDate);
+
     if(trainObj.trainDate.getTime()<=(new Date()).getTime()){
         result.code = util.ERROR.PARAMETER_IS_NOT_CORRECT.errorCode;
         result.message = "培训时间不得小于当前时间";
@@ -213,7 +215,7 @@ router.post("/plan",function(req,res){
 
 
 /**
- * 安排一个培训
+ * 查询看当天是否有培训安排
  */
 router.get("/trainByTime",function(req,res) {
     var trainDate = req.query.trainDate || req.body.trainDate;
