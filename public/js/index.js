@@ -3,13 +3,22 @@
  */
 var pagesTrain={page:1,pageSize:6};//获取列表
 $(function(){
-    username?$('nav a:last').html(username):$('.modal').show();
-    $.get('v1/training/list',pagesTrain,function(data){
-        updateList(data.result,$('#courses .train_list'));
-        if(data.length<6){$('.courses>p').hide();}
-    });
+    if(username){
+        $('nav a:last').html(username);
+        $.get('v1/training/list',pagesTrain,function(data){
+            if(data.result) {
+                updateList(data.result, $('#courses .train_list'));
+                if (data.result.length >= 6) {
+                    $('#courses>p').show();
+                }
+            }
+        });
+        setTimeout(function(){
+            $('header').slideUp(500);
+        },1500);
+    }else{$('.modal').show();}
     //登录验证
-    $('#login input[type="button"]').click(function(e){
+    $('#login input[type="submit"]').click(function(e){
         e.preventDefault();
         var obj=$('#login').serialize();
         $.post('/login',obj,function(data){
@@ -17,6 +26,15 @@ $(function(){
                 window.sessionStorage.setItem('parsec_user',data.result.username);
                 $('.modal').fadeOut('slow');
                 $('nav a:last').html(data.result.username);
+                $.get('v1/training/list',pagesTrain,function(data){
+                    if(data.resutl){
+                        updateList(data.result,$('#courses .train_list'));
+                        if(data.result.length>=6){$('#courses>p').show();}
+                    }
+                });
+                setTimeout(function(){
+                    $('header').slideUp(500);
+                },1500);
             }else{
                 if(data.message){
                     $('.msg_login').html(data.message);

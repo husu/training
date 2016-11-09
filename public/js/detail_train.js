@@ -79,7 +79,7 @@ $(function(){
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
-        $('body').stop().animate({scrollTop:$('.replay').offset().top},1000);
+        $('body').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
     //点击回应
