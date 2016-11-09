@@ -11,23 +11,23 @@
 .modal-content h2{color:#049ACB;}
 .msg_login{height:15px;padding-right:40px;font-size:14px;text-align:right;color:red;}
 #login{margin:15px 30px; }
-#login input{display:block;width:300px;border:1px solid #049ACB;border-radius:4px;padding:8px 0;font-size:18px;margin-bottom:25px;}
-#login input:not([type='button']){padding-left:50px;background:url(../imgs/login_small.png) no-repeat 10px 6px;}
+#login input{display:block;width:300px;border:1px solid #049ACB;border-radius:4px;padding:10px 5px;font-size:14px;margin-bottom:25px;}
+#login input:not([type='submit']){padding-left:50px;background:url(../imgs/login_small.png) no-repeat 10px 6px;}
 #login input:first-child{background-position:10px -34px; }
-#login input[type='button']{background:#049ACB;color:#fff;border:0;cursor:pointer;font-weight:bold;margin:0;padding:8px 0;}
+#login input[type='submit']{cursor:pointer;font-weight:bold;margin:0;padding:8px 0;}
 /*主体.导航标签页*/
-section{background:#ddd;padding-top:10px;width:100%;}
+
 .tabs{width:1200px;text-align:center;overflow:hidden;background:#fff;margin:30px auto;letter-spacing:6px;}
 .tabs li a{width:33.3%;float:left;padding:25px 0;font-size:18px;font-weight: bold;}
 .active-tabs{background:url('../imgs/font-bag.png') no-repeat center center;color:#fff;}
 /*主体.教你做人、、*/
-.main{width:1200px;background:#fff;margin:0 auto;padding:10px 0 50px;}
+.main{width:1200px;margin:0 auto;padding:10px 0 50px;}
 #courses .train_list{overflow:hidden;height:770px;}
 #courses dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
 #courses dt{margin:10px auto;}
 #courses dd{text-align: left;padding-left:60px;margin-top:20px;}
 #courses dl dd:nth-child(2){font-weight: bold;}
-.pages a{background:#f7f7f7;margin:20px;border:1px solid #aaa;padding:6px 15px;font-weight:bold;}
-.pages a:hover{background:#fff;}
+.pages a{background:#36aed5;margin:20px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;color:#fff;}
+.pages a:hover{background:#049ACB;}
 
 

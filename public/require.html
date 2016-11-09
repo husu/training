@@ -8,53 +8,69 @@
     <link rel="stylesheet" href="css/require.css"/>
 </head>
 <body>
+
 <nav>
     <p>
         <a href="index.html">秒差距小课堂</a>
         <a href="#">未登录</a>
     </p>
 </nav>
-<div class="add_train hide">
-    <form id="add">
-        <input type="text" name="title" placeholder="请输入培训课题"/>
-        <input type="text" name="tags" placeholder="请输入分类（java,iso,android等）"/>
-        <textarea name="content" placeholder="请输入培训内容。。。。"></textarea>
-        <input type="hidden" name="imgURL"/>
-        <button>选择图片</button>
-        <button>提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交</button>
-    </form>
-    <div class="default_img hide">
-        <img src="imgs/ios.png" alt="ios"/>
-        <img src="imgs/android.png" alt="android"/>
-        <img src="imgs/github.png" alt="github"/>
-        <img src="imgs/java.png" alt="java"/>
-        <img src="imgs/python.png" alt="python"/>
-        <img src="imgs/nodeJs.png" alt="nodeJs"/>
-        <img src="imgs/project.png" alt="project mannager"/>
-        <img src="imgs/test.png" alt="test"/>
+<div class="modal hide add_train">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="add">
+                <input type="text" name="title" placeholder="请输入培训课题"/>
+                <select name="tags">
+                    <option value="java">java</option>
+                    <option value="android">android</option>
+                    <option value="ios">ios</option>
+                    <option value="gitHub">gitHub</option>
+                    <option value="test">test</option>
+                    <option value="projectManagement">projectManagement</option>
+                    <option value="python">python</option>
+                    <option value="nodeJs">nodeJs</option>
+                </select>
+                <textarea name="content" placeholder="请输入培训内容。。。。"></textarea>
+                <input type="hidden" name="imgURL"/>
+                <div class="smImg"><button id="select">选择图片</button><img src="imgs/default_course.png"></div>
+                <button>提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交</button>
+            </form>
+            <div class="default_img hide">
+                <img src="imgs/ios.png" alt="ios"/>
+                <img src="imgs/android.png" alt="android"/>
+                <img src="imgs/github.png" alt="github"/>
+                <img src="imgs/java.png" alt="java"/>
+                <img src="imgs/python.png" alt="python"/>
+                <img src="imgs/nodeJs.png" alt="nodeJs"/>
+                <img src="imgs/project.png" alt="project mannager"/>
+                <img src="imgs/test.png" alt="test"/>
+            </div>
+            <p class="hide">message</p>
+        </div>
     </div>
-    <p class="hide">message</p>
 </div>
 <section>
     <div class="main">
         <p>
             <a href="#">我&nbsp;要&nbsp;讲</a><a href="#">我&nbsp;想&nbsp;听</a>
         </p>
-        <div class="willing">
-            <p>谁要讲</p>
-            <div></div>
-            <p class="pages text-center">
-                <a href="#" class="hide">上一页</a>
-                <a href="#">下一页</a>
-            </p>
-        </div>
-        <div class="require">
-            <p>想听啥</p>
-            <div></div>
-            <p class="pages text-center">
-                <a href="#" class="hide">上一页</a>
-                <a href="#">下一页</a>
-            </p>
+        <div class="list">
+            <div class="willing">
+                <p>谁要讲</p>
+                <div></div>
+                <p class="pages text-center">
+                    <a href="#" class="hide">上一页</a>
+                    <a href="#" class="hide">下一页</a>
+                </p>
+            </div>
+            <div class="require">
+                <p>想听啥</p>
+                <div></div>
+                <p class="pages text-center">
+                    <a href="#" class="hide">上一页</a>
+                    <a href="#" class="hide">下一页</a>
+                </p>
+            </div>
         </div>
     </div>
 </section>

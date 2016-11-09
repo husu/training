@@ -14,34 +14,33 @@ $(function () {
     });
     //创建培训需求
     $('.main>p>a').click(function(e){
-            e.stopPropagation();
             e.preventDefault();
             $('.add_train').fadeIn('slow');
             $('.default_img').hide();
         }
     );
     //选择图片
-    $('.add_train button:first').click(function (e) {
+    $('#select').click(function (e) {
         e.preventDefault();
-        $('.default_img').show(1000);
+        $('.default_img').slideToggle(500);
+        $('#select').html('选择图片');
+        $('#add input[type="hidden"]').val()&&($(this).siblings('img').attr('src',$('#add input[type="hidden"]').val()));
     });
     $('.default_img img').click(function () {
-        $(this).parent().hide(1000);
-        $(this).css('border','2px solid green').siblings().css('border','2px solid #ddd');
+        $(this).css('border','3px solid green').siblings().css('border','3px solid #ddd');
         $('#add input[type="hidden"]').val($(this).attr('src'));
+        $('#select').html('确认图片');
     });
     //提交新增培训
     $('.add_train button:last').click(function (e) {
         e.preventDefault();
         var res=$('#add').serialize();
         $.post('v1/willingness',res, function (data) {
-            if(!data.code){ $('.add_train').fadeOut();}else{$('.add_train>p').html(data.errors).show();}
+            if(!data.code){ $('.add_train').fadeOut();}else{$('.modal-content>p').html(data.errors).show();}
         });
     });
-    $('.add_train').click(function (e) {e.stopPropagation();});
-    $(document).click(function(e){
-        $('.add_train').fadeOut();
-    });
+    $('.modal-content').click(function (e) {e.stopPropagation();});
+    $('.add_train').click(function () {$('.add_train').fadeOut();});
     //分页查询更多列表
     $('.pages a').click(function (e) {
         e.stopPropagation();
