@@ -4,7 +4,6 @@
 'use strict';
 var AV = require('leanengine');
 AV.Promise._isPromisesAPlusCompliant = false;
-var ts= require('../service/trainingService');
 var assert = require('assert');
 var dateformat = require('dateformat');
 
@@ -12,6 +11,7 @@ var dateformat = require('dateformat');
 const chai = require("chai");
 var expect = chai.expect;
 const chaiHttp = require("chai-http");
+let util = require('../util');
 
 chai.use(chaiHttp);
 
@@ -35,8 +35,6 @@ describe('测试关于培训的RESTful API',function() {
 
 
         request.post(`/login`).send({"username":"test","password":"123456"}).then((resUser)=> {
-
-            //console.log(resUser.body);
              request.post(`/v1/training`).send(t).then(res=>{
                  expect(res).to.have.status(200);
                  expect(res.body).to.be.an("object", "返回对象");
@@ -44,8 +42,6 @@ describe('测试关于培训的RESTful API',function() {
                  expect(res.body).haveOwnProperty("message");
                  expect(res.body).haveOwnProperty("result");
                  assert.equal(res.body.result.title,'测试Restful API新增','测试保存的title是否正确');
-
-
                  return res;
 
             }).then(function(res0){
@@ -78,6 +74,60 @@ describe('测试关于培训的RESTful API',function() {
                      expect(res.body).haveOwnProperty("result");
                      assert.equal(res.body.result,0,'测试当天无培训');
 
+                     return res0;
+                 }).catch(e=>{
+                     done(e);
+                 })
+             }).then(function(res0){
+                 let tid= res0.body.result.objectId;
+
+                 let t={
+                     objectId:tid
+                 };
+                 return request.post(`/v1/training/plan`).send(t).then(res=>{
+                     expect(res).to.have.status(200);
+                     expect(res.body).to.be.an("object", "返回对象");
+                     expect(res.body).haveOwnProperty("code");
+                     expect(res.body).haveOwnProperty("message");
+                     assert.equal(res.body.code,util.ERROR.PARAMETER_MISSING.errorCode,'测试没有填写培训日期时报错');
+                     assert.equal(res.body.message,'培训时间不可为空','测试没有填写培训日期时报错');
+
+                     return res0;
+                 }).catch(e=>{
+                     done(e);
+                 })
+
+             }).then(res0=>{
+                 let tid= res0.body.result.objectId;
+
+                 let t={
+                     objectId:tid,
+                     trainDate:'2011-1-1 12:00:33'
+                 };
+                 return request.post(`/v1/training/plan`).send(t).then(res=>{
+                     expect(res).to.have.status(200);
+                     expect(res.body).to.be.an("object", "返回对象");
+                     expect(res.body).haveOwnProperty("code");
+                     expect(res.body).haveOwnProperty("message");
+                     assert.equal(res.body.code,util.ERROR.PARAMETER_IS_NOT_CORRECT.errorCode,'测试培训时间已经过去');
+                     return res0;
+                 }).catch(e=>{
+                     done(e);
+                 })
+             }).then(res0=>{
+                 let tid= res0.body.result.objectId;
+
+                 let t={
+                     objectId:tid,
+                     trainDate:'2018-12-12 12:00:33'
+                 };
+                 return request.post(`/v1/training/plan`).send(t).then(res=>{
+                     expect(res).to.have.status(200);
+                     expect(res.body).to.be.an("object", "返回对象");
+                     expect(res.body).haveOwnProperty("code");
+                     expect(res.body).haveOwnProperty("message");
+                     expect(res.body).haveOwnProperty("result");
+                     assert.equal(res.body.code,0,'培训安排测试成功');
                      return res0;
                  }).catch(e=>{
                      done(e);

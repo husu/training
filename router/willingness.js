@@ -21,6 +21,9 @@ router.get('/list',function(req,res){
         status:util.TRAININGSTATUS.WILLINGNESS
     };
 
+
+
+
     ts.list(params,page,pageSize).then(function(list){
         var wilingList =  _.map(list,o=>{
             var user  = o.get('creator');
@@ -73,8 +76,6 @@ router.post('/',function(req,res){
     }
 
     trainObj.status=util.TRAININGSTATUS.WILLINGNESS;
-
-
 
 
     trainObj.creator = req.currentUser;

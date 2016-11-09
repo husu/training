@@ -190,22 +190,24 @@ router.post("/plan",function(req,res){
         return res.send(result);
     }
 
-    ts.get(trainObj.objectId).then(t=>{
+    trainObj.status=util.TRAININGSTATUS.TRAINING;
+    trainObj.creator = req.currentUser;
 
-
-        t.trainDate =  trainObj.trainDate;
-        t.status=util.TRAININGSTATUS.TRAINING;
-        t.creator = req.currentUser;
-
-        return ts.save(t).then(function(obj){
-            result ={
-                code:0,
-                message:'保存成功',
-                result:obj
-            };
-            return res.send(result);
-        });
-
+    return ts.save(trainObj).then(function(obj){
+        result ={
+            code:0,
+            message:'保存成功',
+            result:obj
+        };
+        return res.send(result);
+    }).catch(e=>{
+        result ={
+            code:util.ERROR.INTERNAL_ERROR.errorCode,
+            message:'保存失败',
+            errors:[e]
+        };
+        console.log(e);
+        return res.send(result);
     });
 
 
