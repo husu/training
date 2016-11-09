@@ -20,7 +20,7 @@ function selectPage(url,pages,that,elem){
     if(that.html()=="下一页"){
         pages.page+=1;
         $.get(url,pages, function (data) {
-            if(data.result.length!=0){
+            if(data.result.length){
                 that.prev().show();
                 updateList(data.result,elem);
                 data.result.length<6&&that.hide();
@@ -29,8 +29,10 @@ function selectPage(url,pages,that,elem){
     }else {
         pages.page -= 1;
         $.get(url,pages, function (data) {
-            updateList(data.result,elem);
-            that.next().show();
+            if(data.result){
+                updateList(data.result,elem);
+                that.next().show();
+            }
         });
         if (pages.page==1) {that.hide();}
     }

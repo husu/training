@@ -5,14 +5,18 @@ var pagesTrain={page:1,pageSize:6};//获取列表
 $(function(){
     if(username){
         $('nav a:last').html(username);
+        $.get('v1/training/list',pagesTrain,function(data){
+            if(data.result) {
+                updateList(data.result, $('#courses .train_list'));
+                if (data.result.length >= 6) {
+                    $('#courses>p').show();
+                }
+            }
+        });
         setTimeout(function(){
             $('header').slideUp(500);
         },1500);
     }else{$('.modal').show();}
-    $.get('v1/training/list',pagesTrain,function(data){
-        updateList(data.result,$('#courses .train_list'));
-        if(data.length<6){$('.courses>p').hide();}
-    });
     //登录验证
     $('#login input[type="submit"]').click(function(e){
         e.preventDefault();
@@ -23,8 +27,10 @@ $(function(){
                 $('.modal').fadeOut('slow');
                 $('nav a:last').html(data.result.username);
                 $.get('v1/training/list',pagesTrain,function(data){
-                    updateList(data.result,$('#courses .train_list'));
-                    if(data.length<6){$('.courses>p').hide();}
+                    if(data.resutl){
+                        updateList(data.result,$('#courses .train_list'));
+                        if(data.result.length>=6){$('#courses>p').show();}
+                    }
                 });
                 setTimeout(function(){
                     $('header').slideUp(500);

@@ -21,22 +21,22 @@ section{height:90%;}
 .main dt{margin:10px auto;}
 .main dd{text-align: left;padding-left:60px;margin-top:20px;}
 .main dl dd:nth-child(2){font-weight: bold;}
-.pages a{background:#f7f7f7;margin:20px;border:1px solid #aaa;padding:8px 15px;font-weight:bold; font-size:14px;}
-.pages a:hover{background:#fff;}
+.pages a{background:#36aed5;margin:20px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;color:#fff;}
+.pages a:hover{background:#049ACB;}
 .main dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
 .main dt{margin:10px auto;}
 .main dd{text-align: left;padding-left:60px;margin-top:20px;}
 .main dl dd:nth-child(2){font-weight: bold;}
 /*新增培新需求*/
-.modal-content>p{position: absolute;bottom:10px;right:40px;color:red;}
+.modal-content>p{position: absolute;bottom:10px;right:40px;color:#FF6100;font-size:12px;}
 .default_img{position:absolute;left:0;bottom:26.5%;width:100%;padding:10px;overflow:auto;z-index: 100;background:#fff;
     border-bottom:1px solid #049ACB;height:70%;border-radius:4px;}
 .default_img img{float:left;width:40%;margin:20px;margin-left:35px;border:2px solid #ddd;cursor: pointer;}
 #add{padding-top:10px;}
-#add input,#add button,#add select{width:100%;display:block;padding:10Px;border-radius:4px;border:1px solid #049ACB;font-size:14px;margin-bottom:20px;}
+#add input,#add select{width:100%;display:block;padding:10Px;border-radius:4px;border:1px solid #049ACB;font-size:14px;margin-bottom:20px;}
 #add select{height:39px;background:#fff;}
-#add button{font-weight: bold;border:0;}
-#add button:last-child{margin-bottom:5px;}
+#add input[type='button'],#add input[type='submit']{font-weight: bold;border:none;}
+#add input[type='submit']{margin-bottom:5px;}
 #add .smImg{margin:10px 0;margin-top:-30px;}
 #add .smImg #select{width:20%;display:inline-block;}
 *#add .smImg img{position:relative;top:25px;left:60px;height:80px;border:1px solid #333;}

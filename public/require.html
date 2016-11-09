@@ -19,21 +19,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="add">
-                <input type="text" name="title" placeholder="请输入培训课题"/>
+                <input type="text" name="title" placeholder="请输入想将或想听的课程"/>
                 <select name="tags">
                     <option value="java">java</option>
                     <option value="android">android</option>
                     <option value="ios">ios</option>
+                    <option value="python">python</option>
+                    <option value="nodeJs">nodeJs</option>
+                    <option value="weixin">微信开发</option>
                     <option value="gitHub">gitHub</option>
                     <option value="test">test</option>
                     <option value="projectManagement">projectManagement</option>
-                    <option value="python">python</option>
-                    <option value="nodeJs">nodeJs</option>
                 </select>
-                <textarea name="content" placeholder="请输入培训内容。。。。"></textarea>
+                <textarea name="content" placeholder="请输入内容。。。。"></textarea>
                 <input type="hidden" name="imgURL"/>
-                <div class="smImg"><button id="select">选择图片</button><img src="imgs/default_course.png"></div>
-                <button>提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交</button>
+                <div class="smImg"><input type="button" id="select" value="选择图片"><img src="imgs/default_course.png"></div>
+                <input type="submit" value="提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交">
             </form>
             <div class="default_img hide">
                 <img src="imgs/ios.png" alt="ios"/>
@@ -55,20 +56,20 @@
             <a href="#">我&nbsp;要&nbsp;讲</a><a href="#">我&nbsp;想&nbsp;听</a>
         </p>
         <div class="list">
-            <div class="willing">
+            <div class="willing hide">
                 <p>谁要讲</p>
                 <div></div>
-                <p class="pages text-center">
+                <p class="pages text-center hide">
                     <a href="#" class="hide">上一页</a>
-                    <a href="#" class="hide">下一页</a>
+                    <a href="#" >下一页</a>
                 </p>
             </div>
-            <div class="require">
+            <div class="require hide">
                 <p>想听啥</p>
                 <div></div>
-                <p class="pages text-center">
+                <p class="pages text-center hide">
                     <a href="#" class="hide">上一页</a>
-                    <a href="#" class="hide">下一页</a>
+                    <a href="#" >下一页</a>
                 </p>
             </div>
         </div>
