@@ -5,6 +5,7 @@
 var router = require('express').Router();
 var ts = require('../service/trainingService');
 var util =  require('../util');
+var _= require('lodash');
 
 
 /**
