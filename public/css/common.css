@@ -18,6 +18,8 @@ nav a{font-size:20px;color:#fff;line-height:70px;font-weight: bold;}
 nav a:last-child{float:right;}
 /*底部*/
 footer{padding:20px;text-align: center;background: #ddd;color:#4E585B;}
+dl{height:360px;}
+dl img{border:1px solid #ddd;}
 footer p{margin:6px 0;}
 input,button,select,textarea{outline:none;}
 input{background:#fff;}

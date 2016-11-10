@@ -6,7 +6,7 @@ $(function(){
     if(username){
         $('nav a:last').html(username);
         $.get('v1/training/list',pagesTrain,function(data){
-            if(data.result) {
+            if(data.result.length||data.result) {
                 updateList(data.result, $('#courses .train_list'));
                 if (data.result.length >= 6) {
                     $('#courses>p').show();
@@ -27,7 +27,7 @@ $(function(){
                 $('.modal').fadeOut('slow');
                 $('nav a:last').html(data.result.username);
                 $.get('v1/training/list',pagesTrain,function(data){
-                    if(data.resutl){
+                    if(data.result.length||data.result){
                         updateList(data.result,$('#courses .train_list'));
                         if(data.result.length>=6){$('#courses>p').show();}
                     }
@@ -59,5 +59,6 @@ $(function(){
     //培训详情的跳转
     $('.train_list').on('click','a',function(){
         window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
+        window.sessionStorage.removeItem('assign');
     });
 });

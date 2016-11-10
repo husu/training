@@ -6,6 +6,7 @@
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="css/detail_train.css"/>
+    <link rel="stylesheet" href="skin/jedate.css">
 </head>
 <body>
 <nav>
@@ -17,7 +18,15 @@
 <section>
     <div class="main">
         <div class="detail">
-            <p><a href="#">点赞<b></b></a><a href="#">评论<b></b></a></p>
+            <p>
+                <a href="#">点赞<b></b></a>
+                <a href="#">评论<b></b></a>
+                <span id="train_assign" class="rt">
+                    <span>选择培训时间:</span>
+                    <input type="text" id="date" placeholder="请选择培训时间">
+                    <button id="confirm" class="btn-disable">安排培训</button>
+                </span>
+            </p>
         </div>
         <div class="comment"><p><a href="">查看更多评论</a></p></div>
         <div class="replay">
@@ -33,6 +42,7 @@
     <p><span>Copyright 2016 &copy;parsec.com</span><a href="http://www.miitbeian.gov.cn/" style="margin-left:20px;display:inline-block;border:none;" target="_blank">渝ICP备13005505号</a></p>
 </footer>
 <script src="js/common.js"></script>
+<script src="skin/jquery.jedate.js"></script>
 <script src="js/detail_train.js"></script>
 </body>
 </html>

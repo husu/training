@@ -11,8 +11,8 @@ function updateDetail(res){
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
                 <h3>${res.title}</h3>
-                <p>主讲人：${res.creator.username}&nbsp;&nbsp;培训时间：${preTime(res.trainDate,true)}</p>
-                <p>${res.content}</p>
+                <p>主讲人：${res.creator.username}&nbsp;&nbsp;时间：${preTime(res.trainDate||res.createdAt,true)}</p>
+                <div>${res.content}</div>
             </div>
         </div>
     `);
@@ -42,15 +42,47 @@ $(function(){
     username=window.sessionStorage.getItem('parsec_user');
     username&&$('nav a:last').html(username);
     trainId=window.sessionStorage.getItem('train_id');
+    if(window.sessionStorage.getItem('assign')){
+        $('#date').jeDate({
+            skinCell:"jedateblue",
+            format: 'YYYY-MM-DD hh:mm',
+            isinitVal:'2016-10-1 09:00',
+            minDate:$.nowDate(0),
+            isTime:true,
+            choosefun:function (inp,val) {
+                $.get('v1/training/trainByTime',{trainDate:val+':00'},function(data){
+                    if(!data.result){
+                        var plan={objectId:trainId,trainDate:val+':00'};
+                        $('#date').prev().html('');
+                        $('#confirm').removeClass('btn-disable').click(function(e){
+                            e.preventDefault();
+                            var that=$(this);
+                            $.post('/v1/training/plan',plan,function(data){
+                                if(data.result){
+                                    $('#date').prev().html('安排成功');
+                                    that.addClass('btn-disable');
+                                }
+                            });
+                        });
+                    }else{$('#date').prev().html('该时间已有培训')}
+                });
+            }
+        });
+        $('#train_assign').show();
+    }
     $.get(`v1/training/detail/${trainId}`,function(data){
         var res=data.result;
-        updateDetail(res);
-        $('.detail a:first').find('b').html(res.thumbUpNum);
-        $('.detail a:last').find('b').html(res.commentNum);
+        if(res.length||res){
+            updateDetail(res);
+            $('.detail a:first').find('b').html(res.thumbUpNum);
+            $('.detail a:last').find('b').html(res.commentNum);
+        }
     });
     $.get(`v1/comments/list/${trainId}`,comments,function(data){
-        updateComment(data.result);
-        data.result.length<6&&$('.comment>p').hide();
+        if(data.result){
+            updateComment(data.result);
+            data.result.length<6&&$('.comment>p').hide();
+        }
     });
     $.get(`v1/thumbUp/${trainId}`,function(data){
         data.result||$('.detail a:first').addClass('a-disable');
@@ -60,8 +92,10 @@ $(function(){
         e.preventDefault();
         comments.page+=1;
         $.get(`v1/comments/list/${trainId}`,comments,function(data){
-            updateComment(data.result);
-            data.result.length<6&&$('.comment>p a').addClass('b-disable').html('没有更多评论');
+            if(data.result.length||data.result){
+                updateComment(data.result);
+                data.result.length<6&&$('.comment>p a').addClass('b-disable').html('没有更多评论');
+            }
         });
     });
     //点赞
@@ -69,8 +103,10 @@ $(function(){
         e.preventDefault();
         var that=$(this);
         $.post(`v1/thumbUp/${trainId}`,function (data) {
+            if(data.result) {
                 that.addClass('a-disable praise');
-                that.find('b').html(parseInt(that.find('b').html())+1);
+                that.find('b').html(parseInt(that.find('b').html()) + 1);
+            }
         });
     });
     //评论或回复
