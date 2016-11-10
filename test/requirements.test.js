@@ -15,7 +15,7 @@ const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 
 
-describe.skip('测试培训需求的 RESTful API',function() {
+describe('测试培训需求的 RESTful API',function() {
     const request = chai.request.agent('http://localhost:3261');
     before(function(){
         return request.post(`/login`).send({"username":"test","password":"123456"}).then(()=> {
@@ -33,7 +33,7 @@ describe.skip('测试培训需求的 RESTful API',function() {
             tag: ['test111'],
             author:user
         };
-        request.post(`/v1/requirements`).send(t).then(res=>{
+        return request.post(`/v1/requirements`).send(t).then(res=>{
             expect(res).to.have.status(200);
             expect(res.body).to.be.an("object", "返回对象");
             expect(res.body).haveOwnProperty("code");
@@ -43,6 +43,21 @@ describe.skip('测试培训需求的 RESTful API',function() {
 
             assert.ok(res.body.result.objectId,"测试新增后是否有ObjectId");
             return res;
+        }).then(function(res){
+            let t = {
+                page:1,
+                pageSize:6
+            };
+            let tid= res.body.result.objectId;
+            return request.get(`/v1/training/${tid}`).send(t).then(res1=>{
+                expect(res1.body).haveOwnProperty("code");
+                expect(res1.body).haveOwnProperty("message");
+                expect(res1.body.code).to.be.equal(0,'测试是否返回删除成功的状态值');
+                expect(res1.body.result).to.be.above(0,'测试列表是否大于0');
+                return res;
+            }).catch(e1=>{
+                done(e1);
+            });
         }).then(function(res){
             let tid= res.body.result.objectId;
             request.delete(`/v1/training/${tid}`).then(res1=>{
