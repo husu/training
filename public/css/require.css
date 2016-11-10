@@ -12,21 +12,17 @@
 .main>p a,.main>div p:first-child{margin:0 100px;border-radius:5px;padding:15px 30px;background:#36aed5;color:#fff;font-size: 20px;font-weight: bold; }
 .main>p a:hover{background:#049ACB;}
 .main .list{border-top:1px solid #ddd;padding-top:20px;}
-.main .list>div{padding:20px;overflow:hidden;}
+.main .list>div{padding:20px;}
+.main .list>div>div{overflow:hidden;}
 .main .list>div p:first-child{font-size:16px;padding:12px 10px;margin:0;margin-bottom:20px;}
-.main .list>div p:last-child{margin-top:10px;}
+.main .list>div p:last-child{margin-top:30px;}
 /*列表*/
-section{height:90%;}
 .main dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
 .main dt{margin:10px auto;}
 .main dd{text-align: left;padding-left:60px;margin-top:20px;}
 .main dl dd:nth-child(2){font-weight: bold;}
 .pages a{background:#36aed5;margin:20px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;color:#fff;}
 .pages a:hover{background:#049ACB;}
-.main dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
-.main dt{margin:10px auto;}
-.main dd{text-align: left;padding-left:60px;margin-top:20px;}
-.main dl dd:nth-child(2){font-weight: bold;}
 /*新增培新需求*/
 .modal-content>p{position: absolute;bottom:10px;right:40px;color:#FF6100;font-size:12px;}
 .default_img{position:absolute;left:0;bottom:26.5%;width:100%;padding:10px;overflow:auto;z-index: 100;background:#fff;

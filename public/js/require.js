@@ -3,24 +3,28 @@
  */
 var pagesWilling={page:1,pageSize:6};
 var pagesRequire={page:1,pageSize:6};
+var createUrl=null;//创建培训意愿或需求的请求url
 $(function () {
     $.get('v1/willingness/list',pagesWilling,function(data){
-        if(data.result){
-            updateList(data.result,$('.willing>div'));
+        if(data.result.length){
+            updateList(data.result,$('.willing>div'),1);
             if(data.result.length>=6){$('.willing>p:last').show();}
             $('.willing').show();
         }
     });
     $.get('v1/requirements/list',pagesRequire,function(data){
-        if(data.result){
-            updateList(data.result,$('.require>div'));
-            if(data.result.length>=6){$('.require>p:last').show();}
+        if(data.result.length){
+            updateList(data.result,$('.require>div'),2);
+            if(data.result.length>=6){
+                $('.require>p:last').show();
+            }
             $('.require').show();
         }
     });
     //创建培训需求
     $('.main>p>a').click(function(e){
             e.preventDefault();
+            createUrl=$(this).html()=='我&nbsp;要&nbsp;讲'?'v1/willingness':'v1/requirements';
             $('.add_train').fadeIn('slow');
             $('.default_img').hide();
             $('.modal-content>p').hide();
@@ -43,7 +47,7 @@ $(function () {
     $('.add_train input:last').click(function (e) {
         e.preventDefault();
         var res=$('#add').serialize();
-        $.post('v1/willingness',res, function (data) {
+        $.post(createUrl,res, function (data) {
             if(!data.code){ $('.add_train').fadeOut();}else{$('.modal-content>p').html(data.errors).show();}
         });
     });
@@ -53,14 +57,15 @@ $(function () {
     $('.pages a').click(function (e) {
         e.stopPropagation();
         e.preventDefault();
-        if($(this).parent().parent().attr('class')=='willing'){
-            selectPage('v1/willingness/list',pagesWilling,$(this),$('.willing>div'));
+        if($(this).parent().parent().hasClass('willing')){
+            selectPage('v1/willingness/list',pagesWilling,$(this),$('.willing>div'),1);
         }else{
-            selectPage('v1/requirements/list',pagesRequire,$(this),$('.require>div'));
+            selectPage('v1/requirements/list',pagesRequire,$(this),$('.require>div'),2);
         }
     });
     //意愿需求详情
     $('.willing>div,.require>div').on('click','a',function(){
         $(this).attr('data-id')&&window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
+        window.sessionStorage.setItem('assign',true);
     });
 });

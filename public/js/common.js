@@ -16,7 +16,7 @@ function preTime(t,f){
     return f?(year+'年'+month+'月'+date+'日\t\t'+hours+':'+minute):(year+'-'+month+'-'+date+'\t\t'+hours+':'+minute);
 }
 //分页查询
-function selectPage(url,pages,that,elem){
+function selectPage(url,pages,that,elem){//that-按钮,elem-列表父元素,tags:1-willing,2-require,
     if(that.html()=="下一页"){
         pages.page+=1;
         $.get(url,pages, function (data) {
@@ -29,7 +29,7 @@ function selectPage(url,pages,that,elem){
     }else {
         pages.page -= 1;
         $.get(url,pages, function (data) {
-            if(data.result){
+            if(data.result.length){
                 updateList(data.result,elem);
                 that.next().show();
             }
@@ -38,16 +38,26 @@ function selectPage(url,pages,that,elem){
     }
 }
 //更新查询列表
-function updateList(list,jq){
+function updateList(list,jq,tags){//list:列表,jq:父元素,tags:1-willing,2-require,
     var frag=document.createDocumentFragment();
+    var userClass='';
+    var timeClass='';
+    switch(tags){
+        case 1 :
+            userClass='主讲人：';timeClass='创建时间：';break;
+        case 2:
+            userClass='创建人：';timeClass='创建时间：';break;
+        default:
+            userClass='主讲人：';timeClass='时间：';break;
+    }
     for(var i in list){
-        var time=preTime(list[i].trainDate,true);
+        var time=preTime(list[i].trainDate||list[i].createdAt,true);
         $(frag).append(`
             <dl>
                 <dt><a href="detail_train.html" data-id="${list[i].objectId}"><img src="${list[i].imgURL||'../imgs/default_course.png'}"/><\/a><\/dt>
                 <dd>${list[i].title}</dd>
-                ${time?('<dd>时间：'+time+'</dd>'):""}
-                ${list[i].creator.username?('<dd>主讲：'+list[i].creator.username+'</dd>'):""}
+                <dd>${timeClass+time}</dd>
+                <dd>${userClass+list[i].creator.username}</dd>
             </dl>
         `);
     }

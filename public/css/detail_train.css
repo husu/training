@@ -6,13 +6,17 @@
 .detail .rt{width:64%; }
 .detail .rt p{margin:10px 0;font-size:18px;}
 .detail>p{padding:20px 0;}
-.detail>p a{color:#333;padding:8px 7px;padding-left:50px;border:1px solid #ddd;display:inline-block;margin-right:80px;border-radius:4px;background:url('../imgs/login_small.png') no-repeat 7px -136px;}
-.detail>p a:last-child{background:url('../imgs/login_small.png') no-repeat 7px -102px;}
+.detail>p a{color:#333;padding:8px 7px;padding-left:60px;border:1px solid #ddd;display:inline-block;border-radius:4px;background:url('../imgs/login_small.png') no-repeat 7px -136px;}
+.detail>p a:nth-child(2){background:url('../imgs/login_small.png') no-repeat 7px -102px;margin-left:80px;}
 .detail>p a b{display:inline-block;margin:0 10px;}
+.detail #train_assign{display:none;overflow: hidden;width:50%; text-align:right;}
+.detail #train_assign button{width:120px;height:37px;border-radius:4px;font-size:16px;}
+.detail #date{width:180px;height:35px;margin-right:10px;font-size:14px;border:1px solid #049ACB;padding:10px 10px;background:url('../imgs/date.png') no-repeat center right;}
 .praise{background:url('../imgs/login_small.png') no-repeat 7px -168px #f7f7f7 !important; }
-/*a标签禁用*/
+/*a,button标签禁用*/
 .a-disable{ pointer-events: none;cursor:default;background-color:#f7f7f7 !important;}
 .b-disable{ pointer-events: none;cursor:default;}
+.btn-disable{pointer-events: none;cursor:default;background-color:#f7f7f7;color:#aaa;border:1px solid #ddd; }
 /*评论列表*/
 .comment>div{padding:20px;padding-right:0;border-top:1px solid #ddd;overflow: hidden;}
 .comment>p{text-align:center;}
