@@ -41,6 +41,7 @@ describe('测试关于培训的RESTful API',function() {
                  expect(res.body).haveOwnProperty("code");
                  expect(res.body).haveOwnProperty("message");
                  expect(res.body).haveOwnProperty("result");
+                 expect(res.body.result.status).to.equal(util.TRAININGSTATUS.TRAINING,'测试');
                  assert.equal(res.body.result.title,'测试Restful API新增','测试保存的title是否正确');
                  return res;
 
