@@ -1,26 +1,17 @@
-.modal {position: fixed;left: 0;right: 0;top: 0;bottom: 0;background: rgba(0,0,0, .7);  z-index: 999;}
-.modal-dialog {position: absolute;top:20%;left:50%;
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
-}
-.modal-content{padding:30px;border-radius: 4px;z-index:10;background:#fff;width:700px;}
-.main{width:1200px;background:#fff;margin:0 auto;padding:10px 0 20px;}
-.main>p{text-align: center; padding:40px;padding-bottom:50px;}
-.main>p a,.main>div p:first-child{margin:0 100px;border-radius:5px;padding:15px 30px;background:#36aed5;color:#fff;font-size: 20px;font-weight: bold; }
-.main>p a:hover{background:#049ACB;}
-.main .list{border-top:1px solid #ddd;padding-top:20px;}
-.main .list>div{padding:20px;}
-.main .list>div>div{overflow:hidden;}
-.main .list>div p:first-child{font-size:16px;padding:12px 10px;margin:0;margin-bottom:20px;}
-.main .list>div p:last-child{margin-top:30px;}
+#require{width:1200px;background:#fff;margin:0 auto;padding:10px 0 20px;}
+#require>p{text-align: center; padding:40px;padding-bottom:50px;}
+#require>p a,#require>div p:first-child{margin:0 100px;border-radius:5px;padding:15px 30px;background:#36aed5;color:#fff;font-size: 20px;font-weight: bold; }
+#require>p a:hover{background:#049ACB;}
+#require .list{border-top:1px solid #ddd;padding-top:20px;}
+#require .list>div{padding:20px;}
+#require .list>div>div{overflow:hidden;}
+#require .list>div p:first-child{font-size:16px;padding:12px 10px;margin:0;margin-bottom:20px;}
+#require .list>div p:last-child{margin-top:30px;}
 /*列表*/
-.main dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
-.main dt{margin:10px auto;}
-.main dd{text-align: left;padding-left:60px;margin-top:20px;}
-.main dl dd:nth-child(2){font-weight: bold;}
+#require dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
+#require dt{margin:10px auto;}
+#require dd{text-align: left;padding-left:60px;margin-top:20px;}
+#require dl dd:nth-child(2){font-weight: bold;}
 .pages a{background:#36aed5;margin:20px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;color:#fff;}
 .pages a:hover{background:#049ACB;}
 /*新增培新需求*/
@@ -35,5 +26,5 @@
 #add input[type='submit']{margin-bottom:5px;}
 #add .smImg{margin:10px 0;margin-top:-30px;}
 #add .smImg #select{width:20%;display:inline-block;}
-*#add .smImg img{position:relative;top:25px;left:60px;height:80px;border:1px solid #333;}
+#add .smImg img{position:relative;top:25px;left:60px;height:80px;border:1px solid #333;}
 #add textarea{width:100%;height:200px;font-size:14px;padding:10px;resize:none;border-radius:4px;margin-bottom:20px;border:1px solid #049ACB;}

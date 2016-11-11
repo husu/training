@@ -52,7 +52,7 @@ function updateList(list,jq,tags){//list:列表,jq:父元素,tags:1-willing,2-re
         var time=preTime(list[i].trainDate||list[i].createdAt,true);
         $(frag).append(`
             <dl>
-                <dt><a href="data/detail_train.html" data-id="${list[i].objectId}"><img src="${list[i].imgURL||'../imgs/default_course.png'}"/><\/a><\/dt>
+                <dt><a href="data/detail.html" data-id="${list[i].objectId}"><img src="${list[i].imgURL||'../imgs/default_course.png'}"/><\/a><\/dt>
                 <dd>${list[i].title}</dd>
                 <dd>${timeClass+time}</dd>
                 <dd>${userClass+list[i].creator.username}</dd>

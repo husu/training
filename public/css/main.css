@@ -1,5 +1,5 @@
 /*主体.教你做人、、*/
-.main{width:1200px;margin:0 auto;padding:10px 0 50px;}
+#main{width:1200px;margin:0 auto;padding:10px 0 50px;}
 #courses .train_list{overflow:hidden;height:770px;}
 #courses dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
 #courses dt{margin:10px auto;}
