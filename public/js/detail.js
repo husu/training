@@ -75,7 +75,10 @@ $(function(){
                                 }
                             });
                         });
-                    }else{$('#date').prev().html('该时间已有培训').removeClass().addClass('err')}
+                    }else{
+                        $('#date').prev().html('该时间已有培训').removeClass().addClass('err');
+                        $('#confirm').addClass('btn-disable');
+                    }
                 });
             }
         });
