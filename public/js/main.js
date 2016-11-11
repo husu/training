@@ -22,6 +22,6 @@ $(function(){
         e.preventDefault();
         window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
         window.sessionStorage.removeItem('assign');
-        $('.content').load($(this).attr('href'));
+        $('.content').empty().load($(this).attr('href'));
     });
 });

@@ -61,7 +61,6 @@ function updateList(list,jq,tags){//list:列表,jq:父元素,tags:1-willing,2-re
     }
     jq.html(frag);
 }
-
 $(function(){
     if(username){
         $('nav a:last').html(username);

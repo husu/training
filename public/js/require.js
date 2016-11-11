@@ -73,6 +73,6 @@ $(function () {
         }else{
             window.sessionStorage.setItem('assign','2');
         }
-        $('.content').load($(this).attr('href'));
+        $('.content').empty().load($(this).attr('href'));
     });
 });
