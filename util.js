@@ -51,7 +51,7 @@ util.copyProperty=  function(avObject,object){
     let  curValue;
 
     for(let p in object){
-        if(p && object[p]) {
+        if(p && object[p]!=undefined && object[p] != null) {
 
             curValue = object[p];
 
