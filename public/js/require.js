@@ -29,6 +29,7 @@ $(function () {
             $('.default_img').hide();
             $('.modal-content>p').hide();
             $('#select').val('选择图片');
+            $('#add')[0].reset();
         }
     );
     //选择图片
@@ -64,8 +65,11 @@ $(function () {
         }
     });
     //意愿需求详情
-    $('.willing>div,.require>div').on('click','a',function(){
+    $('.willing>div').on('click','a',function(){
         $(this).attr('data-id')&&window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
-        window.sessionStorage.setItem('assign',true);
+        window.sessionStorage.setItem('assign','1');
+    }).siblings('.require>div').on('click','a',function(){
+        $(this).attr('data-id')&&window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
+        window.sessionStorage.setItem('assign','2');
     });
 });

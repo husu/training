@@ -10,6 +10,8 @@ a{text-decoration:none;color:#777;}
 .text-center{text-align:center;}
 .hide{display:none;}
 .show{display:block;}
+.succ{color:green;}
+.err{color:#FF6100;}
 /*头部*/
 .main{background:#fff;height:100%;}
 nav p{width:1200px;margin:0 auto;max-width:100%;padding:0 15px;}

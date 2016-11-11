@@ -9,7 +9,7 @@
 }
 .modal-content {background:#fff;  border: 1px solid #aaa;  border-radius: 3px;  box-shadow: 0 0 5px #aaa;  padding:20px 15px 10px;}
 .modal-content h2{color:#049ACB;}
-.msg_login{height:15px;padding-right:40px;font-size:12px;text-align:right;color:#FF6100}
+.msg_login{height:15px;padding-right:40px;font-size:12px;text-align:right;color:#FF6100;}
 #login{margin:15px 30px; }
 #login input{display:block;width:300px;border:1px solid #049ACB;border-radius:4px;padding:10px 5px;font-size:14px;margin-bottom:25px;}
 #login input:not([type='submit']){padding-left:50px;background:url(../imgs/login_small.png) no-repeat 10px 6px;}

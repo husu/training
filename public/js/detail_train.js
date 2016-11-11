@@ -5,13 +5,25 @@ var resname=null;//回复谁的评论
 var comments={page:1,pageSize:6};//查看更多评论
 var replay={content:"",replayWho:""};//评论参数
 //update detail
-function updateDetail(res){
+function updateDetail(res,tags){
+    var userClass='';
+    var timeClass='';
+    var time=preTime(res.trainDate||res.createdAt,true);
+    switch(tags){
+        case '1' :
+            userClass='主讲人：';timeClass='创建时间：';break;
+        case '2':
+            userClass='创建人：';timeClass='创建时间：';break;
+        default:
+            userClass='主讲人：';timeClass='培训时间：';break;
+    }
     $('.detail').prepend(`
         <div>
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
                 <h3>${res.title}</h3>
-                <p>主讲人：${res.creator.username}&nbsp;&nbsp;时间：${preTime(res.trainDate||res.createdAt,true)}</p>
+                <p>${userClass+res.creator.username}</p>
+                <p>${timeClass+time}</p>
                 <div>${res.content}</div>
             </div>
         </div>
@@ -42,7 +54,8 @@ $(function(){
     username=window.sessionStorage.getItem('parsec_user');
     username&&$('nav a:last').html(username);
     trainId=window.sessionStorage.getItem('train_id');
-    if(window.sessionStorage.getItem('assign')){
+    var tags=window.sessionStorage.getItem('assign');
+    if(tags){
         $('#date').jeDate({
             skinCell:"jedateblue",
             format: 'YYYY-MM-DD hh:mm',
@@ -59,12 +72,12 @@ $(function(){
                             var that=$(this);
                             $.post('/v1/training/plan',plan,function(data){
                                 if(data.result){
-                                    $('#date').prev().html('安排成功');
+                                    $('#date').prev().html('安排成功').removeClass().addClass('succ');
                                     that.addClass('btn-disable');
                                 }
                             });
                         });
-                    }else{$('#date').prev().html('该时间已有培训')}
+                    }else{$('#date').prev().html('该时间已有培训').removeClass().addClass('err')}
                 });
             }
         });
@@ -73,7 +86,7 @@ $(function(){
     $.get(`v1/training/detail/${trainId}`,function(data){
         var res=data.result;
         if(res.length||res){
-            updateDetail(res);
+            updateDetail(res,tags);
             $('.detail a:first').find('b').html(res.thumbUpNum);
             $('.detail a:last').find('b').html(res.commentNum);
         }
