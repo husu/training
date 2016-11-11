@@ -39,11 +39,11 @@ function updateComment(list){
            <div>
             <img src="../imgs/user.png" alt=""/>
             <div class="rt">
-                <p><span>${list[i].creator.username}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
+                <p><span>${list[i].creator.username||username}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
                     ${list[i].replayWho?('<li style="border-left:2px solid #ddd">'+list[i].replayWho+'</li>'):""}
                     <li>${list[i].content}</li>
-                    <li><a href="${list[i].creator.username}">回&nbsp;应</a></li>
+                    <li><a href="${list[i].creator.username||username}">回&nbsp;应</a></li>
                 </ul>
             </div>
         </div>
@@ -65,19 +65,16 @@ $(function(){
                     if(!data.result){
                         var plan={objectId:trainId,trainDate:val+':00'};
                         $('#date').prev().html('');
-                        $('#confirm').removeClass('btn-disable').click(function(e){
+                        $('#confirm').click(function(e){
                             e.preventDefault();
-                            var that=$(this);
                             $.post('/v1/training/plan',plan,function(data){
                                 if(data.result){
                                     $('#date').prev().html('安排成功').removeClass().addClass('succ');
-                                    that.addClass('btn-disable');
                                 }
                             });
                         });
                     }else{
                         $('#date').prev().html('该时间已有培训').removeClass().addClass('err');
-                        $('#confirm').addClass('btn-disable');
                     }
                 });
             }
@@ -153,11 +150,14 @@ $(function(){
         replay.content=$('#resBox').val();
         if(replay.content){
             $.post(`v1/comments/${trainId}`,replay, function (data) {
+                console.log(data);
                 reMsg(data.message);
                 $('#resBox').val("");
                 if(!data.code){
                     var elem=$('.detail b:last');elem.html(parseInt(elem.html())+1);
-                    updateComment(data.result);
+                    var list=[];
+                    list.push(data.result);
+                    updateComment(list);
                 }
             });
         }else{reMsg('回复内容不能为空')}
