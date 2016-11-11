@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>秒差距小课堂</title>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
@@ -27,31 +26,35 @@
             <a href="#">未登录</a>
         </p>
     </nav>
-    <header class="text-center">
-        <img src="imgs/big-picture.png" alt=""/>
-    </header>
     <section>
-        <ul class="tabs">
-            <li><a href="#courses"  class="active-tabs">教你做人</a></li>
-            <li><a href="require.html">资不资瓷</a></li>
-            <li><a href="#rankList">英雄榜</a></li>
-        </ul>
-        <div class="main">
-            <div id="courses">
-                <div class="train_list"></div>
-                <p class="pages text-center hide">
-                    <a href="#" class="hide">上一页</a>
-                    <a href="#">下一页</a>
-                </p>
+        <header class="text-center">
+            <img src="imgs/big-picture.png" alt=""/>
+        </header>
+        <div class="content">
+            <ul class="tabs">
+                <li><a href="data/main.html"  class="active-tabs">教你做人</a></li>
+                <li><a href="data/require.html">资不资瓷</a></li>
+                <li><a href="#rankList">英雄榜</a></li>
+            </ul>
+            <div class="module">
+                <div class="main">
+                    <div id="courses">
+                        <div class="train_list"></div>
+                        <p class="pages text-center hide">
+                            <a href="#" class="hide">上一页</a>
+                            <a href="#">下一页</a>
+                        </p>
+                    </div>
+                    <div id="rankList" class="hide">英雄榜</div>
+                </div>
             </div>
-            <div id="rankList" class="hide">英雄榜</div>
         </div>
     </section>
+
     <footer>
         <p>重庆秒差距科技公司</p>
         <p><span>Copyright 2016 &copy;parsec.com</span><a href="http://www.miitbeian.gov.cn/" style="margin-left:20px;display:inline-block;border:none;" target="_blank">渝ICP备13005505号</a></p>
     </footer>
-    <script src="js/common.js"></script>
     <script src="js/index.js"></script>
 </body>
 </html>

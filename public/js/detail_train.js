@@ -4,6 +4,8 @@
 var resname=null;//回复谁的评论
 var comments={page:1,pageSize:6};//查看更多评论
 var replay={content:"",replayWho:""};//评论参数
+var tags=window.sessionStorage.getItem('assign');//详情类别
+var trainId=window.sessionStorage.getItem('train_id');//培训id
 //update detail
 function updateDetail(res,tags){
     var userClass='';
@@ -51,10 +53,6 @@ function updateComment(list){
 }
 $(function(){
     //页面初始化
-    username=window.sessionStorage.getItem('parsec_user');
-    username&&$('nav a:last').html(username);
-    trainId=window.sessionStorage.getItem('train_id');
-    var tags=window.sessionStorage.getItem('assign');
     if(tags){
         $('#date').jeDate({
             skinCell:"jedateblue",
@@ -81,7 +79,7 @@ $(function(){
                 });
             }
         });
-        $('#train_assign').show();
+        $('#train_assign').css('display','block');
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
         var res=data.result;

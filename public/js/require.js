@@ -5,14 +5,14 @@ var pagesWilling={page:1,pageSize:6};
 var pagesRequire={page:1,pageSize:6};
 var createUrl=null;//创建培训意愿或需求的请求url
 $(function () {
-    $.get('v1/willingness/list',pagesWilling,function(data){
+    $.get('../v1/willingness/list',pagesWilling,function(data){
         if(data.result.length){
             updateList(data.result,$('.willing>div'),1);
             if(data.result.length>=6){$('.willing>p:last').show();}
             $('.willing').show();
         }
     });
-    $.get('v1/requirements/list',pagesRequire,function(data){
+    $.get('../v1/requirements/list',pagesRequire,function(data){
         if(data.result.length){
             updateList(data.result,$('.require>div'),2);
             if(data.result.length>=6){
@@ -59,17 +59,20 @@ $(function () {
         e.stopPropagation();
         e.preventDefault();
         if($(this).parent().parent().hasClass('willing')){
-            selectPage('v1/willingness/list',pagesWilling,$(this),$('.willing>div'),1);
+            selectPage('../v1/willingness/list',pagesWilling,$(this),$('.willing>div'),1);
         }else{
-            selectPage('v1/requirements/list',pagesRequire,$(this),$('.require>div'),2);
+            selectPage('../v1/requirements/list',pagesRequire,$(this),$('.require>div'),2);
         }
     });
     //意愿需求详情
-    $('.willing>div').on('click','a',function(){
+    $('.willing>div,.require>div').on('click','a',function(e){
+        e.preventDefault();
         $(this).attr('data-id')&&window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
-        window.sessionStorage.setItem('assign','1');
-    }).siblings('.require>div').on('click','a',function(){
-        $(this).attr('data-id')&&window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
-        window.sessionStorage.setItem('assign','2');
+        if($(this).parents('.willing')[0]){
+            window.sessionStorage.setItem('assign','1');
+        }else{
+            window.sessionStorage.setItem('assign','2');
+        }
+        $('.content').load($(this).attr('href'));
     });
 });

@@ -1,0 +1,9 @@
+/*主体.教你做人、、*/
+.main{width:1200px;margin:0 auto;padding:10px 0 50px;}
+#courses .train_list{overflow:hidden;height:770px;}
+#courses dl{float:left;width:33.3%;padding-top:30px;text-align: center;}
+#courses dt{margin:10px auto;}
+#courses dd{text-align: left;padding-left:60px;margin-top:20px;}
+#courses dl dd:nth-child(2){font-weight: bold;}
+.pages a{background:#36aed5;margin:20px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;color:#fff;}
+.pages a:hover{background:#049ACB;}
