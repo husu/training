@@ -160,7 +160,6 @@ describe('测试关于培训的RESTful API',function() {
                         expect(res1.body).haveOwnProperty("code");
                         expect(res1.body).haveOwnProperty("message");
                         expect(res1.body.code).to.be.equal(0,'测试是否返回删除成功的状态值');
-                        done();
                     }).catch(e1=>{
                         done(e1);
                     });
@@ -168,7 +167,18 @@ describe('测试关于培训的RESTful API',function() {
                     done(e);
                 });
 
-            }).catch(e=> {
+            }).then(res=>{
+                 request.get(`/logout`).send({}).then(resDetail=>{
+                     expect(resDetail.body).haveOwnProperty("code");
+                     expect(resDetail.body.code).to.be.equal(0,'测试是否返回查询成功的状态值');
+                     assert.equal(request.currentUser,undefined,'Test training detail creator');
+
+                     done();
+                 }).catch(e=>{
+                     done(e);
+                 })
+
+             }).catch(e=> {
                 done(e);
             });
         });

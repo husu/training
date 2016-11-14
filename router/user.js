@@ -51,5 +51,15 @@ router.post("/login",function(req,res){
 });
 
 
+// 登出账号
+router.get('/logout', function(req, res) {
+    if(req.currentUser){
+        req.currentUser.logOut();
+        res.clearCurrentUser();
+    }
+    res.send({code:0,message:'已经退出登录'});
+});
+
+
 module.exports = router;
 
