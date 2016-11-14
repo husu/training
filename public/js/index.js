@@ -13,29 +13,50 @@ function preTime(t,f){
     var minute=strTwo(time.getMinutes());
     return f?(year+'年'+month+'月'+date+'日\t\t'+hours+':'+minute):(year+'-'+month+'-'+date+'\t\t'+hours+':'+minute);
 }
-//分页查询
-function selectPage(url,pages,that,elem){//that-按钮,elem-列表父元素,tags:1-willing,2-require,
-    if(that.html()=="下一页"){
-        pages.page+=1;
-        $.get(url,pages, function (data) {
-            if(data.result.length){
-                that.prev().show();
-                updateList(data.result,elem);
-                data.result.length<6&&that.hide();
-            }else{pages.page-=1;that.hide();}
-        });
-    }else {
-        pages.page -= 1;
-        $.get(url,pages, function (data) {
-            if(data.result.length){
-                updateList(data.result,elem);
-                that.next().show();
+//分页查询//that-按钮,elem-列表父元素,fun-dom更新函数,tags:1-willing,2-require,num:列表条数
+function selectPage(url,pages,fun,jq,tags,that,num){
+    if(!that){
+        pages.page=1;
+        $.get(url,pages,function (data) {
+            if(data.result){
+                if(pages.page>1||data.result.length>=pages.pageSize){
+                    jq.siblings('.pages').show();
+                }
+                if(tags){jq.parent().show();}
+                fun(data.result,jq,tags);
             }
+
         });
-        if (pages.page==1) {that.hide();}
+        return;
     }
+    var totalPage="";
+    num&&(totalPage=Math.ceil(num/pages.pageSize));
+    if(that.html()=="下一页"){
+        $('.pages a:contains("首页"),.pages a:contains("上一页")').removeClass('a-disable');
+        pages.page+=1;
+    }else if(that.html()=="上一页") {
+        $('.pages a:contains("末页"),.pages a:contains("下一页")').removeClass('a-disable');
+        pages.page-=1;
+    }else if(that.html()=="首页"){
+        pages.page=1;
+    }else{
+        pages.page=totalPage;
+    }
+    $.get(url,pages, function (data) {
+        if(data.result.length){
+            if(pages.page==1){
+                $('.pages a:contains("首页"),.pages a:contains("上一页")').addClass('a-disable');
+                $('.pages a:contains("末页"),.pages a:contains("下一页")').removeClass('a-disable');
+            }
+            if(pages.page==totalPage||data.result.length<pages.pageSize){
+                $('.pages a:contains("末页"),.pages a:contains("下一页")').addClass('a-disable');
+                $('.pages a:contains("首页"),.pages a:contains("上一页")').removeClass('a-disable');
+            }
+            fun(data.result,jq,tags);
+        }else{pages.page-=1;}//下一页数据为空
+    });
 }
-//更新查询列表
+//更新培训查询列表
 function updateList(list,jq,tags){//list:列表,jq:父元素,tags:1-willing,2-require,
     var frag=document.createDocumentFragment();
     var userClass='';

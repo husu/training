@@ -51,5 +51,12 @@ button:hover,input[type='button']:hover,input[type='submit']:hover{background:#0
 .tabs{width:1200px;text-align:center;overflow:hidden;background:#fff;margin:30px auto;letter-spacing:6px;}
 .tabs li a{width:33.3%;float:left;padding:25px 0;font-size:18px;font-weight: bold;}
 .active-tabs{background:url('../imgs/font-bag.png') no-repeat center center;color:#fff;}
+/*分页按钮*/
+.pages a{display:inline-block;width:80px;margin:15px 5px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;}
+.a-btn{background-color:#36aed5;color:#fff;}
+.a-btn:hover{background-color:#049ACB;}
+/*a标签禁用*/
+.a-disable,.btn-disable{ pointer-events: none;cursor:default;background-color:#f7f7f7 !important;border:1px solid #ddd !important; color:#777 !important;}
+.b-disable{ pointer-events: none;cursor:default;}
 
 

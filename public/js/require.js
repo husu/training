@@ -5,22 +5,8 @@ var pagesWilling={page:1,pageSize:6};
 var pagesRequire={page:1,pageSize:6};
 var createUrl=null;//创建培训意愿或需求的请求url
 $(function () {
-    $.get('../v1/willingness/list',pagesWilling,function(data){
-        if(data.result.length){
-            updateList(data.result,$('.willing>div'),1);
-            if(data.result.length>=6){$('.willing>p:last').show();}
-            $('.willing').show();
-        }
-    });
-    $.get('../v1/requirements/list',pagesRequire,function(data){
-        if(data.result.length){
-            updateList(data.result,$('.require>div'),2);
-            if(data.result.length>=6){
-                $('.require>p:last').show();
-            }
-            $('.require').show();
-        }
-    });
+    selectPage('../v1/willingness/list',pagesWilling,updateList,$('.willing>div'),1);
+    selectPage('../v1/requirements/list',pagesRequire,updateList,$('.require>div'),2);
     //创建培训需求
     $('.main>p>a').click(function(e){
             e.preventDefault();
@@ -59,9 +45,9 @@ $(function () {
         e.stopPropagation();
         e.preventDefault();
         if($(this).parent().parent().hasClass('willing')){
-            selectPage('../v1/willingness/list',pagesWilling,$(this),$('.willing>div'),1);
+            selectPage('../v1/willingness/list',pagesWilling,updateList,$('.willing>div'),1,$(this));
         }else{
-            selectPage('../v1/requirements/list',pagesRequire,$(this),$('.require>div'),2);
+            selectPage('../v1/requirements/list',pagesRequire,updateList,$('.require>div'),2,$(this));
         }
     });
     //意愿需求详情

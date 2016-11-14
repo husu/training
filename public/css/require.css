@@ -12,8 +12,6 @@
 #require dt{margin:10px auto;}
 #require dd{text-align: left;padding-left:60px;margin-top:20px;}
 #require dl dd:nth-child(2){font-weight: bold;}
-.pages a{background:#36aed5;margin:20px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;color:#fff;}
-.pages a:hover{background:#049ACB;}
 /*新增培新需求*/
 .add_train .modal-dialog{top:18%;}
 .add_train .modal-content{width:700px;padding:20px}

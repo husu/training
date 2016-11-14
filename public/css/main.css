@@ -5,5 +5,3 @@
 #courses dt{margin:10px auto;}
 #courses dd{text-align: left;padding-left:60px;margin-top:20px;}
 #courses dl dd:nth-child(2){font-weight: bold;}
-.pages a{background:#36aed5;margin:20px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;color:#fff;}
-.pages a:hover{background:#049ACB;}
