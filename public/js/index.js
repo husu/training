@@ -14,12 +14,11 @@ function preTime(t,f){
     var minute=strTwo(time.getMinutes());
     return f?(year+'年'+month+'月'+date+'日\t\t'+hours+':'+minute):(year+'-'+month+'-'+date+'\t\t'+hours+':'+minute);
 }
-//分页查询//that-按钮,jq-列表父元素,fun-dom更新函数,tags:1-willing,2-require,num:列表条数
+//分页查询//fun-dom更新函数,jq-列表父元素,tags:1-willing,2-require,that-分页按钮,num:列表条数
 function selectPage(url,pages,fun,jq,tags,that,num){
     var totalPage=null;
     num&&(totalPage=Math.ceil(num/pages.pageSize));
     if(!that){
-        pages.page=1;
         $.get(url,pages,function (data) {
             if(data.result){
                 if(totalPage!=1&&(pages.page>1||data.result.length>=pages.pageSize)){

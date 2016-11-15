@@ -105,7 +105,7 @@ $(function(){
         selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',$(this),commentNum);
     });
     //点赞
-    $('.detail a:contains("点赞")').click(function (e) {
+    $('.detail #praise').click(function (e) {
         e.preventDefault();
         var that=$(this);
         $.post(`v1/thumbUp/${trainId}`,function (data) {
@@ -118,7 +118,7 @@ $(function(){
     });
     //评论或回复
     //点击评论
-    $('.detail a:contains("评论")').click(function (e) {
+    $('.detail #review').click(function (e) {
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
@@ -151,7 +151,7 @@ $(function(){
                 if(!data.code){
                     commentNum+=1;
                     $('.detail a:last').find('b').html(commentNum);
-                    selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'));
+                    selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'','',commentNum);
                 }
             });
         }else{reMsg('回复内容不能为空')}
