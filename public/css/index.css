@@ -17,7 +17,7 @@ nav{height:70px;width:100%;background:#049ACB;position:fixed;top:0;}
 nav>div{width:1200px;margin:0 auto;max-width:100%;padding:0 15px;position:relative;}
 nav>div>a,nav .user{font-size:20px;color:#fff;line-height:70px;font-weight: bold;cursor: pointer;}
 nav .setting{position: absolute;right:0;top:70px;background:#049ACB;color:#fff;font-size:14px;padding:4px 20px 6px;display:none;}
-nav>:hover .setting{display:block;}
+nav .rt:hover .setting{display:block;}
 nav .setting li{padding-bottom:6px;}
 nav .setting a{color:#eee;}
 nav .setting a:hover{color:#fff;}
