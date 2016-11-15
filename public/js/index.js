@@ -24,6 +24,9 @@ function selectPage(url,pages,fun,jq,tags,that,num){
                 if(totalPage!=1&&(pages.page>1||data.result.length>=pages.pageSize)){
                     jq.siblings('.pages').show();
                 }
+                if(totalPage!=pages.page){
+                    $('.pages a:contains("末页"),.pages a:contains("下一页")').removeClass('a-disable');
+                }
                 if(tags){jq.parent().show();}
                 fun(data.result,jq,tags);
             }
