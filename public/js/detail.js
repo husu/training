@@ -21,7 +21,7 @@ function updateDetail(res,tags){
         default:
             userClass='主讲人：';timeClass='培训时间：';break;
     }
-    $('.detail').prepend(`
+    $('.detail>div').html(`
         <div>
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
@@ -93,9 +93,9 @@ $(function(){
             thumbUpNum=res.thumbUpNum||0;
             $('.detail a:first').find('b').html(thumbUpNum);
             $('.detail a:last').find('b').html(commentNum);
+            selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'','',commentNum);
         }
     });
-    selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'));
     $.get(`v1/thumbUp/${trainId}`,function(data){
         data.result||$('.detail a:first').addClass('a-disable');
     });
