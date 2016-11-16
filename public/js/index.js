@@ -56,7 +56,13 @@ function selectPage(url,pages,fun,jq,tags,that,num){
                 $('.pages a:contains("首页"),.pages a:contains("上一页")').removeClass('a-disable');
             }
             fun(data.result,jq,tags);
-        }else{pages.page-=1;}//下一页数据为空
+        }else{//下一页数据为空
+            pages.page-=1;
+            if(pages.page!=1){
+                $('.pages a:contains("末页"),.pages a:contains("下一页")').addClass('a-disable');
+                $('.pages a:contains("首页"),.pages a:contains("上一页")').removeClass('a-disable');
+            }else{that.parent().hide();}
+        }
     });
 }
 //更新培训查询列表
