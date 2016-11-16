@@ -41,11 +41,11 @@ function updateComment(list,jq){
            <div>
             <img src="../imgs/user.png" alt=""/>
             <div class="rt">
-                <p><span>${list[i].creator.username||username}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
+                <p><span>${list[i].creator.username}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
                     ${list[i].replayWho?('<li style="border-left:2px solid #ddd">'+list[i].replayWho+'</li>'):""}
                     <li>${list[i].content}</li>
-                    <li><a href="${list[i].creator.username||username}">回&nbsp;应</a></li>
+                    <li><a href="${list[i].creator.username}">回&nbsp;应</a></li>
                 </ul>
             </div>
         </div>
