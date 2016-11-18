@@ -3,7 +3,9 @@
  */
 var resname=null;//回复谁的评论
 var comments={page:1,pageSize:6};//查看更多评论
-var replay={content:"",replayWho:""};//评论参数
+var commentNum=null;//评论数
+var thumbUpNum=null;//点赞数
+var replay={content:"",replayWho:""};//回复评论参数
 var tags=window.sessionStorage.getItem('assign');//详情类别
 var trainId=window.sessionStorage.getItem('train_id');//培训id
 //update detail
@@ -19,7 +21,7 @@ function updateDetail(res,tags){
         default:
             userClass='主讲人：';timeClass='培训时间：';break;
     }
-    $('.detail').prepend(`
+    $('.detail>div').html(`
         <div>
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
@@ -32,24 +34,24 @@ function updateDetail(res,tags){
     `);
 }
 //update comments
-function updateComment(list){
+function updateComment(list,jq){
     var frag=document.createDocumentFragment();
     for(var i in list){
         $(frag).append(`
            <div>
             <img src="../imgs/user.png" alt=""/>
             <div class="rt">
-                <p><span>${list[i].creator.username||username}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
+                <p><span>${list[i].creator.username}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
                     ${list[i].replayWho?('<li style="border-left:2px solid #ddd">'+list[i].replayWho+'</li>'):""}
                     <li>${list[i].content}</li>
-                    <li><a href="${list[i].creator.username||username}">回&nbsp;应</a></li>
+                    <li><a href="${list[i].creator.username}">回&nbsp;应</a></li>
                 </ul>
             </div>
         </div>
         `);
     }
-    $('.comment>p').before(frag);
+    jq.html(frag);
 }
 $(function(){
     //页面初始化
@@ -61,6 +63,7 @@ $(function(){
             minDate:$.nowDate(0),
             isTime:true,
             choosefun:function (inp,val) {
+                $('#confirm').removeClass('btn-disable');
                 $.get('v1/training/trainByTime',{trainDate:val+':00'},function(data){
                     if(!data.result){
                         var plan={objectId:trainId,trainDate:val+':00'};
@@ -70,6 +73,7 @@ $(function(){
                             $.post('/v1/training/plan',plan,function(data){
                                 if(data.result){
                                     $('#date').prev().html('安排成功').removeClass().addClass('succ');
+                                    $('#confirm').addClass('btn-disable');
                                 }
                             });
                         });
@@ -85,44 +89,36 @@ $(function(){
         var res=data.result;
         if(res.length||res){
             updateDetail(res,tags);
-            $('.detail a:first').find('b').html(res.thumbUpNum);
-            $('.detail a:last').find('b').html(res.commentNum);
-        }
-    });
-    $.get(`v1/comments/list/${trainId}`,comments,function(data){
-        if(data.result){
-            updateComment(data.result);
-            data.result.length<6&&$('.comment>p').hide();
+            commentNum=res.commentNum||0;
+            thumbUpNum=res.thumbUpNum||0;
+            $('.detail a:first').find('b').html(thumbUpNum);
+            $('.detail a:last').find('b').html(commentNum);
+            selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'','',commentNum);
         }
     });
     $.get(`v1/thumbUp/${trainId}`,function(data){
         data.result||$('.detail a:first').addClass('a-disable');
     });
-    //查看更多评论
-    $('.comment>p a').click(function (e) {
+    //分页查询评论
+    $('#resList>p a').click(function (e) {
         e.preventDefault();
-        comments.page+=1;
-        $.get(`v1/comments/list/${trainId}`,comments,function(data){
-            if(data.result.length||data.result){
-                updateComment(data.result);
-                data.result.length<6&&$('.comment>p a').addClass('b-disable').html('没有更多评论');
-            }
-        });
+        selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',$(this),commentNum);
     });
     //点赞
-    $('.detail a:contains("点赞")').click(function (e) {
+    $('.detail #praise').click(function (e) {
         e.preventDefault();
         var that=$(this);
         $.post(`v1/thumbUp/${trainId}`,function (data) {
             if(data.result) {
+                thumbUpNum+=1;
                 that.addClass('a-disable praise');
-                that.find('b').html(parseInt(that.find('b').html()) + 1);
+                that.find('b').html(thumbUpNum);
             }
         });
     });
     //评论或回复
     //点击评论
-    $('.detail a:contains("评论")').click(function (e) {
+    $('.detail #review').click(function (e) {
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
@@ -150,14 +146,12 @@ $(function(){
         replay.content=$('#resBox').val();
         if(replay.content){
             $.post(`v1/comments/${trainId}`,replay, function (data) {
-                console.log(data);
                 reMsg(data.message);
                 $('#resBox').val("");
                 if(!data.code){
-                    var elem=$('.detail b:last');elem.html(parseInt(elem.html())+1);
-                    var list=[];
-                    list.push(data.result);
-                    updateComment(list);
+                    commentNum+=1;
+                    $('.detail a:last').find('b').html(commentNum);
+                    selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'','',commentNum);
                 }
             });
         }else{reMsg('回复内容不能为空')}
