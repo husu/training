@@ -77,6 +77,7 @@ app.use('/v1/willingness', require('./router/willingness'));
 app.use('/v1/comments', require('./router/comments'));
 app.use('/v1/thumbUp', require('./router/thumbUp'));
 app.use('/v1/upload',require('./router/uploadImg'));
+app.use('/v1/rank',require('./router/rank'));
 
 
 

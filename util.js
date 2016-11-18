@@ -66,6 +66,7 @@ util.copyProperty=  function(avObject,object){
     }
 };
 
+
 util.ERROR = {
     INTERNAL_ERROR:{
         errorCode:1,
