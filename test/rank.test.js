@@ -39,7 +39,7 @@ describe('测试排行的接口',function(){
             expect(obj1.thumbUpNum>obj2.thumbUpNum).to.be.ok;
 
 
-            //console.log(res.body);
+            console.log(res.body);
             done()
         }).catch(function(e){
             done(e);
@@ -64,6 +64,9 @@ describe('测试排行的接口',function(){
 
             let  obj2 = res.body.result[1];
             expect(obj1.commentNum>obj2.commentNum).to.be.ok;
+
+
+            //console.log(res.body);
 
             done();
         }).catch(function(e){
