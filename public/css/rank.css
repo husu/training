@@ -36,7 +36,7 @@
 #rank .rankList p{padding:6px 8px;font-size:18px;  color:#049ACB;  font-weight:bold;}
 #rank .rankList ul{counter-set: listNum;width:900px;}
 #rank .rankList li{
-    display:block;
+    display:table;
     margin:10px 0;
     padding:0 8px;
     counter-increment: listNum;
@@ -45,10 +45,8 @@
 #rank .rankList li img{border:1px solid #ddd;}
 #rank .rankList li:hover{background:#b3e3f8;}
 /*#rank .rankList li:hover img{display:inline-block !important;}*/
-#rank .rankList li>span{  display:inline-block;padding:10px 8px;}
-#rank .rankList li>span:first-child{width:36%;}
-#rank .rankList li>span:nth-child(2){width:25%;}
-#rank .rankList li>span:nth-child(3){width:15%;}
+#rank .rankList li>span{ display:inline-block;width:20%; padding:10px 8px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align: middle;}
+#rank .rankList li>span:first-child{width:35%;}
 #rank .rankList li:before{
     content: "" counter(listNum) "";
     display: inline-block;
