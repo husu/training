@@ -60,7 +60,7 @@
     line-height: 20px;
 }
 #rank .rankList li:not(:nth-child(n+4)){font-size:18px;}
-#rank .rankList li:nth-child(n+4):hover{background:#b3e3f8;;}
+#rank .rankList li:hover{background:#b3e3f8;;}
 #rank .rankList li:not(:nth-child(n+4)):before {
     width: 30px;
     height: 30px;
