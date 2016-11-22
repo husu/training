@@ -10,7 +10,7 @@ a{text-decoration:none;color:#777;}
 .show{display:block;}
 .succ{color:green;}
 .err{color:#FF6100;}
-.main{background:#fff;}
+.main{background:#fff;overflow:hidden;}
 section{background:#ddd;}
 /*头部*/
 nav{height:70px;width:100%;background:#049ACB;position:fixed;top:0;}

@@ -1,0 +1,85 @@
+#rank{width:1200px;padding-top:50px;}
+#rank .sort{
+    margin-left:100px;
+}
+/*排行分类*/
+#rank .sort li:first-child{
+    font-size:18px;
+    color:#049ACB;
+    font-weight:bold;
+    padding:6px 8px;
+}
+#rank .sort li a{
+    display:block;
+    padding:6px 8px;
+    font-size:14px;
+    margin-top:4px;
+    border-radius:3px;
+    -webkit-transition: transform 0.2s;
+    -moz-transition: transform 0.2s;
+    -ms-transition: transform 0.2s;
+    -o-transition: transform 0.2s;
+    transition: transform 0.2s;
+}
+#rank .sort li a:hover{
+    background:#049ACB;
+    color:#fff;
+    font-size:16px;
+    -webkit-transform: translateX(10px);
+    -moz-transform: translateX(10px);
+    -ms-transform: translateX(10px);
+    -o-transform: translateX(10px);
+    transform: translateX(10px);;
+}
+/*排行榜单、*/
+#rank .rankList{margin-left:40px;}
+#rank .rankList p{padding:6px 8px;font-size:18px;  color:#049ACB;  font-weight:bold;}
+#rank .rankList ul{counter-set: listNum;width:900px;}
+#rank .rankList li{
+    display:block;
+    margin:10px 0;
+    counter-increment: listNum;
+    padding: 10px 8px;
+    width:100%;
+}
+#rank .rankList li img{border:1px solid #ddd;}
+#rank .rankList li:hover{background:#b3e3f8;}
+/*#rank .rankList li:hover img{display:inline-block !important;}*/
+#rank .rankList li>span{display:inline-block;width:18%;}
+#rank .rankList li>span:first-child{width:40%;padding-left:10px;}
+#rank .rankList li:before{
+    content: "" counter(listNum) "";
+    display: inline-block;
+    border-radius: 50%;
+    background: #ccc;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 14px;
+    margin-right:6px;
+    line-height: 20px;
+}
+#rank .rankList li:not(:nth-child(n+4)):before{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size:18px;
+    font-weight:bold;
+    font-style: italic;
+}
+#rank .rankList li:nth-child(1):before{
+    background:#E01515;
+}
+#rank .rankList li:nth-child(2):before{
+    background:#FF6100;
+
+}
+#rank .rankList li:nth-child(3):before{
+    background:#60BE29;
+}
+#rank .rankList img{
+    width:120px;
+    vertical-align: middle;
+    margin-right:10px;
+}
