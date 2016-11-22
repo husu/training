@@ -156,6 +156,6 @@ $(function(){
         e.preventDefault();
         $('.tabs a').removeClass();
         $(this).addClass('active-tabs');
-        $('.module').load($(this).attr('href'));
+        $('.module').empty().load($(this).attr('href'));
     });
 });
