@@ -1,21 +1,22 @@
 /**
  * Created by taohailin on 2016/11/21.
  */
+<!--<img src="${imgSrc}" style="display:${i>2?'none':'inlnie-block'}">-->
 function updateRank(list,jq,tags) {//tags:0-点赞排行,1-评论排行,默认为0
     var frag=document.createDocumentFragment();
     for(var i in list){
         var imgSrc=list[i].imgURL||'../imgs/default_course.png';
         $(frag).append(`
              <li>
-                <span class="project">
+                <span>
                     <a href="data/detail.html" data-id="${list[i].objectId}">
-                        <img src="${imgSrc}" style="display:${i>2?'none':'inlnie-block'}">
+                        ${i<3?'<img src="'+imgSrc+'">':""}
                         <span>${list[i].title}</span>
                     </a>
                 </span>
-                <span class="speaker">${list[i].creator.username}</span>
-                <span class="tags">类型</span>
-                <span class="amount">${tags?list[i]. commentNum:list[i]. thumbUpNum}</span>
+                <span>${list[i].creator.username||list[i].creator.id}</span>
+                <span>${list[i].tags||""}</span>
+                <span class="${tags?'commentNum':'thumbUpNum'}">${tags?list[i]. commentNum:list[i]. thumbUpNum}</span>
             </li>
         `);
     }
@@ -23,7 +24,6 @@ function updateRank(list,jq,tags) {//tags:0-点赞排行,1-评论排行,默认�
 }
 $(function () {
     $.get('/v1/rank/thumbUp',function(data){
-        console.log(data);
         if(data.result){
             updateRank(data.result,$('#rank .rankList ul'));
         }
