@@ -5,17 +5,16 @@
 function updateRank(list,jq,tags) {//tags:0-点赞排行,1-评论排行,默认为0
     var frag=document.createDocumentFragment();
     for(var i in list){
-        var imgSrc=list[i].imgURL||'../imgs/default_course.png';
         $(frag).append(`
              <li>
                 <span>
                     <a href="data/detail.html" data-id="${list[i].objectId}">
-                        ${i<3?'<img src="'+imgSrc+'">':""}
+                        <img src="${list[i].imgURL||'../imgs/default_course.png'}">
                         <span>${list[i].title}</span>
                     </a>
                 </span>
                 <span>${list[i].creator.username||list[i].creator.id}</span>
-                <span>${list[i].tags||""}</span>
+                <span>${list[i].tags||"未知"}</span>
                 <span class="${tags?'commentNum':'thumbUpNum'}">${tags?list[i]. commentNum:list[i]. thumbUpNum}</span>
             </li>
         `);
