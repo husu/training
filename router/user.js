@@ -4,7 +4,7 @@
 'use strict';
 var router = require('express').Router();
 var AV = require('leanengine');
-
+var util = require('../util');
 
 
 router.post("/login",function(req,res){
@@ -58,6 +58,44 @@ router.get('/logout', function(req, res) {
         res.clearCurrentUser();
     }
     res.send({code:0,message:'已经退出登录'});
+});
+
+// 修改密码
+router.post('/changePwd',function(req,res){
+    let userName = req.body.username;
+    let oldPwd =  req.body.oldPwd;
+    let newPwd = req.body.newPwd;
+
+    if(!userName){
+        return {
+            code:util.ERROR.PARAMETER_MISSING,
+            message:'用户名不可为空'
+        }
+    }
+
+    if(!newPwd){
+        return {
+            code:util.ERROR.PARAMETER_MISSING,
+            message:'新密码不可为空'
+        }
+    }
+
+
+    AV.User.logIn(userName, oldPwd).then(function (loginedUser) {
+        loginedUser.set('password',newPwd);
+        loginedUser.save().then(user=>{
+           return res.send({
+               code:0,
+               message:'修改成功'
+           })
+        });
+    }).catch(function(error) {
+        return res.send({
+            code:util.ERROR.INTERNAL_ERROR.errorCode,
+            message:error.message
+        });
+    });
+
 });
 
 

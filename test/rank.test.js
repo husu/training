@@ -35,11 +35,13 @@ describe('测试排行的接口',function(){
             let obj1 = res.body.result[0];
             expect(obj1.status).to.equal(util.TRAININGSTATUS.TRAINING,'测试是否是培训');
 
+            console.log(obj1.creator.username);
+
             let  obj2 = res.body.result[1];
             expect(obj1.thumbUpNum>obj2.thumbUpNum).to.be.ok;
 
 
-            console.log(res.body);
+            //console.log(res.body);
             done()
         }).catch(function(e){
             done(e);

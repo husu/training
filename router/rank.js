@@ -32,13 +32,16 @@ router.get('/:type',function(req,res){
         var requireList =  _.map(list,o=>{
             var user  = o.get('creator');
 
-            o= _.pick(util.avObjectToJson(o),['commentNum','content','createdAt','creator','status','imgURL','objectId','thumbUpNum','trainDate','title']);
+            o= _.pick(util.avObjectToJson(o),['commentNum','tags','content','createdAt','creator','status','imgURL','objectId','thumbUpNum','trainDate','title']);
             o.creator = {
                 id:user.id,
                 username:user.get('username')
             };
             return o;
         });
+
+
+
 
         let resultObj = {
             code:0,

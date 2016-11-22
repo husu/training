@@ -21,6 +21,7 @@ module.exports ={
         }else{
             query.addDescending("thumbUpNum");
         }
+        query.include('creator');
 
         query.equalTo("status",myUtil.TRAININGSTATUS.TRAINING);
         if(!top)top=10;

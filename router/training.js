@@ -53,7 +53,7 @@ router.get('/list',function(req,res){
        var trainList =  _.map(list,o=>{
             var user  = o.get('creator');
 
-           o= _.pick(util.avObjectToJson(o),['commentNum','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
+           o= _.pick(util.avObjectToJson(o),['commentNum','tags','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
              o.creator = {
                id:user.id,
                username:user.get('username')
