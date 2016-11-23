@@ -32,9 +32,9 @@
     transform: translateX(10px);;
 }
 /*排行榜单、*/
-#rank .rankList{margin-left:40px;}
+#rank .rankList{margin-left:40px;padding:0 20px;}
 #rank .rankList p{padding:6px 8px;font-size:18px;  color:#049ACB;  font-weight:bold;}
-#rank .rankList ul{counter-set: listNum;width:900px;}
+#rank .rankList ul{counter-set: listNum;width:860px;}
 #rank .rankList li{
     display:table;
     margin:10px 0;
@@ -43,10 +43,9 @@
     width:100%;
 }
 #rank .rankList li img{border:1px solid #ddd;}
-#rank .rankList li:hover{background:#b3e3f8;}
 /*#rank .rankList li:hover img{display:inline-block !important;}*/
-#rank .rankList li>span{ display:inline-block;width:20%; padding:10px 8px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align: middle;}
-#rank .rankList li>span:first-child{width:35%;}
+#rank .rankList li>span{ display:inline-block;width:18%; padding:10px 8px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align: middle;}
+#rank .rankList li>span:first-child{width:38%;}
 #rank .rankList li:before{
     content: "" counter(listNum) "";
     display: inline-block;
@@ -60,24 +59,20 @@
     margin-right:6px;
     line-height: 20px;
 }
-#rank .rankList li:not(:nth-child(n+4)):before{
+#rank .rankList li:not(:nth-child(n+4)){font-size:18px;}
+#rank .rankList li:hover{background:#b3e3f8;;}
+#rank .rankList li:not(:nth-child(n+4)):before {
     width: 30px;
     height: 30px;
     line-height: 30px;
-    font-size:18px;
-    font-weight:bold;
+    font-size: 18px;
+    font-weight: bold;
     font-style: italic;
 }
-#rank .rankList li:nth-child(1):before{
-    background:#E01515;
-}
-#rank .rankList li:nth-child(2):before{
-    background:#FF6100;
+#rank .rankList li:nth-child(1):before{background:#E4393c;}
+#rank .rankList li:nth-child(2):before{background:#FF6100;}
+#rank .rankList li:nth-child(3):before{background:#60BE29;}
 
-}
-#rank .rankList li:nth-child(3):before{
-    background:#60BE29;
-}
 #rank .rankList img{
     width:120px;
     vertical-align: middle;

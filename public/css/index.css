@@ -36,7 +36,7 @@ button,input[type='button'],input[type='submit']{cursor:pointer;background:#36ae
 button:hover,input[type='button']:hover,input[type='submit']:hover{background:#049ACB;border:0;border-radius:4px;}
 
 /*用户登录*/
-.modal {position: fixed;left: 0;right: 0;top: 0;bottom: 0;background: rgba(0,0,0, .7);  z-index: 999;}
+.modal {position: fixed;left: 0;right: 0;top: 0;bottom: 0;background: rgba(0,0,0,0.6);  z-index: 999;}
 .modal-dialog {position: absolute;top:30%;left:50%;
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
@@ -46,9 +46,9 @@ button:hover,input[type='button']:hover,input[type='submit']:hover{background:#0
 }
 .modal-content {background:#fff;  border: 1px solid #aaa;  border-radius: 3px;  box-shadow: 0 0 5px #aaa;  padding:20px 15px 10px;}
 .modal-content h3{color:#049ACB;}
-.msg_login{height:15px;padding-right:20px;font-size:12px;text-align:right;color:#FF6100;}
+.msg_login,.msg_setPwd{height:15px;padding-right:15px;font-size:12px;text-align:right;color:#FF6100;}
 #login{margin:15px 30px; }
-#login input{display:block;width:300px;border:1px solid #049ACB;border-radius:4px;padding:10px 5px;font-size:14px;margin-bottom:25px;}
+#login input{display:block;width:300px;border:1px solid #049ACB;border-radius:3px;padding:10px 5px;font-size:14px;margin-bottom:25px;}
 #login input[type='text'],#login input[type='password']{padding-left:50px;background:url(../imgs/login_small.png) no-repeat 10px 6px;}
 #login input:first-child{background-position:10px -34px; }
 #login input[type='checkbox']{display:inline-block;width:30px;}
@@ -68,5 +68,9 @@ button:hover,input[type='button']:hover,input[type='submit']:hover{background:#0
 /*a标签禁用*/
 .a-disable,.btn-disable{ pointer-events: none;cursor:default;background-color:#f7f7f7 !important;border:1px solid #ddd !important; color:#777 !important;}
 .b-disable{ pointer-events: none;cursor:default;}
-
+/*修改密码*/
+#setPwd{margin-bottom:15px;}
+#setPwd input{
+    display:block;width:300px;border:1px solid #ddd;border-radius:3px;padding:10px;margin-top:10px;
+}
 

@@ -99,9 +99,8 @@ $(function(){
             $('header').slideUp(500);
         },1500);
     }else{
-        $('.modal').show();
+        $('#userLogin').show();
         if(user){
-            console.log(user);
             $('#username').val(user.username);
             $('#password').val(user.password);
             $('#savePwd')[0].checked=true;
@@ -114,6 +113,7 @@ $(function(){
             username:$('#username').val(),
             password:$('#password').val()
         }
+        console.log(obj);
         $.post('/login',obj,function(data){
             if(data.result){
                 if($('#savePwd')[0].checked){
@@ -121,11 +121,12 @@ $(function(){
                 }else{
                     window.localStorage.removeItem('parsec_user');
                 }
-                window.sessionStorage.setItem('parsec_user',data.result.username);
-                $('.modal').fadeOut('slow');
-                $('nav .user').html(data.result.username);
+                username=data.result.username
+                window.sessionStorage.setItem('parsec_user',username);
+                $('#userLogin').fadeOut('slow');
+                $('nav .user').html(username);
                 $('.module').load('data/main.html');
-                setTimeout(function(){
+                setTimeout(function(){``
                     $('header').slideUp(500);
                 },1500);
             }else{
@@ -135,6 +136,46 @@ $(function(){
                     $('.msg_login').html('用户名或密码错误');
                 }
             }
+        });
+    });
+    //修改密码
+    $('.setting .resetPwd').click(function(e){
+        e.preventDefault();
+        $('#resetPwd').show().click(function () {
+            $(this).hide()
+        });
+        $('#setPwd')[0].reset();
+        $('.msg_setPwd').html('');
+        $('.setPwd').click(function(e){
+            "use strict";
+            e.stopPropagation();
+        });
+        $('#resetPwd input[type="submit"]').click(function (e) {
+            e.preventDefault();
+            var newPassword=$('#newPwd').val();
+            if(newPassword==$('#resNewPwd').val()){
+                var obj={
+                    username:username,
+                    oldPwd:$('#oldPwd').val(),
+                    newPwd:newPassword
+                }
+                $.post('/changePwd',obj,function(data){
+                    "use strict";
+                    if(!data.code){
+                        $('#resetPwd').hide();
+                        if(window.localStorage.getItem('parsec_user')){
+                            var obj={
+                                username:username,
+                                password:newPassword
+                                }
+                            window.localStorage.setItem('parsec_user',JSON.stringify(obj));
+                        }
+                    }else{$('.msg_setPwd').html(data.message)}
+
+                });
+
+            }else{$('.msg_setPwd').html('两次新密码输入不一致')}
+
         });
     });
     //退出登录
