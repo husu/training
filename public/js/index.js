@@ -121,7 +121,7 @@ $(function(){
                 }else{
                     window.localStorage.removeItem('parsec_user');
                 }
-                username=data.result.username
+                username=data.result.username;
                 window.sessionStorage.setItem('parsec_user',username);
                 $('#userLogin').fadeOut('slow');
                 $('nav .user').html(data.result.nickName);
