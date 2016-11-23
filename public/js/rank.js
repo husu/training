@@ -13,7 +13,7 @@ function updateRank(list,jq,tags) {//tags:0-点赞排行,1-评论排行,默认�
                         <span>${list[i].title}</span>
                     </a>
                 </span>
-                <span>${list[i].creator.username||list[i].creator.id}</span>
+                <span>${list[i].creator.nickName}</span>
                 <span>${list[i].tags||"未知"}</span>
                 <span class="${tags?'commentNum':'thumbUpNum'}">${tags?list[i]. commentNum:list[i]. thumbUpNum}</span>
             </li>

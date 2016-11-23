@@ -26,7 +26,7 @@ function updateDetail(res,tags){
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
                 <h3>${res.title}</h3>
-                <p>${userClass+res.creator.username}</p>
+                <p>${userClass+res.creator.nickName}</p>
                 <p>${timeClass+time}</p>
                 <div>${res.content}</div>
             </div>
@@ -41,11 +41,11 @@ function updateComment(list,jq){
            <div>
             <img src="../imgs/user.png" alt=""/>
             <div class="rt">
-                <p><span>${list[i].creator.username}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
+                <p><span>${list[i].creator.nickName}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
                     ${list[i].replayWho?('<li style="border-left:2px solid #ddd">'+list[i].replayWho+'</li>'):""}
                     <li>${list[i].content}</li>
-                    <li><a href="${list[i].creator.username}">回&nbsp;应</a></li>
+                    <li><a href="${list[i].creator.nickName}">回&nbsp;应</a></li>
                 </ul>
             </div>
         </div>

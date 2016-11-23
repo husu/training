@@ -85,7 +85,7 @@ function updateList(list,jq,tags){//list:列表,jq:父元素,tags:1-willing,2-re
                 <dt><a href="data/detail.html" data-id="${list[i].objectId}"><img src="${list[i].imgURL||'../imgs/default_course.png'}"/><\/a><\/dt>
                 <dd>${list[i].title}</dd>
                 <dd>${timeClass+time}</dd>
-                <dd>${userClass+list[i].creator.username}</dd>
+                <dd>${userClass+list[i].creator.nickName}</dd>
             </dl>
         `);
     }
@@ -113,8 +113,8 @@ $(function(){
             username:$('#username').val(),
             password:$('#password').val()
         }
-        console.log(obj);
         $.post('/login',obj,function(data){
+            console.log(data);
             if(data.result){
                 if($('#savePwd')[0].checked){
                     window.localStorage.setItem('parsec_user',JSON.stringify(obj));
@@ -124,9 +124,9 @@ $(function(){
                 username=data.result.username
                 window.sessionStorage.setItem('parsec_user',username);
                 $('#userLogin').fadeOut('slow');
-                $('nav .user').html(username);
+                $('nav .user').html(data.result.nickName);
                 $('.module').load('data/main.html');
-                setTimeout(function(){``
+                setTimeout(function(){
                     $('header').slideUp(500);
                 },1500);
             }else{
@@ -185,6 +185,7 @@ $(function(){
              if(!data.code){
                  window.sessionStorage.removeItem('parsec_user');
                  window.location.reload(true);
+                 $('nav .user').html('');
              }
          });
      });
