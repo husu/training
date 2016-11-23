@@ -113,6 +113,7 @@ $(function(){
             username:$('#username').val(),
             password:$('#password').val()
         }
+        console.log(obj);
         $.post('/login',obj,function(data){
             if(data.result){
                 if($('#savePwd')[0].checked){
@@ -120,11 +121,12 @@ $(function(){
                 }else{
                     window.localStorage.removeItem('parsec_user');
                 }
-                window.sessionStorage.setItem('parsec_user',data.result.username);
+                username=data.result.username
+                window.sessionStorage.setItem('parsec_user',username);
                 $('#userLogin').fadeOut('slow');
-                $('nav .user').html(data.result.username);
+                $('nav .user').html(username);
                 $('.module').load('data/main.html');
-                setTimeout(function(){
+                setTimeout(function(){``
                     $('header').slideUp(500);
                 },1500);
             }else{
