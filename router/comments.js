@@ -50,7 +50,9 @@ router.get('/list/:id',function(req,res){
             var user = o.get('creator');
             curObj.creator = {
                 objectId:user.id,
-                username:user.get('username')
+                username:user.get('username'),
+                nickName:user.get('nickName')
+
             };
             return curObj;
         });

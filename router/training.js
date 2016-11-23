@@ -55,8 +55,9 @@ router.get('/list',function(req,res){
 
            o= _.pick(util.avObjectToJson(o),['commentNum','tags','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
              o.creator = {
-               id:user.id,
-               username:user.get('username')
+                id:user.id,
+                username:user.get('username'),
+                nickName:user.get('nickName')
            };
            return o;
        });
