@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/rank.css">
 </head>
 <body>
-    <div class="modal hide">
+    <div class="modal hide" id="userLogin">
         <div class="modal-dialog">
             <div class="modal-content">
                 <h3 class="text-center">用户登录</h3>
@@ -26,6 +26,19 @@
             </div>
         </div>
     </div>
+    <div class="modal hide" id="resetPwd">
+        <div class="modal-dialog">
+            <div class="modal-content setPwd">
+                <form id="setPwd">
+                    <input type="password" name="oldPwd" id="oldPwd" placeholder="请输入原密码"/>
+                    <input type="text" name="newPwd" id="newPwd" placeholder="请输入新密码"/>
+                    <input type="text"  id="resNewPwd"  placeholder="请重新输入新密码"/>
+                    <input type="submit" value="修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改"/>
+                </form>
+                <p class="msg_setPwd"></p>
+            </div>
+        </div>
+    </div>
     <nav>
         <div>
             <a href="index.html">秒差距小课堂</a>
@@ -33,8 +46,9 @@
                 <li class="user"></li>
                 <li class="setting hide">
                     <ul>
-                        <li><a href="#" class="userSet">设置</a></li>
-                        <li><a href="#" class="logOut">退出</a></li>
+                        <li><a href="#" class="userSet">信息设置</a></li>
+                        <li><a href="#" class="resetPwd">修改密码</a></li>
+                        <li><a href="#" class="logOut">退出登录</a></li>
                     </ul>
                 </li>
             </ul>
