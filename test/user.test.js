@@ -19,7 +19,7 @@ describe('测试排行的接口',function(){
 
     it('测试修改密码',function(done) {
         let user={
-            username:'test',
+            username:'test2',
             oldPwd:'123456',
             newPwd:'654321'
         };
@@ -40,7 +40,7 @@ describe('测试排行的接口',function(){
 
     after(function(){
         let user={
-            username:'test',
+            username:'test2',
             oldPwd:'654321',
             newPwd:'123456'
         };
