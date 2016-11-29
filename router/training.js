@@ -21,7 +21,8 @@ router.get('/detail/:id', function(req, res) {
         var creator = obj.get('creator');
         training.creator = {
             objectId:creator.id,
-            username:creator.get('username')
+            username:creator.get('username'),
+            nickName:creator.get('nickName')
         };
 
 
