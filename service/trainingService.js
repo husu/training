@@ -77,7 +77,11 @@ module.exports ={
             query.contains('title',params.title);
         }
         if(params.status !=null){
-            query.equalTo('status',params.status);
+            if(params.status !=-1){
+                query.equalTo('status',params.status);
+            }else{
+                query.notEqualTo('status',myUtil.TRAININGSTATUS.TRAINING);
+            }
         }
 
         return query.find().fail(function(e){

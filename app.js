@@ -35,7 +35,7 @@ app.use(AV.Cloud.CookieSession({secret: 'training', maxAge: 3600000 * 48, fetchU
 // 设置默认超时时间
 app.all(/\/(?!login|index[.]).*html$/, function (req, res, next) {
   var url = req.originalUrl;
-  console.log(url);
+  // console.log(url);
   if (!req.currentUser) {
     res.redirect("/index.html");
   } else {

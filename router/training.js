@@ -48,6 +48,10 @@ router.get('/list',function(req,res){
         status:util.TRAININGSTATUS.TRAINING
     };
 
+
+
+
+
     return ts.list(params,page,pageSize).then(function(list){
 
        var trainList =  _.map(list,o=>{
@@ -75,6 +79,70 @@ router.get('/list',function(req,res){
     });
 
 });
+
+
+/**
+ * 获得一个培训列表
+ */
+router.get('/noScheduled/:type',function(req,res){
+    var pageSize = req.query.pageSize || req.body.pageSize ||10;
+    var page = req.query.page || req.body.page || 1;
+    var params = {
+        tags:req.params.tags,
+        title:req.params.title,
+    };
+
+    let curType = req.params.type;
+
+    if(curType == null){
+        return res.send({
+            code : util.ERROR.PARAMETER_MISSING,
+            message:'类型参数丢失'
+        });
+    }
+
+
+    if(curType=="all"){
+        params.status = -1
+    }else if(curType=="requirement"){
+        params.status = util.TRAININGSTATUS.REQUIREMENT;
+    }else if(curType == "willingness"){
+        params.status = util.TRAININGSTATUS.WILLINGNESS;
+    }else{
+        params.status = 10000;
+
+    }
+
+
+
+    return ts.list(params,page,pageSize).then(function(list){
+
+        var trainList =  _.map(list,o=>{
+            var user  = o.get('creator');
+
+            o= _.pick(util.avObjectToJson(o),['commentNum','tags','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
+            o.creator = {
+                id:user.id,
+                username:user.get('username'),
+                nickName:user.get('nickName')
+            };
+            return o;
+        });
+
+        let resultObj = {
+            code:0,
+            result:trainList
+        };
+        return res.send(resultObj);
+    }).fail(function(e){
+        return res.send({
+            code: e.errorCode,
+            message:e.message
+        });
+    });
+
+});
+
 
 /**
  * 保存一个培训信息
