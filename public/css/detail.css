@@ -1,5 +1,5 @@
-
-.main{width:1000px;margin:0 auto;padding:20px 30px 50px;}
+.detail_box{position:absolute;left: 0;right: 0;top:0;background:#ddd;z-index: 5;padding-top:80px;padding-bottom:40px;overflow:auto;}
+.detail-dialog{width:1000px;margin:0 auto;padding:40px 30px 20px;background:#fff;position:relative;overflow:auto;}
 /*培训详情*/
 .detail>div{overflow:hidden;border-radius:6px;padding:20px 15px;box-shadow:0 0 5px 3px #ddd inset;}
 .detail .lf p{font-size:18px;margin-top:20px;}

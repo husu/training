@@ -1,91 +1,39 @@
 /**
  * Created by Taohailin on 2016/10/19.
  */
-var username=window.sessionStorage.getItem('parsec_user');//是否登录
-var user=JSON.parse(window.localStorage.getItem('parsec_user'));//记住用户密码
-//时间格式化方法 t:任意时间格式 f:默认为flase  yy-mm-dd，true yy年mm月dd日;
-function preTime(t,f){
-    function strTwo(T){return (T+100+'').slice(1);}//格式化两位数字;
-    var time=new Date(t);
-    var year=time.getFullYear();
-    var month=strTwo(time.getMonth()+1);
-    var date=strTwo(time.getDate());
-    var hours=strTwo(time.getHours());
-    var minute=strTwo(time.getMinutes());
-    return f?(year+'年'+month+'月'+date+'日\t\t'+hours+':'+minute):(year+'-'+month+'-'+date+'\t\t'+hours+':'+minute);
-}
-//分页查询//fun-dom更新函数,jq-列表父元素,tags:1-willing,2-require,that-分页按钮,num:列表条数
-function selectPage(url,pages,fun,jq,tags,that,num){
-    var totalPage=null;
-    num&&(totalPage=Math.ceil(num/pages.pageSize));
-    if(!that){
-        $.get(url,pages,function (data) {
-            if(data.result){
-                if(totalPage!=1&&(pages.page>1||data.result.length>=pages.pageSize)){
-                    jq.siblings('.pages').show();
-                }
-                if(totalPage!=pages.page){
-                    $('.pages a:contains("末页"),.pages a:contains("下一页")').removeClass('a-disable');
-                }
-                if(tags){jq.parent().show();}
-                fun(data.result,jq,tags);
-            }
-
-        });
-        return;
-    }
-    if(that.html()=="下一页"){
-        $('.pages a:contains("首页"),.pages a:contains("上一页")').removeClass('a-disable');
-        pages.page+=1;
-    }else if(that.html()=="上一页") {
-        $('.pages a:contains("末页"),.pages a:contains("下一页")').removeClass('a-disable');
-        pages.page-=1;
-    }else if(that.html()=="首页"){
-        pages.page=1;
-    }else{
-        pages.page=totalPage;
-    }
-    $.get(url,pages, function (data) {
-        if(data.result.length){
-            if(pages.page==1){
-                $('.pages a:contains("首页"),.pages a:contains("上一页")').addClass('a-disable');
-                $('.pages a:contains("末页"),.pages a:contains("下一页")').removeClass('a-disable');
-            }
-            if(pages.page==totalPage||data.result.length<pages.pageSize){
-                $('.pages a:contains("末页"),.pages a:contains("下一页")').addClass('a-disable');
-                $('.pages a:contains("首页"),.pages a:contains("上一页")').removeClass('a-disable');
-            }
-            fun(data.result,jq,tags);
-        }else{//下一页数据为空
-            pages.page-=1;
-            if(pages.page!=1){
-                $('.pages a:contains("末页"),.pages a:contains("下一页")').addClass('a-disable');
-                $('.pages a:contains("首页"),.pages a:contains("上一页")').removeClass('a-disable');
-            }else{that.parent().hide();}
-        }
-    });
-}
+var pagesTrain={page:1,pageSize:6};//获取培训列表
+var pagesList={page:1,pageSize:6};//获取需求意愿列表
+var createUrl=null;//创建培训意愿或需求的请求url
+var selectUrl=null;//查询的URL
 //更新培训查询列表
-function updateList(list,jq,tags){//list:列表,jq:父元素,tags:1-willing,2-require,
+function updateList(list,jq){//list:列表,jq:父元素
     var frag=document.createDocumentFragment();
     var userClass='';
     var timeClass='';
-    switch(tags){
-        case 1 :
-            userClass='主讲人：';timeClass='创建时间：';break;
-        case 2:
-            userClass='创建人：';timeClass='创建时间：';break;
-        default:
-            userClass='主讲人：';timeClass='时间：';break;
-    }
+    var tag='';
+    var color='';
     for(var i in list){
+        switch(list[i].status){
+            case 1 :
+                userClass='主讲人：';timeClass='创建时间：';tag='讲';color='#FF6100';break;
+            case 0:
+                userClass='创建人：';timeClass='创建时间：';tag='听';color='#60BE29';break;
+            default:
+                userClass='主讲人：';timeClass='时间：';break;
+        }
         var time=preTime(list[i].trainDate||list[i].createdAt,true);
         $(frag).append(`
             <dl>
-                <dt><a href="data/detail.html" data-id="${list[i].objectId}"><img src="${list[i].imgURL||'../imgs/default_course.png'}"/><\/a><\/dt>
+                <dt >
+                    <a href="detail.html" data-id="${list[i].objectId}" style="position:relative;display:inline-block;">
+                        <img src="${list[i].imgURL||'../imgs/default_course.png'}" style="position:relative"/>
+                        <span style="background:${color};position:absolute;top:1px;right:1px;color:#fff;padding:3px 5px;">${tag}</span>
+                    <\/a>        
+                <\/dt>
                 <dd>${list[i].title}</dd>
                 <dd>${timeClass+time}</dd>
                 <dd>${userClass+list[i].creator.nickName}</dd>
+                <dd><span>${list[i].thumbUpNum||0}</span><span>${list[i].commentNum||0}</span></dd>
             </dl>
         `);
     }
@@ -93,13 +41,14 @@ function updateList(list,jq,tags){//list:列表,jq:父元素,tags:1-willing,2-re
 }
 $(function(){
     if(username){
-        $('nav .user').html(username);
-        $('.module').load('data/main.html');
+        selectUrl='/v1/training/noScheduled/all';
+        selectPage(selectUrl,pagesList,updateList,$('#require .list'));
         setTimeout(function(){
             $('header').slideUp(500);
         },1500);
     }else{
-        $('#userLogin').show();
+        $('.userLogin').show();
+        $('#login button').find('i').hide();
         if(user){
             $('#username').val(user.username);
             $('#password').val(user.password);
@@ -107,14 +56,19 @@ $(function(){
         }
     }
     //登录验证
-    $('#login input[type="submit"]').click(function(e){
+    $('#login input').focus(function(){
+        $('.msg_login').html('');
+        $(this).find('span').html('登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录').prev('i').hide();
+    });
+    $('#login button').click(function(e){
+        $(this).find('span').html('登&nbsp;&nbsp;录&nbsp;&nbsp;中...').prev('i').show();
+
         e.preventDefault();
         var obj={
             username:$('#username').val(),
             password:$('#password').val()
         }
         $.post('/login',obj,function(data){
-            console.log(data);
             if(data.result){
                 if($('#savePwd')[0].checked){
                     window.localStorage.setItem('parsec_user',JSON.stringify(obj));
@@ -122,10 +76,12 @@ $(function(){
                     window.localStorage.removeItem('parsec_user');
                 }
                 username=data.result.username;
-                window.sessionStorage.setItem('parsec_user',username);
-                $('#userLogin').fadeOut('slow');
-                $('nav .user').html(data.result.nickName);
-                $('.module').load('data/main.html');
+                nickName=data.result.nickName;
+                window.sessionStorage.setItem('parsec_username',username);
+                window.sessionStorage.setItem('parsec_nickName',nickName);
+                $('.modal').fadeOut('slow');
+                $('nav .user').html(nickName);
+                selectPage('/v1/training/noScheduled/all',pagesList,updateList,$('#require .list'));
                 setTimeout(function(){
                     $('header').slideUp(500);
                 },1500);
@@ -138,66 +94,169 @@ $(function(){
             }
         });
     });
-    //修改密码
-    $('.setting .resetPwd').click(function(e){
-        e.preventDefault();
-        $('#resetPwd').show().click(function () {
-            $(this).hide()
-        });
-        $('#setPwd')[0].reset();
-        $('.msg_setPwd').html('');
-        $('.setPwd').click(function(e){
-            "use strict";
-            e.stopPropagation();
-        });
-        $('#resetPwd input[type="submit"]').click(function (e) {
-            e.preventDefault();
-            var newPassword=$('#newPwd').val();
-            if(newPassword==$('#resNewPwd').val()){
-                var obj={
-                    username:username,
-                    oldPwd:$('#oldPwd').val(),
-                    newPwd:newPassword
-                }
-                $.post('/changePwd',obj,function(data){
-                    "use strict";
-                    if(!data.code){
-                        $('#resetPwd').hide();
-                        if(window.localStorage.getItem('parsec_user')){
-                            var obj={
-                                username:username,
-                                password:newPassword
-                                }
-                            window.localStorage.setItem('parsec_user',JSON.stringify(obj));
-                        }
-                    }else{$('.msg_setPwd').html(data.message)}
-
-                });
-
-            }else{$('.msg_setPwd').html('两次新密码输入不一致')}
-
-        });
-    });
-    //退出登录
-     $('.setting .logOut').click(function (e) {
-         e.preventDefault();
-         $.get(' /logout',function(data){
-             if(!data.code){
-                 window.sessionStorage.removeItem('parsec_user');
-                 window.location.reload(true);
-                 $('nav .user').html('');
-             }
-         });
-     });
-    //用户信息设置
-    $('.setting .userSet').click(function (e) {
-        e.preventDefault();
-    });
     //标签导航
     $('.tabs li a').click(function (e) {
         e.preventDefault();
+        var module=$(this).attr('href')
         $('.tabs a').removeClass();
         $(this).addClass('active-tabs');
-        $('.module').empty().load($(this).attr('href'));
+        $(module).show().siblings('.module').hide();
+        $('#add_train').show();
+        switch(module){
+            case '#training':
+                selectPage('v1/training/list',pagesTrain,updateList,$('#training .train_list'));break;
+            case '#require':
+                $('#require .all').addClass('active_mark').siblings().removeClass('active_mark');
+                selectPage('/v1/training/noScheduled/all',pagesList,updateList,$('#require .list'));break;
+            case '#rank':
+                $('#add_train').hide();
+                $.get('/v1/rank/thumbUp',function(data){
+                    if(data.result){
+                        updateRank(data.result,$('#rank .rankList ul'));
+                    }
+                });
+        }
+    });
+    //添加培训
+    $('#add_train a').click(function(e){
+            e.preventDefault();
+            createUrl=$(this).attr('data-url');
+            $('.add_train').show().siblings('div').hide();
+            $('.modal').not('.userLogin').fadeIn('slow');
+            $('.default_img').hide();
+            $('.modal-content>p').hide();
+            $('#select').val('选择图片');
+            $('#add')[0].reset();
+        }
+    );
+    //选择图片
+    $('#select').click(function (e) {
+        e.preventDefault();
+        $('.default_img').slideToggle(500);
+        $('#select').val('选择图片');
+        $('#add input[type="hidden"]').val()&&($(this).siblings('img').attr('src',$('#add input[type="hidden"]').val()));
+    });
+    $('.default_img img').click(function () {
+        $(this).css('border','3px solid green').siblings().css('border','3px solid #ddd');
+        $('#add input[type="hidden"]').val($(this).attr('src'));
+        $('#select').val('确认图片');
+    });
+    //提交新增培训
+    $('.add_train input:last').click(function (e) {
+        e.preventDefault();
+        var res=$('#add').serialize();
+        $.post(createUrl,res, function (data) {
+            if(!data.code){
+                $('.modal').fadeOut();
+                $('.tabs a[href="#require"]').trigger('click');
+            }else{$('.modal-content>p').html(data.errors).show();}
+        });
+    });
+});
+//英雄榜
+function updateRank(list,jq,tags) {//tags:0-点赞排行,1-评论排行,默认为0---英雄榜updateDom
+    var frag=document.createDocumentFragment();
+    for(var i in list){
+        $(frag).append(`
+             <li>
+                <span>
+                    <a href="detail.html" data-id="${list[i].objectId}">
+                        <img src="${list[i].imgURL||'../imgs/default_course.png'}">
+                        <span>${list[i].title}</span>
+                    </a>
+                </span>
+                <span>${list[i].creator.nickName}</span>
+                <span>${list[i].tags||"未知"}</span>
+                <span class="${tags?'commentNum':'thumbUpNum'}">${tags?list[i]. commentNum||0:list[i]. thumbUpNum||0}</span>
+            </li>
+        `);
+    }
+    jq.html(frag);
+}
+$(function () {
+    //详情的跳转
+    $('.rankList ul').on('click','a',function(e){
+        e.preventDefault();
+        window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
+        window.sessionStorage.removeItem('assign');
+        $('#detail').empty().load('detail.html');
+        $('.detail_box').show().prev().hide();
+        $('body,html').stop().animate({scrollTop:0});
+    });
+    //排行分类
+    $('.sort a:first').click(function(e){
+        e.preventDefault();
+        $.get('/v1/rank/thumbUp',function(data){
+            if(data.result){
+                updateRank(data.result,$('#rank .rankList ul'));
+                $('.rankList>p').html('点赞榜');
+            }
+        });
+    });
+    $('.sort a:last').click(function(e){
+        e.preventDefault();
+        $.get('/v1/rank/comment',function(data){
+            if(data.result){
+                updateRank(data.result,$('#rank .rankList ul'),1);
+                $('.rankList>p').html('热评榜');
+            }
+        });
+    });
+
+});
+//资不资瓷
+
+$(function () {
+    //分页查询更多列表
+    $('#require .pages a').click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        selectPage(selectUrl,pagesList,updateList,$('.list'),$(this));
+
+    });
+    //意愿需求详情
+    $('#require .list').on('click','a',function(e){
+        e.preventDefault();
+        $(this).attr('data-id')&&window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
+        if($(this).find('span').html()=='讲'){
+            window.sessionStorage.setItem('assign','1');
+        }else{
+            window.sessionStorage.setItem('assign','2');
+        }
+        $('#detail').empty().load('detail.html');
+        $('.detail_box').show().prev().hide();
+        $('body,html').stop().animate({scrollTop:0});
+    });
+    //筛选
+    $('.mark a').click(function(e){
+        e.preventDefault();
+        "use strict";
+        var elem=$(this);
+        elem.addClass('active_mark').siblings().removeClass('active_mark');
+       if(elem.hasClass('all')){
+           selectUrl='/v1/training/noScheduled/all';
+       }else if(elem.hasClass('listen')){
+           selectUrl='/v1/training/noScheduled/requirement';
+       }else{
+           selectUrl='/v1/training/noScheduled/willingness';
+       }
+        selectPage(selectUrl,pagesList,updateList,$('#require .list'));
+    });
+});
+//教你做人
+$(function(){
+    //分页查询
+    $('#training .pages a').click(function (e) {
+        e.preventDefault();
+        selectPage('v1/training/list',pagesTrain,updateList,$('#training .train_list'),$(this));
+    });
+    //培训详情的跳转
+    $('#training  .train_list').on('click','a',function(e){
+        e.preventDefault();
+        window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
+        window.sessionStorage.removeItem('assign');
+        $('#detail').empty().load('detail.html');
+        $('.detail_box').show().prev().hide();
+        $('body,html').stop().animate({scrollTop:0});
     });
 });
