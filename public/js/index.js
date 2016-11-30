@@ -28,8 +28,7 @@ function updateList(list,jq){//list:列表,jq:父元素
                     <a href="detail.html" data-id="${list[i].objectId}" style="position:relative;display:inline-block;">
                         <img src="${list[i].imgURL||'../imgs/default_course.png'}" style="position:relative"/>
                         <span style="background:${color};position:absolute;top:1px;right:1px;color:#fff;padding:3px 5px;">${tag}</span>
-                    <\/a>
-                    
+                    <\/a>        
                 <\/dt>
                 <dd>${list[i].title}</dd>
                 <dd>${timeClass+time}</dd>
@@ -49,6 +48,7 @@ $(function(){
         },1500);
     }else{
         $('.userLogin').show();
+        $('#login button').find('i').hide();
         if(user){
             $('#username').val(user.username);
             $('#password').val(user.password);
@@ -56,7 +56,13 @@ $(function(){
         }
     }
     //登录验证
-    $('#login input[type="submit"]').click(function(e){
+    $('#login input').focus(function(){
+        $('.msg_login').html('');
+        $(this).find('span').html('登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录').prev('i').hide();
+    });
+    $('#login button').click(function(e){
+        $(this).find('span').html('登&nbsp;&nbsp;录&nbsp;&nbsp;中...').prev('i').show();
+
         e.preventDefault();
         var obj={
             username:$('#username').val(),

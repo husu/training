@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>秒差距小课堂</title>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="skin/jedate.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/index.css"/>
     <link rel="stylesheet" href="css/require.css">
     <link rel="stylesheet" href="css/rank.css">
     <link rel="stylesheet" href="css/detail.css">
-    <link rel="stylesheet" href="skin/jedate.css">
 </head>
 <body>
 <div class="modal hide userLogin" >
@@ -20,7 +21,10 @@
                     <input type="text" name="username" id="username" placeholder="请输入用户名"/>
                     <input type="password" name="password" id="password" placeholder="请输入密码"/>
                     <input type="checkbox" id="savePwd"><label for="savePwd">记住用户密码</label>
-                    <input type="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录"/>
+                    <button>
+                        <i class="fa fa-spinner fa-pulse" style="color:#fff; font-size:20px; position:relative;left:-10px;"></i>
+                        <span>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</span>
+                    </button>
                 </form>
                 <p class="msg_login"></p>
         </div>
@@ -48,6 +52,7 @@
                             <option value="ios">ios</option>
                             <option value="python">python</option>
                             <option value="nodeJs">nodeJs</option>
+                            <option value="javaScript">javaScript</option>
                             <option value="gitHub">gitHub</option>
                             <option value="test">test</option>
                             <option value="frontEnd">前端技术</option>
@@ -68,9 +73,16 @@
                         <img src="imgs/nodeJs.png" alt="nodeJs"/>
                         <img src="imgs/project.png" alt="project mannager"/>
                         <img src="imgs/test.png" alt="test"/>
+                        <img src="imgs/affairs.png" alt="affairs">
+                        <img src="imgs/computer.png" alt="computer">
+                        <img src="imgs/html5.png" alt="html5">
+                        <img src="imgs/javaScript.png" alt="javaScript">
+                        <img src="imgs/job.png" alt="job">
+                        <img src="imgs/operate.png" alt="operate">
                     </div>
                     <p class="hide">message</p>
                 </div>
+                <div class="userData" style="font-size:30px;font-weight:bold;">你的信息在火星上。。。。。<br>正在努力寻找你的信息 <br>估计要等待3亿光年!!!</div>
             </div>
         </div>
     </div>
@@ -137,7 +149,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal detail_box hide">
+        <div class=" detail_box hide">
             <div class="detail-dialog modal-content">
                 <span class="close" style="position:absolute;font-size:20px;top:0;right:0;padding:5px 15px;cursor:pointer">&times;</span>
                 <div id="detail"></div>

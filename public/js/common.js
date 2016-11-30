@@ -66,15 +66,15 @@ function selectPage(url,pages,fun,jq,that,num){
 $(function () {
     username&& $('nav .user').html(window.sessionStorage.getItem('parsec_nickName'));
     $('.modal-content').click(function (e) {e.stopPropagation();});
-    $('.modal').not('.userLogin').click(function(){
+    $('.modal').not('.userLogin').click(function(){$(this).fadeOut();});
+    $('.detail_box').click(function(){
         $(this).fadeOut();
-        if($(this).hasClass('detail_box')){
-            $(this).prev().show();
-        }
+        $(this).prev().show();
     });
     $('.close').click(function () {
-        $('.modal').fadeOut();
-        if($(this).parent().hasClass('detail-dialog')){$(this).parent().parent().prev().show()}
+        if($(this).parent().hasClass('detail-dialog')){
+            $(this).parent().parent().fadeOut().prev().show();
+        }else{$('.modal').fadeOut();}
     });
     //修改密码
     $('.setting .resetPwd').click(function(e){
@@ -124,5 +124,7 @@ $(function () {
     //用户信息设置
     $('.setting .userSet').click(function (e) {
         e.preventDefault();
+        $('.modal').not('.userLogin').fadeIn('slow');
+        $('.userData').show().siblings('div').hide()
     });
 })

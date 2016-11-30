@@ -1,12 +1,12 @@
 /*用户登录*/
 .userLogin h3{color:#049ACB;}
 #login{margin:15px 30px; }
-#login input{display:block;width:300px;border:1px solid #049ACB;border-radius:3px;padding:10px 5px;font-size:14px;margin-bottom:25px;}
+#login input,#login button{display:block;width:300px;border:1px solid #049ACB;border-radius:3px;padding:10px 5px;font-size:14px;margin-bottom:25px;}
 #login input[type='text'],#login input[type='password']{padding-left:50px;background:url(../imgs/login_small.png) no-repeat 10px 6px;}
 #login input:first-child{background-position:10px -34px; }
 #login input[type='checkbox']{display:inline-block;width:30px;}
 #login label{font-size:14px;}
-#login input[type='submit']{cursor:pointer;font-weight:bold;margin:0;padding:8px 0;border:none;}
+#login button{cursor:pointer;font-weight:bold;margin:0;padding:8px 0;border:none;font-size:18px;}
 #login label{position:relative;right:32px;background:#fff;height:40px;}
 #login label:before{content: '';display:inline-block;position: relative;width:14px;height:14px;border:1px solid #049ACB;top:4px;margin-right:10px;}
 #savePwd:checked+label:before{background:url('../imgs/save_pwd.png') no-repeat center center;}

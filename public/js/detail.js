@@ -122,7 +122,7 @@ $(function(){
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
-        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
+        $('.detail_box').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
     //点击回应
@@ -131,7 +131,7 @@ $(function(){
         resname=$(this).attr('href');
         $('#replayWho').html(resname);
         replay.replayWho=$(this).parent().prev().html().slice(0,40)+'\t\t@'+resname;
-        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
+        $('.detail_box').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
     //点击切换默认回复对象
