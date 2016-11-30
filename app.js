@@ -11,7 +11,7 @@ const user = require('./router/user');
 const requirements = require('./router/requirements');
 var fs = require('fs');
 
-//var multipart = require('connect-multiparty');
+var multipart = require('connect-multiparty');
 
 
 var app = global.app = express();
@@ -20,7 +20,7 @@ var app = global.app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(timeout('25s'));
-//app.use(multipart({ uploadDir: __dirname + '/v1/upload' })) // Replace for depricated connect.bodyParser()
+app.use(multipart()); // Replace for depricated connect.bodyParser()
 
 
 
@@ -57,8 +57,10 @@ app.all(/\/v1\/.*$/, function (req, res, next) {
 app.use(express.static('public'));
 
 app.use(bodyParser());
+// app.use(express.bodyParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
+
 app.use(cookieParser());
 
 //app.get('/', function(req, res) {
