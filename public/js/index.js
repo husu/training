@@ -1,8 +1,8 @@
 /**
  * Created by Taohailin on 2016/10/19.
  */
-var pagesTrain={page:1,pageSize:6};//获取培训列表
-var pagesList={page:1,pageSize:6};//获取需求意愿列表
+var pagesTrain={page:1,pageSize:12};//获取培训列表
+var pagesList={page:1,pageSize:12};//获取需求意愿列表
 var createUrl=null;//创建培训意愿或需求的请求url
 var selectUrl=null;//查询的URL
 //更新培训查询列表
