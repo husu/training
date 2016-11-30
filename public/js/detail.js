@@ -9,7 +9,7 @@ var replay={content:"",replayWho:""};//回复评论参数
 var tags=window.sessionStorage.getItem('assign');//详情类别
 var trainId=window.sessionStorage.getItem('train_id');//培训id
 //update detail
-function updateDetail(res,tags){
+function updateDetail(res){
     var userClass='';
     var timeClass='';
     var time=preTime(res.trainDate||res.createdAt,true);
@@ -26,7 +26,7 @@ function updateDetail(res,tags){
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
                 <h3>${res.title}</h3>
-                <p>${userClass+res.creator.nickName||res.creator.username}</p>
+                <p>${userClass+(res.creator.nickName||res.creator.username)}</p>
                 <p>${timeClass+time}</p>
                 <div>${res.content}</div>
             </div>
@@ -93,7 +93,7 @@ $(function(){
             thumbUpNum=res.thumbUpNum||0;
             $('.detail a:first').find('b').html(thumbUpNum);
             $('.detail a:last').find('b').html(commentNum);
-            selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'','',commentNum);
+            selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
         }
     });
     $.get(`v1/thumbUp/${trainId}`,function(data){
@@ -102,7 +102,7 @@ $(function(){
     //分页查询评论
     $('#resList>p a').click(function (e) {
         e.preventDefault();
-        selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',$(this),commentNum);
+        selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),$(this),commentNum);
     });
     //点赞
     $('.detail #praise').click(function (e) {
@@ -122,7 +122,7 @@ $(function(){
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
-        $('body').stop().animate({scrollTop:$('.replay').offset().top},500);
+        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
     //点击回应
@@ -131,7 +131,7 @@ $(function(){
         resname=$(this).attr('href');
         $('#replayWho').html(resname);
         replay.replayWho=$(this).parent().prev().html().slice(0,40)+'\t\t@'+resname;
-        $('body').stop().animate({scrollTop:$('.replay').offset().top},1000);
+        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
     //点击切换默认回复对象
@@ -151,7 +151,7 @@ $(function(){
                 if(!data.code){
                     commentNum+=1;
                     $('.detail a:last').find('b').html(commentNum);
-                    selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'','',commentNum);
+                    selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
                 }
             });
         }else{reMsg('回复内容不能为空')}
