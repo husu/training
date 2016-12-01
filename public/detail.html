@@ -1,15 +1,21 @@
 <div class="detail_main">
+    <div class="msg-confirm text-center hide">
+        <span>你确认要讲这个?</span><a href="" class="ok">确认</a><a href="" class="cancel">取消</a>
+    </div>
+    <div class="msg-prompt text-center hide">
+        <p></p>
+    </div>
     <div class="detail">
-        <div></div>
-        <p>
+        <div class="content"></div>
+        <div class="plan">
             <a href="#" id="praise">点赞<b></b></a>
             <a href="#" id="review">评论<b></b></a>
-            <span id="train_assign" class="rt">
-                    <span>选择培训时间:</span>
-                    <input type="text" id="date" placeholder="请选择培训时间">
-                    <button id="confirm" class="btn-disable">安排培训</button>
-                </span>
-        </p>
+            <div id="train_assign" class="rt">
+                <span>选择培训时间:</span>
+                <input type="text" id="date" placeholder="请选择培训时间">
+                <button id="confirm" class="btn-disable">安排培训</button>
+            </div>
+        </div>
     </div>
     <div id="resList">
         <div class="comment"></div>
@@ -24,7 +30,6 @@
         <p>回复@<a href="#" id='replayWho'>课程</a></p>
         <textarea id="resBox" placeholder="回复内容..."></textarea>
         <p><a href="" class="rt">回&nbsp;&nbsp;复</a></p>
-        <p id="msg"></p>
     </div>
 </div>
 <script src="skin/jquery.jedate.js"></script>

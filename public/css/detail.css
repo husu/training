@@ -1,15 +1,15 @@
 .detail_box{position:absolute;left: 0;right: 0;top:0;background:#ddd;z-index: 5;padding-top:80px;padding-bottom:40px;overflow:auto;}
-.detail-dialog{width:1000px;margin:0 auto;padding:40px 30px 20px;background:#fff;position:relative;overflow:auto;}
+.detail-dialog{width:1000px;margin:0 auto;padding:40px 30px 20px;background:#fff;position: relative;}
 /*培训详情*/
-.detail>div{overflow:hidden;border-radius:6px;padding:20px 15px;box-shadow:0 0 5px 3px #ddd inset;}
-.detail .lf p{font-size:18px;margin-top:20px;}
-.detail .rt{width:64%; }
-.detail .rt p{margin:6px 0;font-size:16px;}
-.detail>p{padding:20px 0;}
-.detail>p a{color:#333;padding:8px 7px;padding-left:60px;border:1px solid #ddd;display:inline-block;border-radius:4px;background:url('../imgs/login_small.png') no-repeat 7px -136px;}
-.detail>p a:nth-child(2){background:url('../imgs/login_small.png') no-repeat 7px -102px;margin-left:80px;}
-.detail>p a b{display:inline-block;margin:0 10px;}
-.detail #train_assign{display:none;overflow: hidden;width:50%; text-align:right;}
+.detail .content{overflow:hidden;border-radius:6px;padding:20px 15px;box-shadow:0 0 5px 3px #ddd inset;}
+.detail .content .lf p{font-size:18px;margin-top:20px;}
+.detail .content .rt{width:64%; }
+.detail .content .rt p{margin:6px 0;font-size:16px;}
+.detail .plan{padding:20px 0;}
+.detail .plan>a{color:#333;padding:8px 7px;padding-left:60px;border:1px solid #ddd;display:inline-block;border-radius:4px;background:url('../imgs/login_small.png') no-repeat 7px -136px;}
+.detail a#review{background:url('../imgs/login_small.png') no-repeat 7px -102px;margin-left:80px;}
+.detail .plan>a b{display:inline-block;margin:0 10px;}
+.detail #train_assign{display:none;width:50%; text-align:right;position:relative;}
 .detail #train_assign button{width:120px;height:37px;border-radius:4px;font-size:16px;}
 .detail #date{width:180px;height:35px;margin-right:10px;font-size:14px;border:1px solid #049ACB;padding:10px 10px;background:url('../imgs/date.png') no-repeat center right;}
 .praise{background:url('../imgs/login_small.png') no-repeat 7px -168px #f7f7f7 !important;}
@@ -34,3 +34,10 @@
     -ms-transform: translate(-50%,-50%);
     -o-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);}
+/*信息提示/确认*/
+.msg-confirm,.msg-prompt{position:fixed; z-index: 999;top:70px;left:1px;right:1px;border-radius:5px;background:#fdeac2;padding:15px;}
+.msg-confirm span,.msg-confirm a{display:inline-block;margin-left:10px;padding:4px 12px;}
+.msg-prompt p{padding:4px 12px;}
+.msg-confirm .ok{border-radius:3px;background:#00B9E8;color:#fff;}
+.msg-confirm a{font-size:14px;}
+.msg-confirm .cancel{border:1px solid #aaa;border-radius:3px;}

@@ -1,8 +1,8 @@
 /**
  * Created by Taohailin on 2016/10/19.
  */
-var pagesTrain={page:1,pageSize:6};//获取培训列表
-var pagesList={page:1,pageSize:6};//获取需求意愿列表
+var pagesTrain={page:1,pageSize:9};//获取培训列表
+var pagesList={page:1,pageSize:9};//获取需求意愿列表
 var createUrl=null;//创建培训意愿或需求的请求url
 var selectUrl=null;//查询的URL
 //更新培训查询列表
@@ -58,7 +58,7 @@ $(function(){
     //登录验证
     $('#login input').focus(function(){
         $('.msg_login').html('');
-        $(this).find('span').html('登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录').prev('i').hide();
+        $('#login button').find('span').html('登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录').prev('i').hide();
     });
     $('#login button').click(function(e){
         $(this).find('span').html('登&nbsp;&nbsp;录&nbsp;&nbsp;中...').prev('i').show();
@@ -81,7 +81,8 @@ $(function(){
                 window.sessionStorage.setItem('parsec_nickName',nickName);
                 $('.modal').fadeOut('slow');
                 $('nav .user').html(nickName);
-                selectPage('/v1/training/noScheduled/all',pagesList,updateList,$('#require .list'));
+                selectUrl='/v1/training/noScheduled/all';
+                selectPage(selectUrl,pagesList,updateList,$('#require .list'));
                 setTimeout(function(){
                     $('header').slideUp(500);
                 },1500);
@@ -149,7 +150,7 @@ $(function(){
             if(!data.code){
                 $('.modal').fadeOut();
                 $('.tabs a[href="#require"]').trigger('click');
-            }else{$('.modal-content>p').html(data.errors).show();}
+            }else{$('.msg-add').html(data.errors).show();}
         });
     });
 });
