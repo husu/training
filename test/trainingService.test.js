@@ -30,7 +30,8 @@ describe('测试关于培训的RESTful API',function() {
             status:1,
             content:'测试新增需求',
             trainDate:new Date(),
-            tag:['test111']
+            tag:['test111'],
+            thumbUpNum:5
         };
 
 

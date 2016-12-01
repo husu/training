@@ -260,10 +260,10 @@ router.post("/plan",function(req,res){
         return res.send(result);
     }
 
-    trainObj.status=util.TRAININGSTATUS.TRAINING;
-    trainObj.creator = req.currentUser;
+    // trainObj.status=util.TRAININGSTATUS.TRAINING;
+    // trainObj.creator = req.currentUser;
 
-    return ts.save(trainObj).then(function(obj){
+    return ts.plan(trainObj.objectId,trainObj.trainDate,trainObj.creator).then(function(obj){
         result ={
             code:0,
             message:'保存成功',
@@ -276,7 +276,13 @@ router.post("/plan",function(req,res){
             message:'保存失败',
             errors:[e]
         };
-        console.log(e);
+        if(e.errorCode && e.errorCode == util.ERROR.AUTH_FAIL.errorCode){
+            result.code = e.errorCode;
+            result.message = '要积满6个赞方可开坛！'
+        }
+
+
+        // console.log(e);
         return res.send(result);
     });
 

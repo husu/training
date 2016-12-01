@@ -103,6 +103,10 @@ util.ERROR = {
     PARAMETER_IS_NOT_CORRECT:{
         errorCode:-7,
         message:'参数数据非法'
+    },
+    THUMBUP_NUM_NOT_ENOUGH:{
+        errorCode:-8,
+        message:'点赞数不足'
     }
 };
 

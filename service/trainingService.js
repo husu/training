@@ -24,12 +24,34 @@ module.exports ={
            training =  AV.Object.createWithoutData('Training',training.id);
         }
         myUtil.copyProperty(training,obj);
-
-
-
         return training.save();
 
     },
+
+    plan:function (id,planDate,user) {
+        if(!id){
+            return  AV.Promise.error(myUtil.ERROR.OBJECT_ID_IS_EMPTY);
+        }
+        return new AV.Query('Training').get(id).then(obj=>{
+            if(!obj){
+                return AV.Promise.error(myUtil.ERROR.OBJECT_ID_IS_EMPTY);
+
+            }
+
+            if(!obj.get('thumbUpNum') || obj.get('thumbUpNum')<6){
+                return AV.Promise.error(myUtil.ERROR.THUMBUP_NUM_NOT_ENOUGH);
+            }
+
+            obj.set('trainDate',planDate);
+            obj.set('creator',user);
+            return obj.save();
+        }).catch(function (err) {
+            return err;
+        });
+
+    },
+
+
     /**
      * 删除一个培训
      * @param objectId
@@ -37,7 +59,7 @@ module.exports ={
      */
     delete:function(objectId){
         if(!objectId){
-            return AV.Promise.error(myUtil.ERROR.OBJECT_ID_IS_EMPTY);
+            return  AV.Promise.error(myUtil.ERROR.OBJECT_ID_IS_EMPTY);
         }
        return AV.Object.createWithoutData('Training',objectId).destroy();
     },
