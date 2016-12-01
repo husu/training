@@ -11,7 +11,7 @@ a{text-decoration:none;color:#777;}
 .show{display:block;}
 .succ{color:green;}
 .err{color:#FF6100;}
-.main{background:#fff;overflow:hidden;margin:0 auto;min-height:770px;width:1200px;}
+.main{background:#fff;overflow:hidden;margin:0 auto;width:1200px;}
 section{background:#ddd;}
 /*头部*/
 nav{height:70px;width:100%;background:#049ACB;position:fixed;top:0;z-index:10;}

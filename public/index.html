@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>秒差距小课堂</title>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="skin/jedate.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/index.css"/>
@@ -37,8 +37,8 @@
                 <div class="resetPwd hide">
                     <form id="setPwd">
                         <input type="password" name="oldPwd" id="oldPwd" placeholder="请输入原密码"/>
-                        <input type="text" name="newPwd" id="newPwd" placeholder="请输入新密码"/>
-                        <input type="text"  id="resNewPwd"  placeholder="请重新输入新密码"/>
+                        <input type="password" name="newPwd" id="newPwd" placeholder="请输入新密码"/>
+                        <input type="password"  id="resNewPwd"  placeholder="请重新输入新密码"/>
                         <input type="submit" value="修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改"/>
                     </form>
                     <p class="msg_setPwd"></p>
@@ -79,9 +79,9 @@
                         <img src="imgs/javaScript.png" alt="javaScript">
                         <img src="imgs/operate.png" alt="operate">
                     </div>
-                    <p class="hide">message</p>
+                    <p class="hide msg-add">message</p>
                 </div>
-                <div class="userData" style="font-size:30px;font-weight:bold;">你的信息在火星上。。。。。<br>正在努力寻找你的信息 <br>估计要等待3亿光年!!!</div>
+                <div class="userData" style="font-size:30px;font-weight:bold;">还没开发=>你想怎样!</div>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@
                 <li class="setting hide">
                     <ul>
                         <li><a href="#" class="userSet">信息设置</a></li>
-                        <li><a href="#" class="resetPwd">修改密码</a></li>
+                        <li><a href="#" class="resPwd">修改密码</a></li>
                         <li><a href="#" class="logOut">退出登录</a></li>
                     </ul>
                 </li>
@@ -115,7 +115,7 @@
                     <a data-url="v1/willingness">我&nbsp;要&nbsp;讲</a><a data-url="v1/requirements">我&nbsp;想&nbsp;听</a>
                 </p>
                 <div class="module hide" id="training">
-                    <div class="train_list"></div>
+                    <div class="train_list" style="min-height: 770px"></div>
                     <p class="pages text-center hide">
                         <a href="#" class="a-btn a-disable">上一页</a>
                         <a href="#" class="a-btn">下一页</a>
@@ -128,14 +128,14 @@
                             <a href="" class="listen">想听</a>
                             <a href="" class="talk">想讲</a>
                         </p>
-                        <div class="list" style="overflow:hidden"></div>
+                        <div class="list" style="overflow:hidden;min-height: 770px"></div>
                         <p class="pages text-center hide">
                             <a href="#" class="a-btn a-disable">上一页</a>
                             <a href="#" class="a-btn">下一页</a>
                         </p>
                     </div>
                 </div>
-                <div class="module hide" id="rank">
+                <div class="module hide" id="rank" style="min-height: 770px">
                         <ul class="sort lf">
                             <li>排行分类</li>
                             <li><a href="">按点赞数</a></li>

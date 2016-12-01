@@ -2,7 +2,7 @@
  * Created by Taohailin on 2016/10/26.
  */
 var resname=null;//回复谁的评论
-var comments={page:1,pageSize:6};//查看更多评论
+var comments={page:1,pageSize:9};//查看更多评论
 var commentNum=null;//评论数
 var thumbUpNum=null;//点赞数
 var replay={content:"",replayWho:""};//回复评论参数
@@ -21,7 +21,7 @@ function updateDetail(res){
         default:
             userClass='主讲人：';timeClass='培训时间：';break;
     }
-    $('.detail>div').html(`
+    $('.detail .content').html(`
         <div>
             <div class="lf"><img src="${res.imgURL||'../imgs/default_course.png'}" alt=""/></div>
             <div class="rt">
@@ -54,8 +54,17 @@ function updateComment(list,jq){
     jq.html(frag);
 }
 $(function(){
+    //提示信息
+    function reMsg(txt){
+        $('.msg-prompt').html(txt).slideDown('fast', function () {
+            setTimeout(function () {
+                $('.msg-prompt').slideUp();
+            },1500);
+        });
+    }
     //页面初始化
     if(tags){
+        $('.needUpNum').show();
         $('#date').jeDate({
             skinCell:"jedateblue",
             format: 'YYYY-MM-DD hh:mm',
@@ -67,23 +76,33 @@ $(function(){
                 $.get('v1/training/trainByTime',{trainDate:val+':00'},function(data){
                     if(!data.result){
                         var plan={objectId:trainId,trainDate:val+':00'};
-                        $('#date').prev().html('');
                         $('#confirm').click(function(e){
                             e.preventDefault();
-                            $.post('/v1/training/plan',plan,function(data){
-                                if(data.result){
-                                    $('#date').prev().html('安排成功').removeClass().addClass('succ');
-                                    $('#confirm').addClass('btn-disable');
-                                }
+                            $('.msg-confirm').slideDown('',function(){
+                                "use strict";
+                                $('body').click(function(){return false});
+                                $('.ok').click(function(e){
+                                    $('.msg-confirm').slideUp();
+                                    e.preventDefault();
+                                    $.post('/v1/training/plan',plan,function(data){
+                                        if(data.result){
+                                            reMsg('安排成功');
+                                            $('#confirm').addClass('btn-disable');
+                                        }else{reMsg('安排失败');}
+                                    });
+                                });
+                                $('.cancel').click(function(e){
+                                    e.preventDefault();
+                                    $('.msg-confirm').slideUp();
+                                });
                             });
                         });
                     }else{
-                        $('#date').prev().html('该时间已有培训').removeClass().addClass('err');
+                        reMsg('该时间已经有培训课程');
                     }
                 });
             }
         });
-        $('#train_assign').css('display','block');
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
         var res=data.result;
@@ -91,13 +110,14 @@ $(function(){
             updateDetail(res,tags);
             commentNum=res.commentNum||0;
             thumbUpNum=res.thumbUpNum||0;
-            $('.detail a:first').find('b').html(thumbUpNum);
-            $('.detail a:last').find('b').html(commentNum);
+            tags&&(thumbUpNum>=5)&&$('#train_assign').show()&&$('.needUpNum').hide();
+            $('#praise').find('b').html(thumbUpNum);
+            $('#review').find('b').html(commentNum);
             selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
         }
     });
     $.get(`v1/thumbUp/${trainId}`,function(data){
-        data.result||$('.detail a:first').addClass('a-disable');
+        data.result||$('#praise').addClass('a-disable');
     });
     //分页查询评论
     $('#resList>p a').click(function (e) {
@@ -105,12 +125,16 @@ $(function(){
         selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),$(this),commentNum);
     });
     //点赞
-    $('.detail #praise').click(function (e) {
+    $('#praise').click(function (e) {
         e.preventDefault();
         var that=$(this);
         $.post(`v1/thumbUp/${trainId}`,function (data) {
             if(data.result) {
                 thumbUpNum+=1;
+                if(tags&&(thumbUpNum<5)){
+                    reMsg('点赞成功!!还差'+(5-thumbUpNum)+'赞开坛!');
+                }else{ reMsg('点赞成功!!!');}
+                tags&&(thumbUpNum>=5)&&$('#train_assign').show()&&$('.needUpNum').hide();
                 that.addClass('a-disable praise');
                 that.find('b').html(thumbUpNum);
             }
@@ -118,11 +142,11 @@ $(function(){
     });
     //评论或回复
     //点击评论
-    $('.detail #review').click(function (e) {
+    $('#review').click(function (e) {
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
-        $('.detail_box').stop().animate({scrollTop:$('.replay').offset().top},500);
+        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},1000);
         $('#resBox').focus();
     });
     //点击回应
@@ -131,7 +155,7 @@ $(function(){
         resname=$(this).attr('href');
         $('#replayWho').html(resname);
         replay.replayWho=$(this).parent().prev().html().slice(0,40)+'\t\t@'+resname;
-        $('.detail_box').stop().animate({scrollTop:$('.replay').offset().top},500);
+        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},1000);
         $('#resBox').focus();
     });
     //点击切换默认回复对象
@@ -150,18 +174,10 @@ $(function(){
                 $('#resBox').val("");
                 if(!data.code){
                     commentNum+=1;
-                    $('.detail a:last').find('b').html(commentNum);
+                    $('#review').find('b').html(commentNum);
                     selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
                 }
             });
         }else{reMsg('回复内容不能为空')}
-        //回复提示信息
-        function reMsg(txt){
-            $('#msg').html(txt).fadeIn('slow', function () {
-                setTimeout(function () {
-                    $('#msg').fadeOut();
-                }, 1000);
-            });
-        }
     });
 });
