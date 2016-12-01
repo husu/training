@@ -8,7 +8,8 @@ var thumbUpNum=null;//点赞数
 var replay={content:"",replayWho:""};//回复评论参数
 var tags=window.sessionStorage.getItem('assign');//详情类别
 var trainId=window.sessionStorage.getItem('train_id');//培训id
-var needUpNum=6;//多少个赞开坛
+if(tags){var needUpNum=6;}//满足安排培训的点赞数
+
 //update detail
 function updateDetail(res){
     var userClass='';
