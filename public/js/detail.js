@@ -8,6 +8,8 @@ var thumbUpNum=null;//点赞数
 var replay={content:"",replayWho:""};//回复评论参数
 var tags=window.sessionStorage.getItem('assign');//详情类别
 var trainId=window.sessionStorage.getItem('train_id');//培训id
+if(tags){var needUpNum=6;}//满足安排培训的点赞数
+
 //update detail
 function updateDetail(res){
     var userClass='';
@@ -110,7 +112,7 @@ $(function(){
             updateDetail(res,tags);
             commentNum=res.commentNum||0;
             thumbUpNum=res.thumbUpNum||0;
-            tags&&(thumbUpNum>=5)&&$('#train_assign').show()&&$('.needUpNum').hide();
+            tags&&(thumbUpNum>=needUpNum)&&$('#train_assign').show()&&$('.needUpNum').hide();
             $('#praise').find('b').html(thumbUpNum);
             $('#review').find('b').html(commentNum);
             selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
@@ -131,10 +133,10 @@ $(function(){
         $.post(`v1/thumbUp/${trainId}`,function (data) {
             if(data.result) {
                 thumbUpNum+=1;
-                if(tags&&(thumbUpNum<5)){
-                    reMsg('点赞成功!!还差'+(5-thumbUpNum)+'赞开坛!');
+                if(tags&&(thumbUpNum<needUpNum)){
+                    reMsg('点赞成功!!还差'+(needUpNum-thumbUpNum)+'赞开坛!');
                 }else{ reMsg('点赞成功!!!');}
-                tags&&(thumbUpNum>=5)&&$('#train_assign').show()&&$('.needUpNum').hide();
+                tags&&(thumbUpNum>=needUpNum)&&$('#train_assign').show()&&$('.needUpNum').hide();
                 that.addClass('a-disable praise');
                 that.find('b').html(thumbUpNum);
             }
