@@ -64,6 +64,7 @@ $(function(){
     }
     //页面初始化
     if(tags){
+        $('.needUpNum').show();
         $('#date').jeDate({
             skinCell:"jedateblue",
             format: 'YYYY-MM-DD hh:mm',
@@ -102,7 +103,6 @@ $(function(){
                 });
             }
         });
-        $('#train_assign').show();
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
         var res=data.result;
@@ -110,6 +110,7 @@ $(function(){
             updateDetail(res,tags);
             commentNum=res.commentNum||0;
             thumbUpNum=res.thumbUpNum||0;
+            tags&&(thumbUpNum>=5)&&$('#train_assign').show()&&$('.needUpNum').hide();
             $('#praise').find('b').html(thumbUpNum);
             $('#review').find('b').html(commentNum);
             selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
@@ -130,6 +131,8 @@ $(function(){
         $.post(`v1/thumbUp/${trainId}`,function (data) {
             if(data.result) {
                 thumbUpNum+=1;
+                reMsg('点赞成功!');
+                tags&&(thumbUpNum>=5)&&$('#train_assign').show()&&$('.needUpNum').hide();
                 that.addClass('a-disable praise');
                 that.find('b').html(thumbUpNum);
             }
