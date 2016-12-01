@@ -131,7 +131,9 @@ $(function(){
         $.post(`v1/thumbUp/${trainId}`,function (data) {
             if(data.result) {
                 thumbUpNum+=1;
-                reMsg('点赞成功!');
+                if(tags&&(thumbUpNum<5)){
+                    reMsg('点赞成功!!还差'+(5-thumbUpNum)+'赞开坛!');
+                }else{ reMsg('点赞成功!!!');}
                 tags&&(thumbUpNum>=5)&&$('#train_assign').show()&&$('.needUpNum').hide();
                 that.addClass('a-disable praise');
                 that.find('b').html(thumbUpNum);
