@@ -9,7 +9,7 @@ let fs = require('fs');
 let AV = require('leanengine');
 let _= require('lodash');
 
-router.post('/img',function(req,res){
+router.post('/icon',function(req,res){
         var iconFile = req.files.image;
         if(iconFile){
 
@@ -37,10 +37,15 @@ router.post('/img',function(req,res){
                 var base64Data = data.toString('base64');
                 var theFile = new AV.File(iconFile.name, {base64: base64Data});
                 theFile.save().then(function(theFile){
-                    res.send({
+
+                    let user =  req.currentUser;
+                    user.set('icon',theFile.get('url'));
+                    user.save().then(u=>{
+                        res.send({
                         code:1,
                         message:'上传成功',
                         result:theFile
+                        });
                     });
                 });
             });
