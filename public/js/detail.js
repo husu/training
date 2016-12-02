@@ -75,9 +75,10 @@ $(function(){
             isTime:true,
             choosefun:function (inp,val) {
                 $('#confirm').removeClass('btn-disable');
-                $.get('v1/training/trainByTime',{trainDate:val+':00'},function(data){
+                // console.log('inp:' + inp + 'val:'+ val);
+                $.get('v1/training/trainByTime',{trainDate:val},function(data){
                     if(!data.result){
-                        var plan={objectId:trainId,trainDate:val+':00'};
+                        var plan={objectId:trainId,trainDate:val};
                         $('#confirm').click(function(e){
                             e.preventDefault();
                             $('.msg-confirm').slideDown('',function(){

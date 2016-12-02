@@ -121,9 +121,12 @@ router.get('/noScheduled/:type',function(req,res){
         var trainList =  _.map(list,o=>{
             var user  = o.get('creator');
 
+
+
+
             o= _.pick(util.avObjectToJson(o),['commentNum','status','tags','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
             o.creator = {
-                id:user.id,
+                id:user.id || '',
                 username:user.get('username'),
                 nickName:user.get('nickName')
             };
