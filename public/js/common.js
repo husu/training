@@ -1,7 +1,12 @@
 /**
  * Created by taohailin on 2016/11/29.
  */
-var username=window.sessionStorage.getItem('parsec_username');//是否登录
+var obj=JSON.parse(window.sessionStorage.getItem('parsec_user'));//用户信息
+if(obj){
+    var username=obj.usrName;
+    var nickname=obj.nickName;
+    var userface=obj.userFace;
+}
 var user=JSON.parse(window.localStorage.getItem('parsec_user'));//记住用户密码
 //时间格式化方法 t:任意时间格式 f:默认为flase  yy-mm-dd，true yy年mm月dd日;
 function preTime(t,f){
@@ -69,7 +74,7 @@ function selectPage(url,pages,fun,jq,that,num){
     });
 }
 $(function () {
-    username&& $('nav .user').html(window.sessionStorage.getItem('parsec_nickName'));
+    username&& $('nav .user').html(nickname)&&$('nav .avatar img').attr('src',userface);
     $('.modal-content').click(function (e) {e.stopPropagation();});
     // $('.modal').not('.userLogin').click(function(){$(this).fadeOut();});
     $('.close').click(function () {

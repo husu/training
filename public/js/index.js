@@ -62,25 +62,30 @@ $(function(){
     });
     $('#login button').click(function(e){
         $(this).find('span').html('登&nbsp;&nbsp;录&nbsp;&nbsp;中...').prev('i').show();
-
         e.preventDefault();
-        var obj={
+        var userObj={
             username:$('#username').val(),
             password:$('#password').val()
         }
-        $.post('/login',obj,function(data){
+        $.post('/login',userObj,function(data){
             if(data.result){
                 if($('#savePwd')[0].checked){
-                    window.localStorage.setItem('parsec_user',JSON.stringify(obj));
+                    window.localStorage.setItem('parsec_user',JSON.stringify(userObj));
                 }else{
                     window.localStorage.removeItem('parsec_user');
                 }
                 username=data.result.username;
-                nickName=data.result.nickName;
-                window.sessionStorage.setItem('parsec_username',username);
-                window.sessionStorage.setItem('parsec_nickName',nickName);
+                userface=data.result.userface||'imgs/user.png';
+                nickname=data.result.nickName;
+                var obj={
+                    userName:username,
+                    nickName:nickname,
+                    userFace:userface
+                }
+                window.sessionStorage.setItem('parsec_username',JSON.stringify(obj));
                 $('.modal').fadeOut('slow');
-                $('nav .user').html(nickName);
+                $('nav .user').html(nickname);
+                $('nav .avatar img').attr('src',userface);
                 selectUrl='/v1/training/noScheduled/all';
                 selectPage(selectUrl,pagesList,updateList,$('#require .list'));
                 setTimeout(function(){
@@ -98,22 +103,28 @@ $(function(){
     //标签导航
     $('.tabs li a').click(function (e) {
         e.preventDefault();
-        var module=$(this).attr('href')
+        var flag=false;
+        var module=$(this).attr('href');
         $('.tabs a').removeClass();
         $(this).addClass('active-tabs');
         $(module).show().siblings('.module').hide();
         $('#add_train').show();
+        if(!$(module).find('.list').html()){flag=true}else{
+            var time=new Date().getTime();
+            console.log(time%3);
+            if((time%3)==2){flag=true;}
+        }
         switch(module){
             case '#training':
-                selectPage('v1/training/list',pagesTrain,updateList,$('#training .train_list'));break;
+                flag&&selectPage('v1/training/list',pagesTrain,updateList,$('#training .list'));break;
             case '#require':
                 $('#require .all').addClass('active_mark').siblings().removeClass('active_mark');
-                selectPage('/v1/training/noScheduled/all',pagesList,updateList,$('#require .list'));break;
+                flag&&selectPage('/v1/training/noScheduled/all',pagesList,updateList,$('#require .list'));break;
             case '#rank':
                 $('#add_train').hide();
-                $.get('/v1/rank/thumbUp',function(data){
+                flag&&$.get('/v1/rank/thumbUp',function(data){
                     if(data.result){
-                        updateRank(data.result,$('#rank .rankList ul'));
+                        updateRank(data.result,$('#rank .rankList .list'));
                     }
                 });
         }
