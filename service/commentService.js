@@ -47,12 +47,14 @@ module.exports = {
         myUtil.copyProperty(comment,comObj);
 
 
+
         if(!comObj.trainId){
             return AV.Promise.error(myUtil.ERROR.PARAMETER_MISSING);
         }
 
         var trainPointer =AV.Object.createWithoutData('Training',comObj.trainId);
         comment.set('training',trainPointer);
+        comment.set('content',comObj.content);
         return comment.save().then(function(c){
             if(comObj.type == myUtil.COMMENTTYPE.COMMENT) {
                 trainPointer.increment('commentNum', 1);

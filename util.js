@@ -18,9 +18,8 @@ util.copyPropertyFromRequest=function(model,request){
 
     for(let p in request.body){
         if(p && request.body[p]) {
-
             curValue=request.body[p];
-            if(typeof request.body[p] == 'string' &&  validator.isDate(request.body[p])){
+            if(typeof request.body[p] == 'string' && curValue.substring(0,1) !='+' && validator.isDate(request.body[p])){
                 curValue = new Date(request.body[p]);
             }
             model.set(p, curValue);
@@ -56,7 +55,7 @@ util.copyProperty=  function(avObject,object){
             curValue = object[p];
 
 
-            if( typeof object[p] == 'string' &&  validator.isDate(object[p])){
+            if( typeof object[p] == 'string' && curValue.substring(0,1)!= '+' && validator.isDate(object[p])){
                 curValue = new Date(object[p]);
             }
 

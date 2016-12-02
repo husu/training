@@ -90,6 +90,7 @@ router.post('/:trainId',function(req,res){
     comment.creator = req.currentUser;
 
 
+
     return cs.saveComment(comment).then(function(obj){
         result.message ='保存成功';
         result.result = obj;
