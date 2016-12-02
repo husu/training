@@ -21,7 +21,7 @@ function updateDetail(res){
         case '2':
             userClass='创建人：';timeClass='创建时间：';break;
         default:
-            userClass='主讲人：';timeClass='培训时间：';break;
+            userClass='主讲人：';timeClass='开坛时间：';break;
     }
     $('.detail .content').html(`
         <div>

@@ -13,27 +13,36 @@
     <link rel="stylesheet" href="css/detail.css">
 </head>
 <body>
-<div class="modal hide userLogin" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-                <h3 class="text-center">用户登录</h3>
-                <form id="login">
-                    <input type="text" name="username" id="username" placeholder="请输入用户名"/>
-                    <input type="password" name="password" id="password" placeholder="请输入密码"/>
-                    <input type="checkbox" id="savePwd"><label for="savePwd">记住用户密码</label>
-                    <button>
-                        <i class="fa fa-spinner fa-pulse" style="color:#fff; font-size:20px; position:relative;left:-10px;"></i>
-                        <span>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</span>
-                    </button>
-                </form>
-                <p class="msg_login"></p>
+    <div class="modal hide userLogin" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <h3 class="text-center">用户登录</h3>
+                    <form id="login">
+                        <input type="text" name="username" id="username" placeholder="请输入用户名"/>
+                        <input type="password" name="password" id="password" placeholder="请输入密码"/>
+                        <input type="checkbox" id="savePwd"><label for="savePwd">记住用户密码</label>
+                        <button>
+                            <i class="fa fa-spinner fa-pulse" style="color:#fff; font-size:20px; position:relative;left:-10px;"></i>
+                            <span>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</span>
+                        </button>
+                    </form>
+                    <p class="msg_login"></p>
+            </div>
         </div>
     </div>
-</div>
     <div class="modal hide" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <span class="close" style="position:absolute;font-size:20px;top:0;right:0;padding:5px 15px;cursor:pointer">&times;</span>
+                <div class="uploadFace hide">
+                    <img src="" alt="头像预览" width="100px" height="100px" style="border:1px solid #ddd;" class="lf">
+                    <form id="uploadFace" class="lf" enctype="multipart/form-data">
+                        <a href="javascript:;" class="file">选择文件<input name="image" type="file"/></a>
+                        <input type="button" value="上传" id="upFace" class="btn-disable"/>
+                    </form>
+                    <span class="clear" style="display:block;width:100%;text-align:center;font-size:14px;height:20px;padding-top:4px;"></span>
+                    <progress style="width:100%;" value="0"></progress>
+                </div>
                 <div class="resetPwd hide">
                     <form id="setPwd">
                         <input type="password" name="oldPwd" id="oldPwd" placeholder="请输入原密码"/>
@@ -45,7 +54,7 @@
                 </div>
                 <div class="add_train hide ">
                     <form id="add">
-                        <input type="text" name="title" placeholder="请输入想将或想听的课程"/>
+                        <input type="text" name="title" placeholder="请输入想讲或想听的课程"/>
                         <select name="tags">
                             <option value="java">java</option>
                             <option value="android">android</option>
@@ -55,6 +64,7 @@
                             <option value="javaScript">javaScript</option>
                             <option value="gitHub">gitHub</option>
                             <option value="test">test</option>
+                            <option value="dataBase">数据库</option>
                             <option value="frontEnd">前端技术</option>
                             <option value="weixin">微信开发</option>
                             <option value="projectManagement">项目管理</option>
@@ -98,6 +108,7 @@
                     </ul>
                 </li>
             </ul>
+            <a href="" class="avatar rt"><img src="imgs/user.png" style="width:40px;height:40px;vertical-align: middle; margin-right:15px;" title="上传头像"></a>
         </div>
     </nav>
     <section>

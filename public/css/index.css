@@ -33,3 +33,35 @@
 #add .smImg #select{width:20%;display:inline-block;}
 #add .smImg img{position:relative;top:25px;left:60px;height:80px;border:1px solid #333;}
 #add textarea{width:100%;height:200px;font-size:14px;padding:10px;resize:none;border-radius:4px;margin-bottom:20px;border:1px solid #049ACB;}
+/*修改密码*/
+#setPwd{margin-bottom:15px;}
+#setPwd input{
+    display:block;width:300px;border:1px solid #ddd;border-radius:3px;padding:10px;margin-top:10px;
+}
+/*上传头像*/
+.uploadFace{padding:10px;}
+#uploadFace{font-size:18px;padding-top:15px;padding-left:40px;}
+.uploadFace img{margin-left:20px;}
+#uploadFace>input{padding: 4px 12px;font-size:16px;border-radius:4px;display:block;margin-top:15px;width:100px;}
+.file {
+    position: relative;
+    display: inline-block;
+    background:#36aed5;;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color:#fff;
+    font-size:16px;
+    width:100px;
+    text-align: center;
+}
+.file input {
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    font-size:100px;
+}
+.file:hover {
+    background:#049ACB;
+}

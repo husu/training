@@ -71,11 +71,74 @@ function selectPage(url,pages,fun,jq,that,num){
 $(function () {
     username&& $('nav .user').html(window.sessionStorage.getItem('parsec_nickName'));
     $('.modal-content').click(function (e) {e.stopPropagation();});
-    $('.modal').not('.userLogin').click(function(){$(this).not.fadeOut();});
+    // $('.modal').not('.userLogin').click(function(){$(this).fadeOut();});
     $('.close').click(function () {
         if($(this).parent().hasClass('detail-dialog')){
             $(this).parent().parent().fadeOut().prev().show();
         }else{$('.modal').fadeOut();}
+    });
+    //上传头像
+    $('nav .avatar').click(function(e){
+        e.preventDefault();
+        $('.uploadFace progress').val('');
+        $('.uploadFace .clear').html('').removeClass('succ err');
+        $('.uploadFace img').attr('src','');
+        $('.modal').not('.userLogin').fadeIn('slow');
+        $('.uploadFace').show().siblings('div').hide();
+        $('#upFace').addClass('btn-disable').click(function(e){
+            e.preventDefault();
+            $('.uploadFace .clear').html('').removeClass('succ err');
+            var formData = new FormData($('#uploadFace')[0]);
+            console.log(formData);
+            $.ajax({
+                url:'/v1/upload/icon',
+                type: 'POST',
+                xhr: function() {
+                    myXhr = $.ajaxSettings.xhr();
+                    if(myXhr.upload){
+                        myXhr.upload.addEventListener('progress',progressHandlingFunction, false);
+                    }
+                    return myXhr;
+                },
+                beforeSend:function(){
+                    $('.uploadFace progress').val('');
+                },
+                success:function(data){
+                    if(data.result){
+                        $('.uploadFace .clear').html('上传成功').addClass('succ');
+                        $('nav .avatar img').attr('src',data.result.url);
+                    }else{$('.uploadFace .clear').html('上传失败').addClass('err');}
+
+                },
+                error:function(){
+                    $('.uploadFace .clear').html('上传失败').addClass('err');
+                },
+                data:formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            function progressHandlingFunction(e){
+                if(e.lengthComputable){
+                    $('.uploadFace progress').attr({value:e.loaded,max:e.total});
+                }
+            }
+        });
+        $('#uploadFace :file').change(function(){
+            $('.uploadFace .clear').html('').removeClass('succ err');
+            var file = this.files[0];
+            if(!/\.(jpg|png|jpeg)$/.test(file.name)){
+                $('.uploadFace .clear').html('图片类型只能为jpg、png、jpeg').addClass('err');
+            }else{
+                $('.uploadFace .clear').html(file.name).removeClass('err');
+                $('#upFace').removeClass('btn-disable');
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    $('.uploadFace img').attr('src',event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
     });
     //修改密码
     $('.setting .resPwd').click(function(e){

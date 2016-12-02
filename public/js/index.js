@@ -19,7 +19,7 @@ function updateList(list,jq){//list:列表,jq:父元素
             case 0:
                 userClass='创建人：';timeClass='创建时间：';tag='听';color='#60BE29';break;
             default:
-                userClass='主讲人：';timeClass='时间：';break;
+                userClass='主讲人：';timeClass='开坛时间：';break;
         }
         var time=preTime(list[i].trainDate||list[i].createdAt,true);
         $(frag).append(`
@@ -206,7 +206,6 @@ $(function () {
 
 });
 //资不资瓷
-
 $(function () {
     //分页查询更多列表
     $('#require .pages a').click(function (e) {
