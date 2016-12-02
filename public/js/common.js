@@ -71,11 +71,7 @@ function selectPage(url,pages,fun,jq,that,num){
 $(function () {
     username&& $('nav .user').html(window.sessionStorage.getItem('parsec_nickName'));
     $('.modal-content').click(function (e) {e.stopPropagation();});
-    $('.modal').not('.userLogin').click(function(){$(this).fadeOut();});
-    $('.detail_box').click(function(){
-        $(this).fadeOut();
-        $(this).prev().show();
-    });
+    $('.modal').not('.userLogin').click(function(){$(this).not.fadeOut();});
     $('.close').click(function () {
         if($(this).parent().hasClass('detail-dialog')){
             $(this).parent().parent().fadeOut().prev().show();

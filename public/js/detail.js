@@ -64,6 +64,39 @@ $(function(){
             },1500);
         });
     }
+    //选择时间后的处理
+    function selectTime(val) {
+        $('#confirm').removeClass('btn-disable');
+        console.log('inp:' + inp + 'val:'+ val);
+        $.get('v1/training/trainByTime',{trainDate:val},function(data){
+            if(!data.result){
+                var plan={objectId:trainId,trainDate:val};
+                $('#confirm').click(function(e){
+                    e.preventDefault();
+                    $('.msg-confirm').slideDown('',function(){
+                        "use strict";
+                        $('body').click(function(){return false});
+                        $('.ok').click(function(e){
+                            $('.msg-confirm').slideUp();
+                            e.preventDefault();
+                            $.post('/v1/training/plan',plan,function(data){
+                                if(data.result){
+                                    reMsg('安排成功');
+                                    $('#confirm').addClass('btn-disable');
+                                }else{reMsg('安排失败');}
+                            });
+                        });
+                        $('.cancel').click(function(e){
+                            e.preventDefault();
+                            $('.msg-confirm').slideUp();
+                        });
+                    });
+                });
+            }else{
+                reMsg('该时间已经有培训课程');
+            }
+        });
+    }
     //页面初始化
     if(tags){
         $('.needUpNum').show();
@@ -72,39 +105,10 @@ $(function(){
             format: 'YYYY-MM-DD hh:mm',
             isinitVal:'2016-10-1 09:00',
             minDate:$.nowDate(0),
+            festival: true,
             isTime:true,
-            choosefun:function (inp,val) {
-                $('#confirm').removeClass('btn-disable');
-                // console.log('inp:' + inp + 'val:'+ val);
-                $.get('v1/training/trainByTime',{trainDate:val},function(data){
-                    if(!data.result){
-                        var plan={objectId:trainId,trainDate:val};
-                        $('#confirm').click(function(e){
-                            e.preventDefault();
-                            $('.msg-confirm').slideDown('',function(){
-                                "use strict";
-                                $('body').click(function(){return false});
-                                $('.ok').click(function(e){
-                                    $('.msg-confirm').slideUp();
-                                    e.preventDefault();
-                                    $.post('/v1/training/plan',plan,function(data){
-                                        if(data.result){
-                                            reMsg('安排成功');
-                                            $('#confirm').addClass('btn-disable');
-                                        }else{reMsg('安排失败');}
-                                    });
-                                });
-                                $('.cancel').click(function(e){
-                                    e.preventDefault();
-                                    $('.msg-confirm').slideUp();
-                                });
-                            });
-                        });
-                    }else{
-                        reMsg('该时间已经有培训课程');
-                    }
-                });
-            }
+            okfun:function (val) {selectTime(val);},
+            choosefun:function (val) {selectTime(val);}
         });
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
@@ -149,7 +153,7 @@ $(function(){
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
-        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},1000);
+        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
     //点击回应
@@ -158,7 +162,7 @@ $(function(){
         resname=$(this).attr('href');
         $('#replayWho').html(resname);
         replay.replayWho=$(this).parent().prev().html().slice(0,40)+'\t\t@'+resname;
-        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},1000);
+        $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
     //点击切换默认回复对象
