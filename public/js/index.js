@@ -5,37 +5,41 @@ var pagesTrain={page:1,pageSize:12};//获取培训列表
 var pagesList={page:1,pageSize:12};//获取需求意愿列表
 var createUrl=null;//创建培训意愿或需求的请求url
 var selectUrl=null;//查询的URL
-//更新培训查询列表
-function updateList(list,jq){//list:列表,jq:父元素
-    var frag=document.createDocumentFragment();
+//一个培训课程
+function htmlFlat(list){
     var userClass='';
     var timeClass='';
     var tag='';
     var color='';
-    for(var i in list){
-        switch(list[i].status){
-            case 1 :
-                userClass='主讲人：';timeClass='创建时间：';tag='讲';color='#FF6100';break;
-            case 0:
-                userClass='创建人：';timeClass='创建时间：';tag='听';color='#60BE29';break;
-            default:
-                userClass='主讲人：';timeClass='开坛时间：';break;
-        }
-        var time=preTime(list[i].trainDate||list[i].createdAt,true);
-        $(frag).append(`
+    switch(list.status){
+        case 1 :
+            userClass='主讲人：';timeClass='创建时间：';tag='讲';color='#FF6100';break;
+        case 0:
+            userClass='创建人：';timeClass='创建时间：';tag='听';color='#60BE29';break;
+        default:
+            userClass='主讲人：';timeClass='开坛时间：';break;
+    }
+    var time=preTime(list.trainDate||list.createdAt,true);
+    return `
             <dl>
                 <dt >
-                    <a href="detail.html" data-id="${list[i].objectId}" style="position:relative;display:inline-block;">
-                        <img src="${list[i].imgURL||'../imgs/default_course.png'}" style="position:relative"/>
+                    <a data-id="${list.objectId}" style="position:relative;display:inline-block;">
+                        <img src="${list.imgURL||'../imgs/default_course.png'}" style="position:relative"/>
                         <span style="background:${color};position:absolute;top:1px;right:1px;color:#fff;padding:3px 5px;">${tag}</span>
                     <\/a>        
                 <\/dt>
-                <dd>${list[i].title}</dd>
+                <dd><a href="detail.html" data-id="${list.objectId}">${list.title}</a></dd>
                 <dd>${timeClass+time}</dd>
-                <dd>${userClass+list[i].creator.nickName}</dd>
-                <dd><span>${list[i].thumbUpNum||0}</span><span>${list[i].commentNum||0}</span></dd>
+                <dd>${userClass+list.creator.nickName}</dd>
+                <dd><span>${list.thumbUpNum||0}</span><span>${list.commentNum||0}</span></dd>
             </dl>
-        `);
+        `;
+}
+//更新培训查询列表
+function updateList(list,jq){//list:列表,jq:父元素
+    var frag=document.createDocumentFragment();
+    for(var i in list){
+        $(frag).append(htmlFlat(list[i]));
     }
     jq.html(frag);
 }
@@ -77,12 +81,9 @@ $(function(){
                 username=data.result.username;
                 userface=data.result.userface||'imgs/user.png';
                 nickname=data.result.nickName;
-                var obj={
-                    userName:username,
-                    nickName:nickname,
-                    userFace:userface
-                }
-                window.sessionStorage.setItem('parsec_username',JSON.stringify(obj));
+                window.sessionStorage.setItem('parsec_userName',username);
+                window.sessionStorage.setItem('parsec_nickName',nickname);
+                window.sessionStorage.setItem('parsec_userFace',userface);
                 $('.modal').fadeOut('slow');
                 $('nav .user').html(nickname);
                 $('nav .avatar img').attr('src',userface);
@@ -111,7 +112,6 @@ $(function(){
         $('#add_train').show();
         if(!$(module).find('.list').html()){flag=true}else{
             var time=new Date().getTime();
-            console.log(time%3);
             if((time%3)==2){flag=true;}
         }
         switch(module){
@@ -160,7 +160,10 @@ $(function(){
         $.post(createUrl,res, function (data) {
             if(!data.code){
                 $('.modal').fadeOut();
-                $('.tabs a[href="#require"]').trigger('click');
+                $('#require .list').prepend(htmlFlat(data.result));
+                $('.tabs a').removeClass();
+                $('.tabs li:nth-child(2) a').addClass('active-tabs');
+                $('#require').show().siblings('.module').hide();
             }else{$('.msg-add').html(data.errors).show();}
         });
     });
@@ -172,7 +175,7 @@ function updateRank(list,jq,tags) {//tags:0-点赞排行,1-评论排行,默认�
         $(frag).append(`
              <li>
                 <span>
-                    <a href="detail.html" data-id="${list[i].objectId}">
+                    <a data-id="${list[i].objectId}">
                         <img src="${list[i].imgURL||'../imgs/default_course.png'}">
                         <span>${list[i].title}</span>
                     </a>

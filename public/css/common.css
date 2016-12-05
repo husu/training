@@ -5,7 +5,7 @@ p,ul,ol,h1,h2,h3,h4,h5,h6,dl,dt,dd{margin:0; padding:0; list-style:none;}
 .rt{float:right;}
 .clear{clear:both;}
 .close{cursor:pointer;}
-a{text-decoration:none;color:#777;}
+a{text-decoration:none;color:#777;cursor:pointer;}
 .text-center{text-align:center;}
 .hide{display:none;}
 .show{display:block;}
@@ -17,18 +17,19 @@ section{background:#ddd;}
 nav{height:70px;width:100%;background:#049ACB;position:fixed;top:0;z-index:10;}
 nav>div{width:1200px;margin:0 auto;max-width:100%;padding:0 15px;position:relative;}
 nav>div>a,nav .user{font-size:20px;color:#fff;line-height:70px;font-weight: bold;cursor: pointer;}
-nav .setting{position: absolute;right:0;top:70px;background:#049ACB;color:#fff;font-size:14px;padding:4px 20px 6px;display:none;}
+nav .setting{position: absolute;right:0;top:70px;background:#049ACB;color:#fff;font-size:14px;padding:4px 20px 6px;display:none;z-index:10;}
 nav .rt:hover .setting{display:block;}
 nav .setting li{padding-bottom:6px;}
 nav .setting a{color:#eee;}
 nav .setting a:hover{color:#fff;}
 nav a{color:#fff;}
+/*//培训课程*/
 dl{height:360px;}
 dl img{border:1px solid #ddd;}
 dl{float:left;width:33.3%;padding-bottom:30px;text-align: center;}
 dt{margin:10px auto;}
 dd{text-align: left;padding-left:60px;margin-top:10px;}
-dl dd:nth-child(2){font-weight: bold;}
+dl dd:nth-child(2) a{font-weight: bold;}
 dl dd:nth-child(5) span{display:inline-block;margin-right:30px;}
 dl dd:nth-child(5) span:before{
     content:url('../imgs/res-gray.png');
@@ -37,7 +38,7 @@ dl dd:nth-child(5) span:before{
     margin-right:6px;
 }
 dl dd:nth-child(5) span:first-child:before{content:url('../imgs/parise-gray.png');}
-footer p{margin:6px 0;}
+/*按钮*/
 input,button,select,textarea{outline:none;}
 input{background:#fff;}
 textarea{resize:none}

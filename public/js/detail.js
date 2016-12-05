@@ -5,7 +5,7 @@ var resname=null;//回复谁的评论
 var comments={page:1,pageSize:9};//查看更多评论
 var commentNum=null;//评论数
 var thumbUpNum=null;//点赞数
-var replay={content:"",replayWho:""};//回复评论参数
+var replay={content:"",replayWho:"",recipient:""};//回复评论参数
 var tags=window.sessionStorage.getItem('assign');//详情类别
 var trainId=window.sessionStorage.getItem('train_id');//培训id
 if(tags){var needUpNum=6;}//满足安排培训的点赞数
@@ -47,7 +47,7 @@ function updateComment(list,jq){
                 <ul>
                     ${list[i].replayWho?('<li style="border-left:2px solid #ddd">'+list[i].replayWho+'</li>'):""}
                     <li>${list[i].content}</li>
-                    <li><a href="${list[i].creator.nickName||res.creator.username}">回&nbsp;应</a></li>
+                    <li><a data-userName="${list[i].creator.nickName||res.creator.username}" data-userId="${list[i].objectId}">回&nbsp;应</a></li>
                 </ul>
             </div>
         </div>
@@ -67,7 +67,7 @@ $(function(){
     //选择时间后的处理
     function selectTime(val) {
         $('#confirm').removeClass('btn-disable');
-        console.log('inp:' + inp + 'val:'+ val);
+        // console.log('inp:' + inp + 'val:'+ val);
         $.get('v1/training/trainByTime',{trainDate:val},function(data){
             if(!data.result){
                 var plan={objectId:trainId,trainDate:val};
@@ -107,8 +107,8 @@ $(function(){
             minDate:$.nowDate(0),
             festival: true,
             isTime:true,
-            okfun:function (val) {selectTime(val);},
-            choosefun:function (val) {selectTime(val);}
+            okfun:function (inp,val) {selectTime(val);},
+            choosefun:function (inp,val) {selectTime(val);}
         });
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
@@ -153,13 +153,15 @@ $(function(){
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
+        replay.recipient="";
         $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
     //点击回应
     $('.comment').on('click','div a', function (e) {
         e.preventDefault();
-        resname=$(this).attr('href');
+        resname=$(this).attr('data-userName');
+        replay.recipient=$(this).attr('data-userId');
         $('#replayWho').html(resname);
         replay.replayWho=$(this).parent().prev().html().slice(0,40)+'\t\t@'+resname;
         $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
@@ -170,6 +172,7 @@ $(function(){
         e.preventDefault();
         $(this).html('课程');
         replay.replayWho="";
+        replay.recipient="";
     });
     //点击回复
     $('.replay a:last').click(function (e) {

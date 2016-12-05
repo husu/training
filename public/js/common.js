@@ -1,13 +1,12 @@
 /**
  * Created by taohailin on 2016/11/29.
  */
-var obj=JSON.parse(window.sessionStorage.getItem('parsec_user'));//用户信息
-if(obj){
-    var username=obj.usrName;
-    var nickname=obj.nickName;
-    var userface=obj.userFace;
-}
+var username=window.sessionStorage.getItem('parsec_userName');
+var nickname=window.sessionStorage.getItem('parsec_nickName');
+var userface=window.sessionStorage.getItem('parsec_userFace');
 var user=JSON.parse(window.localStorage.getItem('parsec_user'));//记住用户密码
+var replayNum=0;//消息数量=》用于保存消息数量
+var replayNums=0;//消息数量=》用于判断否重新请求消息列表
 //时间格式化方法 t:任意时间格式 f:默认为flase  yy-mm-dd，true yy年mm月dd日;
 function preTime(t,f){
     function strTwo(T){return (T+100+'').slice(1);}//格式化两位数字;
@@ -74,13 +73,43 @@ function selectPage(url,pages,fun,jq,that,num){
     });
 }
 $(function () {
-    username&& $('nav .user').html(nickname)&&$('nav .avatar img').attr('src',userface);
+    var flag=false;//判断消息列表是否显示;
+    username&&$('nav .user').html(nickname)&&$('nav .avatar img').attr('src',userface);
     $('.modal-content').click(function (e) {e.stopPropagation();});
     // $('.modal').not('.userLogin').click(function(){$(this).fadeOut();});
     $('.close').click(function () {
         if($(this).parent().hasClass('detail-dialog')){
             $(this).parent().parent().fadeOut().prev().show();
         }else{$('.modal').fadeOut();}
+    });
+    //消息数量
+    // setInterval(function () {
+    //     $.get('/v1/notification/count',function (data) {
+    //         if(!data.code){
+    //             if(data.result!=replayNum){
+    //                 replayNum=data.result;
+    //                 $('.receive .replayNum').html(replayNum||'0');
+    //             }
+    //         }
+    //     });
+    // },5000);
+    //消息列表
+    $('.receive .infoTip').click(function (e) {
+        e.preventDefault();
+        if(replayNum){
+            flag=flag?false:true;
+            $('#msgList').slideToggle(200);
+            if((replayNum!=replayNums)&&flag){
+                replayNums=replayNum;
+                $.get('/v1/notification',function(data){
+
+                });
+            }
+        }
+    });
+    //阅读消息
+    $('#msgList').on('click','li',function(){
+
     });
     //上传头像
     $('nav .avatar').click(function(e){
@@ -94,7 +123,6 @@ $(function () {
             e.preventDefault();
             $('.uploadFace .clear').html('').removeClass('succ err');
             var formData = new FormData($('#uploadFace')[0]);
-            console.log(formData);
             $.ajax({
                 url:'/v1/upload/icon',
                 type: 'POST',
@@ -112,6 +140,7 @@ $(function () {
                     if(data.result){
                         $('.uploadFace .clear').html('上传成功').addClass('succ');
                         $('nav .avatar img').attr('src',data.result.url);
+                        window.sessionStorage.setItem('parsec_userFace',data.result.url);
                     }else{$('.uploadFace .clear').html('上传失败').addClass('err');}
 
                 },
@@ -187,7 +216,9 @@ $(function () {
         e.preventDefault();
         $.get('/logout',function(data){
             if(!data.code){
-                window.sessionStorage.removeItem('parsec_username');
+                window.sessionStorage.removeItem('parsec_userName');
+                window.sessionStorage.removeItem('parsec_nickName');
+                window.sessionStorage.removeItem('parsec_userFace');
                 window.location.reload(true);
             }
         });
