@@ -7,6 +7,7 @@
 var router = require('express').Router();
 var util =  require('../util');
 var _= require('lodash');
+var ns = require('../service/nitificationService');
 
 
 /**
@@ -15,24 +16,22 @@ var _= require('lodash');
 router.get('',function (req,res) {
    let user = req.currentUser;
 
-   return res.send({
-       code:0,
-       message:'',
-       result:[
-           {
-               type:1,
-               from:'583525c061ff4b0061ee0d18',
-               content:'谁谁谁回应了你',
-               id:'2333421333'
-           },
-           {
-               type:1,
-               from:'583525c061ff4b0061ee0d18',
-               content:'谁谁谁回应了你',
-               id:'2333421344'
-           }
-       ]
+
+   ns.get(user).then(function (list) {
+       return res.send({
+           code:0,
+           message:'',
+           result:list
+       });
+   }).catch(e=>{
+       return res.send({
+           code:util.ERROR.INTERNAL_ERROR,
+           message:e.message,
+           errors:[e]
+       })
    });
+
+
 });
 /**
  * 阅读了某个消息
@@ -45,11 +44,21 @@ router.post('',function (req,res) {
             message:'参数错误'
        });
    }
+    let user = req.currentUser;
 
-   return res.send({
-        code:0,
-        message:'成功'
-   });
+    ns.delete(id,user).then(function () {
+        return res.send({
+            code:0,
+            message:'成功'
+        });
+    }).catch(e=>{
+        return res.send({
+            code:util.ERROR.INTERNAL_ERROR,
+            message:e.message,
+            errors:[e]
+        });
+    });
+
 
 });
 
@@ -57,10 +66,58 @@ router.post('',function (req,res) {
  * 获得消息数量
  */
 router.get('/count',function (req,res) {
-    return res.send({
-        code:0,
-        result:2
-    });
+    let user = req.currentUser;
+
+    ns.count(user).then(function (num) {
+        return res.send({
+            code:0,
+            result:num
+        });
+    }).catch(e=>{
+        return res.send({
+            code:util.ERROR.INTERNAL_ERROR,
+            message:e.message
+        });
+    })
+
+});
+
+/**
+ * 用于测试的接口，新增消息
+ * {
+
+            type:1,
+            from:'583525c061ff4b0061ee0d18',
+            content:'谁谁谁回应了你',
+            id:"" + (new Date()).getTime()
+        };
+ *
+ */
+router.post('/add',function (req,res) {
+    let  userid  = req.body.userId;
+    let content = req.body.content;
+    let from = req.body.from;
+
+
+    let msg = {
+            type:1,
+            from:from,
+            content:content,
+            id:"" + (new Date()).getTime()
+    };
+    ns.save(msg,userid).then(obj=>{
+        return res.send({
+            code:0,
+            message:'ok',
+            result:msg.id
+        });
+    }).catch(e=>{
+        return res.send({
+            code:-1,
+            message:'fail',
+            errors:[e]
+        });
+    })
 });
 
 module.exports = router;
