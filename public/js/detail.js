@@ -2,7 +2,7 @@
  * Created by Taohailin on 2016/10/26.
  */
 var resname=null;//回复谁的评论
-var comments={page:1,pageSize:9};//查看更多评论
+var comments={page:1,pageSize:15};//查看更多评论
 var commentNum=null;//评论数
 var thumbUpNum=null;//点赞数
 var replay={content:"",replayWho:""};//回复评论参数
