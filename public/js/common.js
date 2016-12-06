@@ -98,7 +98,7 @@ $(function () {
         e.preventDefault();
         if(replayNum){
             flag=flag?false:true;
-            $('#msgList').slideToggle(200);
+            $('#msgList').stop().slideToggle(200);
             if((replayNum!=replayNums)&&flag){
                 replayNums=replayNum;
                 $.get('/v1/notification',function(data){

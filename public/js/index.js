@@ -118,8 +118,7 @@ $(function(){
             case '#training':
                 flag&&selectPage('v1/training/list',pagesTrain,updateList,$('#training .list'));break;
             case '#require':
-                $('#require .all').addClass('active_mark').siblings().removeClass('active_mark');
-                flag&&selectPage('/v1/training/noScheduled/all',pagesList,updateList,$('#require .list'));break;
+                flag&&$('#require .all').addClass('active_mark').siblings().removeClass('active_mark')&&selectPage('/v1/training/noScheduled/all',pagesList,updateList,$('#require .list'));break;
             case '#rank':
                 $('#add_train').hide();
                 flag&&$.get('/v1/rank/thumbUp',function(data){
@@ -144,7 +143,7 @@ $(function(){
     //选择图片
     $('#select').click(function (e) {
         e.preventDefault();
-        $('.default_img').slideToggle(500);
+        $('.default_img').stop().slideToggle(500);
         $('#select').val('选择图片');
         $('#add input[type="hidden"]').val()&&($(this).siblings('img').attr('src',$('#add input[type="hidden"]').val()));
     });

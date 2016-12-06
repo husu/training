@@ -45,7 +45,7 @@ function updateComment(list,jq){
             <div class="rt">
                 <p><span>${list[i].creator.nickName}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
-                    ${list[i].replayWho?('<li style="border-left:2px solid #ddd">'+list[i].replayWho+'</li>'):""}
+                    ${list[i].replayWho?('<li style="border-left:2px solid #aaa;color:#888">'+list[i].replayWho+'</li>'):""}
                     <li>${list[i].content}</li>
                     <li><a data-userName="${list[i].creator.nickName||res.creator.username}" data-userId="${list[i].objectId}">回&nbsp;应</a></li>
                 </ul>

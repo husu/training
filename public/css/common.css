@@ -4,7 +4,8 @@ p,ul,ol,h1,h2,h3,h4,h5,h6,dl,dt,dd{margin:0; padding:0; list-style:none;}
 .lf{float:left;}
 .rt{float:right;}
 .clear{clear:both;}
-.close{cursor:pointer;}
+.close{cursor:pointer;color:#aaa;}
+.close:hover{color:#666;}
 a{text-decoration:none;color:#777;cursor:pointer;}
 .text-center{text-align:center;}
 .hide{display:none;}
@@ -25,7 +26,7 @@ nav .setting a:hover{color:#fff;}
 nav a{color:#fff;}
 /*//培训课程*/
 dl{height:360px;}
-dl img{border:1px solid #ddd;}
+dl img{border:1px solid #ddd;width:302px;height:193px;}
 dl{float:left;width:33.3%;padding-bottom:30px;text-align: center;}
 dt{margin:10px auto;}
 dd{text-align: left;padding-left:60px;margin-top:10px;}
@@ -46,7 +47,7 @@ option{padding:10px;}
 button,input[type='button'],input[type='submit']{cursor:pointer;background:#36aed5;color:#fff;border:none;}
 button:hover,input[type='button']:hover,input[type='submit']:hover{background:#049ACB;border:0;border-radius:4px;}
 /*分页按钮*/
-.pages a{display:inline-block;width:80px;margin:15px 5px;padding:8px 15px;font-weight:bold; font-size:14px;border-radius:4px;}
+.pages a{display:inline-block;width:60px;margin:15px 5px;padding:5px 0; font-size:14px;border-radius:4px;}
 .a-btn{background-color:#36aed5;color:#fff;}
 .a-btn:hover{background-color:#049ACB;}
 /*a标签禁用*/
