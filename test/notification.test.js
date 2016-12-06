@@ -49,12 +49,35 @@ describe('测试排行的接口',function(){
                 expect(res.body.code).to.equal(0);
                 expect(res.body.result).to.be.above(0);
 
+                console.log('当前数量%d',res.body.result);
 
+                return resPre;
 
                 //console.log(res.body);
-                done()
             }).catch(function(e){
                 done(e);
+            });
+        }).then(resPre=>{
+           request.get('/v1/notification').then(res=>{
+               expect(res).to.have.status(200);
+               expect(res.body).to.be.an("object", "返回对象");
+               expect(res.body).haveOwnProperty("code");
+               expect(res.body.code).to.equal(0);
+               expect(res.body).haveOwnProperty('result');
+               expect(res.body.result.length).to.be.above(0);
+               expect(res.body.result[0].type).to.equal(1);
+               return resPre;
+           }).catch(e=>{
+               done(e);
+           });
+        }).then(resPre=>{
+            request.post('/v1/notification').send({id:msgid}).then(res=>{
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an("object", "返回对象");
+                expect(res.body).haveOwnProperty("code");
+                expect(res.body.code).to.equal(0);
+                console.log(msgid);
+                done();
             });
         }).catch(function (e) {
             done(e);

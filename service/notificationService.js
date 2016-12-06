@@ -58,8 +58,13 @@ function _delete(id,user){
     return query.first().then(obj=>{
         if(obj){
             let msgArray =  obj.get('message') || [];
-            _.dropRightWhile(msgArray, function(o) { return o.id==id;});
-            obj.set('message',msgArray);
+
+            _.forEach(msgArray,function (v) {
+                if(v.id==id) {
+                    obj.remove('message', v);
+                }
+            });
+
             return obj.save();
         }
     }).fail(e=>{
