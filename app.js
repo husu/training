@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var training = require('./router/training');
 var AV = require('leanengine');
 var util = require('./util');
-const user = require('./router/user');
+// const user = require('./router/user');
 const requirements = require('./router/requirements');
 var fs = require('fs');
 

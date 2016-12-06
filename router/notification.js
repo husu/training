@@ -7,7 +7,7 @@
 var router = require('express').Router();
 var util =  require('../util');
 var _= require('lodash');
-var ns = require('../service/nitificationService');
+var ns = require('../service/notificationService');
 
 
 /**
