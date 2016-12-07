@@ -80,9 +80,41 @@ nav .receive .replayNum{
     color:#fff;
     font-size:14px;
     font-weight: bold;
-    padding:1px 5px;
+    padding:1px 4px;
 }
-nav .infoTip{cursor:pointer;}
+@keyframes animate_info{
+    0%   {left:3px;}
+    50%  {left:-3px;}
+    100% {left:0;}
+}
+@-webkit-keyframes animate_info {
+    0%   {left:3px;}
+    50%  {left:-3px;}
+    100% {left:0;}
+}
+@-moz-keyframes  animate_info{
+    0%   {left:3px;}
+    50%  {left:-3px;}
+    100% {left:0;}
+}
+@-ms-keyframes  animate_info{
+    0%   {left:3px;}
+    50%  {left:-3px;}
+    100% {left:0;}
+}
+@-o-keyframes  animate_info{
+    0%   {left:3px;}
+    50%  {left:-3px;}
+    100% {left:0;}
+}
+.noted{
+    -webkit-animation:animate_info 0.2s 5;
+    -o-animation:animate_info 0.2s 5;
+    animation:animate_info 0.2s 5;
+}
+nav .infoTip{
+    cursor:pointer;position:relative;
+}
 #msgList{
     position:absolute;
     min-width:250px;max-width:300px;

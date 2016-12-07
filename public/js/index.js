@@ -79,7 +79,7 @@ $(function(){
                     window.localStorage.removeItem('parsec_user');
                 }
                 username=data.result.username;
-                userface=data.result.userface||'imgs/user.png';
+                userface=data.result.icon||'imgs/user.png';
                 nickname=data.result.nickName;
                 window.sessionStorage.setItem('parsec_userName',username);
                 window.sessionStorage.setItem('parsec_nickName',nickname);

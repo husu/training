@@ -94,26 +94,22 @@ $(function () {
         }else{$('.modal').fadeOut();}
     });
     // 消息数量
-    $.get('/v1/notification/count',function (data) {
-        if(!data.code){
-            if(data.result!=replayNum){
-                replayNum=data.result;
-                $('.receive .replayNum').html(replayNum||'0');
-            }
-            setInterval(function () {
-                $.get('/v1/notification/count',function (data) {
-                    if(!data.code){
-                        if(data.result!=replayNum){
-                            replayNum=data.result;
-                            $('.receive .replayNum').html(replayNum||'0');
-                        }
-                    }
-                });
-            },5000);
-        }
+    $('nav .infoTip').on('animationend',function(){
+        $(this).removeClass('noted');
     });
+    setInterval(function () {
+        $.get('/v1/notification/count',function (data) {
+            if(!data.code){
+                if(data.result!=replayNum){
+                    replayNum=data.result;
+                    replayNum&&$('.receive').show()&&$('nav .infoTip').addClass('noted');
+                    $('.receive .replayNum').html(replayNum);
+                }
+            }
+        });
+    },5000);
     // 消息列表
-    $('.receive .infoTip').click(function (e) {
+    $('.receive .infoTip').click(function (e){
         e.preventDefault();
         if(replayNum){
             flag=flag?false:true;
@@ -135,6 +131,10 @@ $(function () {
                     window.sessionStorage.setItem('train_id',$(this).attr('data-from'));
                     $('#detail').empty().load('detail.html');
                     $('.detail_box').show().prev().hide();
+                    replayNum-=1;
+                    !replayNum&&$('.receive').hide();
+                    $('.receive .replayNum').html(replayNum);
+                    $(this).remove();
                 }
             });
         }else{return true;}
