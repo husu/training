@@ -85,7 +85,8 @@ nav .receive .replayNum{
 nav .infoTip{cursor:pointer;}
 #msgList{
     position:absolute;
-    width:250px;background:#fff;
+    min-width:250px;max-width:300px;
+    background:#fff;
     right:-20px;top:48px;
     border:1px solid #ddd;
     border-top:none;
@@ -100,7 +101,7 @@ nav .infoTip{cursor:pointer;}
 #msgList li:hover{background:#f6f6f6;cursor:pointer;}
 #msgList li a{color:#666;font-size:14px;}
 #msgList li:before{
-    content:'阅';
+    content:'新';
     display:inline-block;
     padding:2px 5px;
     background:#60BE29;
@@ -109,7 +110,7 @@ nav .infoTip{cursor:pointer;}
     border-radius:3px;
     margin-right:10px;
 }
-#msgList .noted:before{
-    content:'新';
+#msgList .systemMsg:before{
+    content:'系';
     background: #e64444;
 }
