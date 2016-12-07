@@ -82,18 +82,18 @@ $(function () {
             $(this).parent().parent().fadeOut().prev().show();
         }else{$('.modal').fadeOut();}
     });
-    //消息数量
-    // setInterval(function () {
-    //     $.get('/v1/notification/count',function (data) {
-    //         if(!data.code){
-    //             if(data.result!=replayNum){
-    //                 replayNum=data.result;
-    //                 $('.receive .replayNum').html(replayNum||'0');
-    //             }
-    //         }
-    //     });
-    // },5000);
-    //消息列表
+    // 消息数量
+    setInterval(function () {
+        $.get('/v1/notification/count',function (data) {
+            if(!data.code){
+                if(data.result!=replayNum){
+                    replayNum=data.result;
+                    $('.receive .replayNum').html(replayNum||'0');
+                }
+            }
+        });
+    },5000);
+    // 消息列表
     $('.receive .infoTip').click(function (e) {
         e.preventDefault();
         if(replayNum){
