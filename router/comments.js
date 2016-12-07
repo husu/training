@@ -4,9 +4,13 @@
 'use strict';
 var router = require('express').Router();
 var cs = require('../service/commentService');
-var util =  require('../util');
+var myUtil =  require('../util');
 var _= require('lodash');
+let ns = require('../service/notificationService');
+let myNs = new ns();
 
+
+// let ns = new NotificationService();
 
 /**
  * 获得一个评论，我也不知道也没有用，姑且写一写，么么哒
@@ -42,11 +46,8 @@ router.get('/list/:id',function(req,res){
         code:0
     };
     cs.list(para,page,pageSize).then(function(list){
-
-
-
         var commentList = _.map(list,o=>{
-            var curObj= util.avObjectToJson(o);
+            var curObj= myUtil.avObjectToJson(o);
             var user = o.get('creator');
             curObj.creator = {
                 objectId:user.id,
@@ -56,7 +57,6 @@ router.get('/list/:id',function(req,res){
             };
             return curObj;
         });
-
         returnObj.result  = commentList;
         return res.send(returnObj);
     }).catch(function(e){
@@ -76,13 +76,24 @@ router.post('/:trainId',function(req,res){
         code:0
     };
 
+    comment.recipient = '583525c061ff4b0061ee0d18';
+
+    if(!comment.recipient){
+        result.code = myUtil.ERROR.PARAMETER_MISSING.errorCode;
+        result.message = '未填写回复对象的用户ID';
+        result.errors = ['未填写回复对象的用户ID'];
+        return res.send(result);
+    }
+
+    let recipient = comment.recipient;
+
     comment.trainId = req.params.trainId;
-    comment.type = util.COMMENTTYPE.COMMENT;
+    comment.type = myUtil.COMMENTTYPE.COMMENT;
 
 
     if(!comment.content){
-        result.code = util.ERROR.PARAMETER_MISSING.errorCode;
-        result.message = util.ERROR.PARAMETER_MISSING.message;
+        result.code = myUtil.ERROR.PARAMETER_MISSING.errorCode;
+        result.message = myUtil.ERROR.PARAMETER_MISSING.message;
         result.errors = '评论内容不可为空';
         return res.send(result);
     }
@@ -90,7 +101,19 @@ router.post('/:trainId',function(req,res){
     comment.creator = req.currentUser;
 
 
+    let msgObj = {
+        type:1,
+        content:'您收到了一个回复',
+        from:comment.trainId,
+        id:"" + (new Date()).getTime()
+    };
+
+
+
     return cs.saveComment(comment).then(function(obj){
+
+        myNs.sendNotification(msgObj,recipient);
+
         result.message ='保存成功';
         result.result = obj;
         return res.send(result);
@@ -102,8 +125,15 @@ router.post('/:trainId',function(req,res){
 
 });
 
+myNs.on('notice',function (data,userId) {
+    ns.save(data,userId).catch(e=>{
+        console.log(e);
+    });
+});
 
-
+myNs.on('error',function (err) {
+    console.log(err);
+});
 
 
 

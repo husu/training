@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var training = require('./router/training');
 var AV = require('leanengine');
 var util = require('./util');
-const user = require('./router/user');
+// const user = require('./router/user');
 const requirements = require('./router/requirements');
 var fs = require('fs');
 
@@ -80,6 +80,7 @@ app.use('/v1/comments', require('./router/comments'));
 app.use('/v1/thumbUp', require('./router/thumbUp'));
 app.use('/v1/upload',require('./router/uploadImg'));
 app.use('/v1/rank',require('./router/rank'));
+app.use('/v1/notification',require('./router/notification'));
 
 
 

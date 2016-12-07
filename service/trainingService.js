@@ -89,8 +89,8 @@ module.exports ={
 
         var query  =  new AV.Query("Training");
         query.limit(pageSize);
+        query.addDescending('updatedAt');
         query.addDescending('thumbUpNum');
-        query.addDescending('createdAt');
         query.include('creator');
         query.skip(pageSize*(pageNo-1));
         if(params.tags){
