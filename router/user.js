@@ -27,7 +27,7 @@ router.post("/login",function(req,res){
 
         res.saveCurrentUser(user);
 
-        const keys = ['objectId','username','nickName'];
+        const keys = ['objectId','username','nickName','icon'];
 
         let userObj ={};
         keys.forEach(function(u){
