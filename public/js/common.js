@@ -78,7 +78,7 @@ function updateNews(list) {
     var frag=document.createDocumentFragment();
     for(var i in list){
         $(frag).append(`
-            <li data-id="" data-from="" data-type="">${list[i].content.slice(0,8)+'...'}</li>
+            <li data-id="${list[i].id}" data-from="${list[i].from}" data-type="${list[i].type}" class="${list[i].type==1?'':'systemMsg'}">${list[i].content}</li>
         `);
     }
     $('#msgList').html(frag);
@@ -94,16 +94,24 @@ $(function () {
         }else{$('.modal').fadeOut();}
     });
     // 消息数量
-    // setInterval(function () {
-    //     $.get('/v1/notification/count',function (data) {
-    //         if(!data.code){
-    //             if(data.result!=replayNum){
-    //                 replayNum=data.result;
-    //                 $('.receive .replayNum').html(replayNum||'0');
-    //             }
-    //         }
-    //     });
-    // },5000);
+    $.get('/v1/notification/count',function (data) {
+        if(!data.code){
+            if(data.result!=replayNum){
+                replayNum=data.result;
+                $('.receive .replayNum').html(replayNum||'0');
+            }
+            setInterval(function () {
+                $.get('/v1/notification/count',function (data) {
+                    if(!data.code){
+                        if(data.result!=replayNum){
+                            replayNum=data.result;
+                            $('.receive .replayNum').html(replayNum||'0');
+                        }
+                    }
+                });
+            },5000);
+        }
+    });
     // 消息列表
     $('.receive .infoTip').click(function (e) {
         e.preventDefault();
@@ -113,6 +121,7 @@ $(function () {
             if((replayNum!=replayNums)&&flag){
                 replayNums=replayNum;
                 $.get('/v1/notification',function(data){
+                    console.log(data);
                     !data.code&&updateNews(data.result);
                 });
             }
@@ -120,7 +129,15 @@ $(function () {
     });
     //阅读消息
     $('#msgList').on('click','li',function(){
-        // window.sessionStorage.setItem('train_id',);
+        if($(this).attr('data-type')==1){
+            $.post('/v1/notification/',{id:$(this).attr('data-id')},function (data) {
+                if(!data.code){
+                    window.sessionStorage.setItem('train_id',$(this).attr('data-from'));
+                    $('#detail').empty().load('detail.html');
+                    $('.detail_box').show().prev().hide();
+                }
+            });
+        }else{return true;}
     });
     //上传头像
     $('nav .avatar').click(function(e){

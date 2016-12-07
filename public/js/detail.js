@@ -7,8 +7,8 @@ var commentNum=null;//评论数
 var thumbUpNum=null;//点赞数
 var replay={content:"",replayWho:"",recipient:""};//回复评论参数
 var trainId=window.sessionStorage.getItem('train_id');//培训id
+var tags=false;//是否需要安排培训
 if(tags){var needUpNum=6;}//满足安排培训的点赞数
-
 //update detail
 function updateDetail(res){
     var userClass='';
@@ -16,9 +16,9 @@ function updateDetail(res){
     var time=preTime(res.trainDate||res.createdAt,true);
     switch(res.status){
         case 1:
-            userClass='主讲人：';timeClass='创建时间：';break;
+            userClass='主讲人：';timeClass='创建时间：';tags=true;break;
         case 0:
-            userClass='创建人：';timeClass='创建时间：';break;
+            userClass='创建人：';timeClass='创建时间：';tags=true;break;
         default:
             userClass='主讲人：';timeClass='开坛时间：';break;
     }
