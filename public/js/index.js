@@ -73,6 +73,7 @@ $(function(){
         }
         $.post('/login',userObj,function(data){
             if(data.result){
+                console.log(data);
                 if($('#savePwd')[0].checked){
                     window.localStorage.setItem('parsec_user',JSON.stringify(userObj));
                 }else{

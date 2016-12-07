@@ -40,7 +40,7 @@ function updateComment(list,jq){
     for(var i in list){
         $(frag).append(`
            <div>
-            <img src="../imgs/user.png" alt=""/>
+            <img src="${lisyt[i].creator.icon||'../imgs/user.png'}" style="width:75px; height:75px;"/>
             <div class="rt">
                 <p><span>${list[i].creator.nickName}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
