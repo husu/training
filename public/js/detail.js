@@ -40,7 +40,7 @@ function updateComment(list,jq){
     for(var i in list){
         $(frag).append(`
            <div>
-            <img src="${lisyt[i].creator.icon||'../imgs/user.png'}" style="width:75px; height:75px;"/>
+            <img src="${list[i].creator.icon||'../imgs/user.png'}" style="width:75px; height:75px;"/>
             <div class="rt">
                 <p><span>${list[i].creator.nickName}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
@@ -111,7 +111,6 @@ $(function(){
         });
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
-        console.log(data);
         var res=data.result;
         if(res.length||res){
             updateDetail(res,tags);
