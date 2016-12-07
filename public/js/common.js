@@ -4,6 +4,7 @@
 var username=window.sessionStorage.getItem('parsec_userName');
 var nickname=window.sessionStorage.getItem('parsec_nickName');
 var userface=window.sessionStorage.getItem('parsec_userFace');
+var userId=window.sessionStorage.getItem('parserc_ouserId');
 var user=JSON.parse(window.localStorage.getItem('parsec_user'));//记住用户密码
 var replayNum=0;//消息数量=》用于保存消息数量
 var replayNums=0;//消息数量=》用于判断否重新请求消息列表
@@ -72,6 +73,16 @@ function selectPage(url,pages,fun,jq,that,num){
         }
     });
 }
+//回复消息列表
+function updateNews(list) {
+    var frag=document.createDocumentFragment();
+    for(var i in list){
+        $(frag).append(`
+            <li data-id="" data-from="" data-type="">${list[i].content.slice(0,8)+'...'}</li>
+        `);
+    }
+    $('#msgList').html(frag);
+}
 $(function () {
     var flag=false;//判断消息列表是否显示;
     username&&$('nav .user').html(nickname)&&$('nav .avatar img').attr('src',userface);
@@ -83,16 +94,16 @@ $(function () {
         }else{$('.modal').fadeOut();}
     });
     // 消息数量
-    setInterval(function () {
-        $.get('/v1/notification/count',function (data) {
-            if(!data.code){
-                if(data.result!=replayNum){
-                    replayNum=data.result;
-                    $('.receive .replayNum').html(replayNum||'0');
-                }
-            }
-        });
-    },5000);
+    // setInterval(function () {
+    //     $.get('/v1/notification/count',function (data) {
+    //         if(!data.code){
+    //             if(data.result!=replayNum){
+    //                 replayNum=data.result;
+    //                 $('.receive .replayNum').html(replayNum||'0');
+    //             }
+    //         }
+    //     });
+    // },5000);
     // 消息列表
     $('.receive .infoTip').click(function (e) {
         e.preventDefault();
@@ -102,14 +113,14 @@ $(function () {
             if((replayNum!=replayNums)&&flag){
                 replayNums=replayNum;
                 $.get('/v1/notification',function(data){
-
+                    !data.code&&updateNews(data.result);
                 });
             }
         }
     });
     //阅读消息
     $('#msgList').on('click','li',function(){
-
+        // window.sessionStorage.setItem('train_id',);
     });
     //上传头像
     $('nav .avatar').click(function(e){

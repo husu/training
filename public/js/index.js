@@ -84,6 +84,7 @@ $(function(){
                 window.sessionStorage.setItem('parsec_userName',username);
                 window.sessionStorage.setItem('parsec_nickName',nickname);
                 window.sessionStorage.setItem('parsec_userFace',userface);
+                window.sessionStorage.setItem('parsec_userId',data.result.objectId);
                 $('.modal').fadeOut('slow');
                 $('nav .user').html(nickname);
                 $('nav .avatar img').attr('src',userface);
@@ -192,7 +193,6 @@ $(function () {
     $('.rankList ul').on('click','a',function(e){
         e.preventDefault();
         window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
-        window.sessionStorage.removeItem('assign');
         $('#detail').empty().load('detail.html');
         $('.detail_box').show().prev().hide();
         $('body,html').stop().animate({scrollTop:0});
@@ -231,11 +231,6 @@ $(function () {
     $('#require .list').on('click','a',function(e){
         e.preventDefault();
         $(this).attr('data-id')&&window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
-        if($(this).find('span').html()=='讲'){
-            window.sessionStorage.setItem('assign','1');
-        }else{
-            window.sessionStorage.setItem('assign','2');
-        }
         $('#detail').empty().load('detail.html');
         $('.detail_box').show().prev().hide();
         $('body,html').stop().animate({scrollTop:0});
@@ -267,7 +262,6 @@ $(function(){
     $('#training  .train_list').on('click','a',function(e){
         e.preventDefault();
         window.sessionStorage.setItem('train_id',$(this).attr('data-id'));
-        window.sessionStorage.removeItem('assign');
         $('#detail').empty().load('detail.html');
         $('.detail_box').show().prev().hide();
         $('body,html').stop().animate({scrollTop:0});

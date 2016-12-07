@@ -6,7 +6,6 @@ var comments={page:1,pageSize:9};//查看更多评论
 var commentNum=null;//评论数
 var thumbUpNum=null;//点赞数
 var replay={content:"",replayWho:"",recipient:""};//回复评论参数
-var tags=window.sessionStorage.getItem('assign');//详情类别
 var trainId=window.sessionStorage.getItem('train_id');//培训id
 if(tags){var needUpNum=6;}//满足安排培训的点赞数
 
@@ -15,10 +14,10 @@ function updateDetail(res){
     var userClass='';
     var timeClass='';
     var time=preTime(res.trainDate||res.createdAt,true);
-    switch(tags){
-        case '1' :
+    switch(res.status){
+        case 1:
             userClass='主讲人：';timeClass='创建时间：';break;
-        case '2':
+        case 0:
             userClass='创建人：';timeClass='创建时间：';break;
         default:
             userClass='主讲人：';timeClass='开坛时间：';break;
@@ -112,6 +111,7 @@ $(function(){
         });
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
+        console.log(data);
         var res=data.result;
         if(res.length||res){
             updateDetail(res,tags);
@@ -172,7 +172,7 @@ $(function(){
         e.preventDefault();
         $(this).html('课程');
         replay.replayWho="";
-        replay.recipient="";
+        replay.recipient=userId;
     });
     //点击回复
     $('.replay a:last').click(function (e) {
