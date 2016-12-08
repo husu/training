@@ -180,7 +180,7 @@ $(function(){
         e.preventDefault();
         replay.content=$('#resBox').val();
         if(replay.content){
-            $.post(`v1/comments/${trainId}`,replay, function (data) {
+            $.post(`v1/comments/${trainId}`,JSON.stringify(replay), function (data) {
                 reMsg(data.message);
                 $('#resBox').val("");
                 if(!data.code){

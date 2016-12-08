@@ -22,13 +22,13 @@ function htmlFlat(list){
     var time=preTime(list.trainDate||list.createdAt,true);
     return `
             <dl>
-                <dt >
+                <dt>
                     <a data-id="${list.objectId}" style="position:relative;display:inline-block;">
                         <img src="${list.imgURL||'../imgs/default_course.png'}" style="position:relative"/>
                         <span style="background:${color};position:absolute;top:1px;right:1px;color:#fff;padding:3px 5px;">${tag}</span>
                     <\/a>        
                 <\/dt>
-                <dd><a href="detail.html" data-id="${list.objectId}">${list.title}</a></dd>
+                <dd><a data-id="${list.objectId}">${list.title}</a></dd>
                 <dd>${timeClass+time}</dd>
                 <dd>${userClass+list.creator.nickName}</dd>
                 <dd><span>${list.thumbUpNum||0}</span><span>${list.commentNum||0}</span></dd>
