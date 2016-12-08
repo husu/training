@@ -180,6 +180,8 @@ $(function(){
     //点击回复
     $('.replay a:last').click(function (e) {
         e.preventDefault();
+        var that=$(this);
+        that.addClass('btn-disable');
         replay.content=$('#resBox').val();
         if(replay.content){
             $.post(`v1/comments/${trainId}`,replay, function (data) {
@@ -187,6 +189,7 @@ $(function(){
                 $('#resBox').val("");
                 if(!data.code){
                     commentNum+=1;
+                    that.removeClass('btn-disable');
                     $('#review').find('b').html(commentNum);
                     selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
                 }
