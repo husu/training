@@ -5,8 +5,9 @@ var resname=null;//回复谁的评论
 var comments={page:1,pageSize:15};//查看更多评论
 var commentNum=null;//评论数
 var thumbUpNum=null;//点赞数
-var replay={content:"",replayWho:"",recipient:""};//回复评论参数
+var replay={content:"",replayWho:"",recipient:[]};//回复评论参数
 var trainId=window.sessionStorage.getItem('train_id');//培训id
+var authorId='';//作者id
 var tags=false;//是否需要安排培训
 if(tags){var needUpNum=6;}//满足安排培训的点赞数
 //update detail
@@ -111,6 +112,7 @@ $(function(){
         });
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
+        authorId=data.creator.objectId;
         var res=data.result;
         if(res.length||res){
             updateDetail(res,tags);
@@ -152,7 +154,7 @@ $(function(){
         e.preventDefault();
         $('#replayWho').html('课程');
         replay.replayWho="";
-        replay.recipient="";
+        replay.recipient=[authorId];
         $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
@@ -160,7 +162,7 @@ $(function(){
     $('.comment').on('click','div a', function (e) {
         e.preventDefault();
         resname=$(this).attr('data-userName');
-        replay.recipient=$(this).attr('data-userId');
+        replay.recipient=[authorId,$(this).attr('data-userId')];
         $('#replayWho').html(resname);
         replay.replayWho=$(this).parent().prev().html().slice(0,40)+'\t\t@'+resname;
         $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
@@ -171,7 +173,7 @@ $(function(){
         e.preventDefault();
         $(this).html('课程');
         replay.replayWho="";
-        replay.recipient=userId;
+        replay.recipient=[authorId];
     });
     //点击回复
     $('.replay a:last').click(function (e) {
