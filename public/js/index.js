@@ -44,65 +44,6 @@ function updateList(list,jq){//list:列表,jq:父元素
     jq.html(frag);
 }
 $(function(){
-    if(username){
-        selectUrl='/v1/training/noScheduled/all';
-        selectPage(selectUrl,pagesList,updateList,$('#require .list'));
-        setTimeout(function(){
-            $('header').slideUp(500);
-        },1500);
-    }else{
-        $('.userLogin').show();
-        $('#login button').find('i').hide();
-        if(user){
-            $('#username').val(user.username);
-            $('#password').val(user.password);
-            $('#savePwd')[0].checked=true;
-        }
-    }
-    //登录验证
-    $('#login input').focus(function(){
-        $('.msg_login').html('');
-        $('#login button').find('span').html('登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录').prev('i').hide();
-    });
-    $('#login button').click(function(e){
-        $(this).find('span').html('登&nbsp;&nbsp;录&nbsp;&nbsp;中...').prev('i').show();
-        e.preventDefault();
-        var userObj={
-            username:$('#username').val(),
-            password:$('#password').val()
-        }
-        $.post('/login',userObj,function(data){
-            if(data.result){
-                console.log(data);
-                if($('#savePwd')[0].checked){
-                    window.localStorage.setItem('parsec_user',JSON.stringify(userObj));
-                }else{
-                    window.localStorage.removeItem('parsec_user');
-                }
-                username=data.result.username;
-                userface=data.result.icon||'imgs/user.png';
-                nickname=data.result.nickName;
-                window.sessionStorage.setItem('parsec_userName',username);
-                window.sessionStorage.setItem('parsec_nickName',nickname);
-                window.sessionStorage.setItem('parsec_userFace',userface);
-                window.sessionStorage.setItem('parsec_userId',data.result.objectId);
-                $('.modal').fadeOut('slow');
-                $('nav .user').html(nickname);
-                $('nav .avatar img').attr('src',userface);
-                selectUrl='/v1/training/noScheduled/all';
-                selectPage(selectUrl,pagesList,updateList,$('#require .list'));
-                setTimeout(function(){
-                    $('header').slideUp(500);
-                },1500);
-            }else{
-                if(data.message){
-                    $('.msg_login').html(data.message);
-                }else{
-                    $('.msg_login').html('用户名或密码错误');
-                }
-            }
-        });
-    });
     //标签导航
     $('.tabs li a').click(function (e) {
         e.preventDefault();
@@ -268,3 +209,5 @@ $(function(){
         $('body,html').stop().animate({scrollTop:0});
     });
 });
+
+

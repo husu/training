@@ -114,8 +114,9 @@ $(function(){
     $.get(`v1/training/detail/${trainId}`,function(data){
         var res=data.result;
         authorId=res.creator.objectId;
+        replay.recipient=authorId;
         if(res.length||res){
-            updateDetail(res,tags);
+            updateDetail(res);
             commentNum=res.commentNum||0;
             thumbUpNum=res.thumbUpNum||0;
             tags&&(thumbUpNum>=needUpNum)&&$('#train_assign').show()&&$('.needUpNum').hide();
@@ -180,7 +181,7 @@ $(function(){
         e.preventDefault();
         replay.content=$('#resBox').val();
         if(replay.content){
-            $.post(`v1/comments/${trainId}`,JSON.stringify(replay), function (data) {
+            $.post(`v1/comments/${trainId}`,replay, function (data) {
                 reMsg(data.message);
                 $('#resBox').val("");
                 if(!data.code){

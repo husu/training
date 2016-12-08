@@ -4,7 +4,6 @@
 var username=window.sessionStorage.getItem('parsec_userName');
 var nickname=window.sessionStorage.getItem('parsec_nickName');
 var userface=window.sessionStorage.getItem('parsec_userFace');
-var userId=window.sessionStorage.getItem('parserc_ouserId');
 var user=JSON.parse(window.localStorage.getItem('parsec_user'));//记住用户密码
 var replayNum=0;//消息数量=》用于保存消息数量
 var replayNums=0;//消息数量=》用于判断否重新请求消息列表
@@ -85,7 +84,33 @@ function updateNews(list) {
 }
 $(function () {
     var flag=false;//判断消息列表是否显示;
-    username&&$('nav .user').html(nickname)&&$('nav .avatar img').attr('src',userface);
+    function getNewsNum(){//获得消息数量
+        $.get('/v1/notification/count',function (data) {
+            if (!data.code) {
+                if (data.result != replayNum) {
+                    replayNum = data.result;
+                    replayNum && $('.receive').show() && $('nav .infoTip').addClass('noted');
+                    $('.receive .replayNum').html(replayNum);
+                }
+            }
+        });
+    }
+    if(username){
+        $('nav .user').html(nickname)&&$('nav .avatar img').attr('src',userface)&&getNewsNum();
+        selectUrl='/v1/training/noScheduled/all';
+        selectPage(selectUrl,pagesList,updateList,$('#require .list'));
+        setTimeout(function(){
+            $('header').slideUp(500);
+        },1500);
+    }else{
+        $('.userLogin').show();
+        $('#login button').find('i').hide();
+        if(user){
+            $('#username').val(user.username);
+            $('#password').val(user.password);
+            $('#savePwd')[0].checked=true;
+        }
+    }
     $('.modal-content').click(function (e) {e.stopPropagation();});
     // $('.modal').not('.userLogin').click(function(){$(this).fadeOut();});
     $('.close').click(function () {
@@ -93,29 +118,14 @@ $(function () {
             $(this).parent().parent().fadeOut().prev().show();
         }else{$('.modal').fadeOut();}
     });
-    // 消息数量
+    //获得消息
+    // 消息抖动
     $('nav .infoTip').on('animationend',function(){
         $(this).removeClass('noted');
     });
-    $.get('/v1/notification/count',function (data) {
-        if (!data.code) {
-            if (data.result != replayNum) {
-                replayNum = data.result;
-                replayNum && $('.receive').show() && $('nav .infoTip').addClass('noted');
-                $('.receive .replayNum').html(replayNum);
-            }
-        }
-    });
+    // 消息数量
     setInterval(function () {
-        $.get('/v1/notification/count',function (data) {
-            if(!data.code){
-                if(data.result!=replayNum){
-                    replayNum=data.result;
-                    replayNum&&$('.receive').show()&&$('nav .infoTip').addClass('noted');
-                    $('.receive .replayNum').html(replayNum);
-                }
-            }
-        });
+       getNewsNum();
     },15000);
     // 消息列表
     $('.receive .infoTip').click(function (e){
@@ -133,10 +143,11 @@ $(function () {
     });
     //阅读消息
     $('#msgList').on('click','li',function(){
+        var train_id=$(this).attr('data-from');
         if($(this).attr('data-type')==1){
             $.post('/v1/notification/',{id:$(this).attr('data-id')},function (data) {
                 if(!data.code){
-                    window.sessionStorage.setItem('train_id',$(this).attr('data-from'));
+                    window.sessionStorage.setItem('train_id',train_id);
                     $('#detail').empty().load('detail.html');
                     $('.detail_box').show().prev().hide();
                     replayNum-=1;
@@ -146,6 +157,50 @@ $(function () {
                 }
             });
         }else{return true;}
+    });
+    //登录验证
+    $('#login input').focus(function(){
+        $('nav .user').html(nickname)&&$('nav .avatar img').attr('src',userface);
+        $('.msg_login').html('');
+        $('#login button').find('span').html('登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录').prev('i').hide();
+    });
+    $('#login button').click(function(e){
+        $(this).find('span').html('登&nbsp;&nbsp;录&nbsp;&nbsp;中...').prev('i').show();
+        e.preventDefault();
+        var userObj={
+            username:$('#username').val(),
+            password:$('#password').val()
+        }
+        $.post('/login',userObj,function(data){
+            if(!data.code){
+                if($('#savePwd')[0].checked){
+                    window.localStorage.setItem('parsec_user',JSON.stringify(userObj));
+                }else{
+                    window.localStorage.removeItem('parsec_user');
+                }
+                getNewsNum();
+                username=data.result.username;
+                userface=data.result.icon||'imgs/user.png';
+                nickname=data.result.nickName;
+                window.sessionStorage.setItem('parsec_userName',username);
+                window.sessionStorage.setItem('parsec_nickName',nickname);
+                window.sessionStorage.setItem('parsec_userFace',userface);
+                $('.modal').fadeOut('slow');
+                $('nav .user').html(nickname);
+                $('nav .avatar img').attr('src',userface);
+                selectUrl='/v1/training/noScheduled/all';
+                selectPage(selectUrl,pagesList,updateList,$('#require .list'));
+                setTimeout(function(){
+                    $('header').slideUp(500);
+                },1500);
+            }else{
+                if(data.message){
+                    $('.msg_login').html(data.message);
+                }else{
+                    $('.msg_login').html('用户名或密码错误');
+                }
+            }
+        });
     });
     //上传头像
     $('nav .avatar').click(function(e){
@@ -265,4 +320,4 @@ $(function () {
         $('.modal').not('.userLogin').fadeIn('slow');
         $('.userData').show().siblings('div').hide()
     });
-})
+});
