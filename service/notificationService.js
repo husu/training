@@ -105,29 +105,23 @@ function _save(msgObj,userId){
     if(!userId){
         return AV.Promise.error(myUtil.ERROR.PARAMETER_MISSING);
     }
-    let queryUser = new AV.Query('_User');
-    return queryUser.get(userId).then(user=>{
-        let query =new AV.Query(Notification);
-        query.equalTo('targetUser',user);
-        return query.first().then(obj=>{
-            if(obj){
-                obj.addUnique('message',msgObj);
-                return obj.save();
-            }else{
-                let nf = new Notification();
-                nf.set('targetUser',user);
-                nf.addUnique('message',msgObj);
-                return nf.save();
-            }
-        }).fail(e=>{
+
+    let queryUser  = AV.Object.createWithoutData('_User',userId);
+    let query =new AV.Query(Notification);
+    query.equalTo('targetUser',queryUser);
+    return query.first().then(obj=>{
+        if(obj){
+            obj.addUnique('message',msgObj);
+            return obj.save();
+        }else{
             let nf = new Notification();
-            nf.set('targetUser',user);
+            nf.set('targetUser',queryUser);
             nf.addUnique('message',msgObj);
             return nf.save();
-            // console.log(e);
-        });
+        }
+    }).fail(e=>{
+        console.log(e);
     });
-
 }
 
 
