@@ -9,7 +9,7 @@ var replay={content:"",replayWho:"",recipient:[]};//回复评论参数
 var trainId=window.sessionStorage.getItem('train_id');//培训id
 var authorId='';//作者id
 var tags=false;//是否需要安排培训
-if(tags){var needUpNum=6;}//满足安排培训的点赞数
+var needUpNum=6;//满足安排培训的点赞数
 //update detail
 function updateDetail(res){
     var userClass='';
@@ -98,19 +98,6 @@ $(function(){
         });
     }
     //页面初始化
-    if(tags){
-        $('.needUpNum').show();
-        $('#date').jeDate({
-            skinCell:"jedateblue",
-            format: 'YYYY-MM-DD hh:mm',
-            isinitVal:'2016-10-1 09:00',
-            minDate:$.nowDate(0),
-            festival: true,
-            isTime:true,
-            okfun:function (inp,val) {selectTime(val);},
-            choosefun:function (inp,val) {selectTime(val);}
-        });
-    }
     $.get(`v1/training/detail/${trainId}`,function(data){
         var res=data.result;
         authorId=res.creator.objectId;
@@ -119,7 +106,21 @@ $(function(){
             updateDetail(res);
             commentNum=res.commentNum||0;
             thumbUpNum=res.thumbUpNum||0;
-            tags&&(thumbUpNum>=needUpNum)&&$('#train_assign').show()&&$('.needUpNum').hide();
+            if(tags){
+                $('.needUpNum').show();
+                $('#date').jeDate({
+                    skinCell:"jedateblue",
+                    format: 'YYYY-MM-DD hh:mm',
+                    isinitVal:'2016-10-1 09:00',
+                    minDate:$.nowDate(0),
+                    festival: true,
+                    isTime:true,
+                    okfun:function (inp,val) {selectTime(val);},
+                    choosefun:function (inp,val) {selectTime(val);}
+                });
+                (thumbUpNum>=needUpNum)&&$('#train_assign').show()&&$('.needUpNum').hide();
+            }
+
             $('#praise').find('b').html(thumbUpNum);
             $('#review').find('b').html(commentNum);
             selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
