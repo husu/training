@@ -124,7 +124,14 @@ router.post('/:trainId',function(req,res){
 
 
 
+
+
     return cs.saveComment(comment).then(function(obj){
+
+        if(!(recipient instanceof Array)){
+            recipient =[recipient];
+        }
+
         myNs.sendNotification(msgObj,recipient);
         result.message ='保存成功';
         result.result = obj;
