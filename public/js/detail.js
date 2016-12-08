@@ -112,8 +112,8 @@ $(function(){
         });
     }
     $.get(`v1/training/detail/${trainId}`,function(data){
-        authorId=data.creator.objectId;
         var res=data.result;
+        authorId=res.creator.objectId;
         if(res.length||res){
             updateDetail(res,tags);
             commentNum=res.commentNum||0;
@@ -163,8 +163,8 @@ $(function(){
         e.preventDefault();
         resname=$(this).attr('data-userName');
         replay.recipient=[authorId,$(this).attr('data-userId')];
-        $('#replayWho').html(resname);
         replay.replayWho=$(this).parent().prev().html().slice(0,40)+'\t\t@'+resname;
+        $('#replayWho').html(resname);
         $('html,body').stop().animate({scrollTop:$('.replay').offset().top},500);
         $('#resBox').focus();
     });
