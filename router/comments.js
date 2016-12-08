@@ -77,7 +77,7 @@ router.post('/:trainId',function(req,res){
         code:0
     };
 
-    comment.recipient = '583525c061ff4b0061ee0d18';
+    // comment.recipient = '583525c061ff4b0061ee0d18';
 
     if(!comment.recipient){
         result.code = myUtil.ERROR.PARAMETER_MISSING.errorCode;
@@ -87,6 +87,16 @@ router.post('/:trainId',function(req,res){
     }
 
     let recipient = comment.recipient;
+
+
+    _.map(recipient,rpt=>{
+       if(rpt==req.currentUser.id){
+            return '00000';
+       }else{
+           return rpt;
+       }
+    });
+
 
     comment.trainId = req.params.trainId;
     comment.type = myUtil.COMMENTTYPE.COMMENT;
@@ -112,9 +122,7 @@ router.post('/:trainId',function(req,res){
 
 
     return cs.saveComment(comment).then(function(obj){
-
         myNs.sendNotification(msgObj,recipient);
-
         result.message ='保存成功';
         result.result = obj;
         return res.send(result);
@@ -127,8 +135,12 @@ router.post('/:trainId',function(req,res){
 });
 
 myNs.on('notice',function (data,userId) {
-    ns.save(data,userId).catch(e=>{
-        console.log(e);
+    userId.forEach(id=>{
+        if(id!='00000') {
+            ns.save(data, id).catch(e => {
+                console.log(e);
+            });
+        }
     });
 });
 
