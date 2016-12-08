@@ -91,6 +91,11 @@ $(function () {
                     replayNum = data.result;
                     replayNum && $('.receive').show() && $('nav .infoTip').addClass('noted');
                     $('.receive .replayNum').html(replayNum);
+                    if($('#msgList').attr('display')!='none'){
+                        $.get('/v1/notification',function(data){
+                            !data.code&&updateNews(data.result);
+                        });
+                    }
                 }
             }
         });
@@ -143,8 +148,9 @@ $(function () {
     });
     //阅读消息
     $('#msgList').on('click','li',function(){
-        var train_id=$(this).attr('data-from');
-        if($(this).attr('data-type')==1){
+        var that=$(this);
+        var train_id=that.attr('data-from');
+        if(that.attr('data-type')==1){
             $.post('/v1/notification/',{id:$(this).attr('data-id')},function (data) {
                 if(!data.code){
                     window.sessionStorage.setItem('train_id',train_id);
@@ -153,7 +159,7 @@ $(function () {
                     replayNum-=1;
                     !replayNum&&$('.receive').hide();
                     $('.receive .replayNum').html(replayNum);
-                    $(this).remove();
+                    that.remove();
                 }
             });
         }else{return true;}
