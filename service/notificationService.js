@@ -120,7 +120,11 @@ function _save(msgObj,userId){
                 return nf.save();
             }
         }).fail(e=>{
-            console.log(e);
+            let nf = new Notification();
+            nf.set('targetUser',user);
+            nf.addUnique('message',msgObj);
+            return nf.save();
+            // console.log(e);
         });
     });
 

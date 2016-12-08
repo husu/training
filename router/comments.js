@@ -58,6 +58,7 @@ router.get('/list/:id',function(req,res){
             };
             return curObj;
         });
+
         returnObj.result  = commentList;
         return res.send(returnObj);
     }).catch(function(e){
@@ -98,6 +99,8 @@ router.post('/:trainId',function(req,res){
     });
 
 
+    _.union(recipient); //去重
+
     comment.trainId = req.params.trainId;
     comment.type = myUtil.COMMENTTYPE.COMMENT;
 
@@ -110,7 +113,7 @@ router.post('/:trainId',function(req,res){
     }
 
     comment.creator = req.currentUser;
-
+    comment.recipient = undefined;
 
     let msgObj = {
         type:1,
