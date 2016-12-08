@@ -52,7 +52,8 @@ router.get('/list/:id',function(req,res){
             curObj.creator = {
                 objectId:user.id,
                 username:user.get('username'),
-                nickName:user.get('nickName')
+                nickName:user.get('nickName'),
+                icon:user.get('icon')
 
             };
             return curObj;
