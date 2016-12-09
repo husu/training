@@ -187,6 +187,14 @@ router.post('/',function(req,res){
     trainObj.creator = req.currentUser;
 
     return ts.save(trainObj).then(function(obj){
+
+        obj.creator = {
+            id : req.currentUser.id || '',
+            userName:req.currentUser.get('username'),
+            nickName:req.currentUser.get('nickName')
+        };
+
+
         result ={
             code:0,
             message:'保存成功',

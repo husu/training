@@ -23,6 +23,7 @@ router.get('/detail/:id',function(req,res){
     };
 
     cs.get(id).then(function(comment){
+
         returnObj.result = comment;
         return res.send(returnObj);
     }).catch(function(e){
@@ -127,6 +128,7 @@ router.post('/:trainId',function(req,res){
 
 
     return cs.saveComment(comment).then(function(obj){
+
 
         if(!(recipient instanceof Array)){
             recipient =[recipient];
