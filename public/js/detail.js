@@ -194,6 +194,6 @@ $(function(){
                     selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
                 }
             });
-        }else{reMsg('回复内容不能为空')}
+        }else{reMsg('回复内容不能为空');that.removeClass('btn-disable');}
     });
 });
