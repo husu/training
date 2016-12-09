@@ -22,6 +22,11 @@
 .comment div.rt ul li{padding:5px;margin-top:15px;}
 .comment div.rt ul li:last-child{padding-right:50px;text-align: right;}
 .comment a{color:#aaa;font-size:18px;}
+.comment img{
+    width:75px;height:75px;border: 1px solid #fff;
+    box-shadow: 0 1px 1px rgba(34,25,25,.4);
+    -moz-box-shadow: 0 1px 1px rgba(34,25,25,.4);
+    -webkit-box-shadow: 0 1px 1px rgba(34,25,25,.4);}
 /*回复框*/
 .replay{width:75%;margin:20px auto;position:relative;}
 .replay a{color:#049ACB;}
