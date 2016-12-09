@@ -41,7 +41,7 @@ function updateComment(list,jq){
     for(var i in list){
         $(frag).append(`
            <div>
-            <img src="${list[i].creator.icon||'../imgs/user.png'}" style="width:75px; height:75px;"/>
+            <img src="${list[i].creator.icon||'../imgs/user.png'}"/>
             <div class="rt">
                 <p><span>${list[i].creator.nickName}</span>&nbsp;&nbsp;&nbsp;&nbsp;${preTime(list[i].createdAt)}</p>
                 <ul>
@@ -194,6 +194,6 @@ $(function(){
                     selectPage(`v1/comments/list/${trainId}`,comments,updateComment,$('.comment'),'',commentNum);
                 }
             });
-        }else{reMsg('回复内容不能为空')}
+        }else{reMsg('回复内容不能为空');that.removeClass('btn-disable');}
     });
 });

@@ -22,7 +22,7 @@ function preTime(t,f){
 function selectPage(url,pages,fun,jq,that,num){
     var totalPage=null;
     num&&(totalPage=Math.ceil(num/pages.pageSize));
-    if(!that){
+    if(!that){//初始化查询
         if(!totalPage){
             pages.page=1;
             $('.pages a:contains("末页"),.pages a:contains("下一页")').removeClass('a-disable');
@@ -41,6 +41,7 @@ function selectPage(url,pages,fun,jq,that,num){
         });
         return;
     }
+    //分页查询
     if(that.html()=="下一页"){
         $('.pages a:contains("首页"),.pages a:contains("上一页")').removeClass('a-disable');
         pages.page+=1;
@@ -213,7 +214,7 @@ $(function () {
         e.preventDefault();
         $('.uploadFace progress').val('');
         $('.uploadFace .clear').html('').removeClass('succ err');
-        $('.uploadFace img').attr('src','');
+        $('.uploadFace img').attr('src',userface);
         $('.modal').not('.userLogin').fadeIn('slow');
         $('.uploadFace').show().siblings('div').hide();
         $('#upFace').addClass('btn-disable').click(function(e){
