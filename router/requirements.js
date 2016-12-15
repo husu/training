@@ -81,7 +81,12 @@ router.post('/',function(req,res){
 
     ts.save(trainObj).then(function(obj){
 
-        obj.creator = {
+
+        let o= _.pick(util.avObjectToJson(obj),['commentNum','content','createdAt','status','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
+
+
+
+        o.creator = {
             id : req.currentUser.id || '',
             userName:req.currentUser.get('username'),
             nickName:req.currentUser.get('nickName')
@@ -91,7 +96,7 @@ router.post('/',function(req,res){
         result ={
             code:0,
             message:'保存成功',
-            result:obj
+            result:o
         };
         return res.send(result);
     });
