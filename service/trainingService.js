@@ -45,6 +45,7 @@ module.exports ={
             obj.set('trainDate',planDate);
             obj.set('creator',user);
             obj.set('status',myUtil.TRAININGSTATUS.TRAINING);
+            obj.set('thumbUpNum',0);
             return obj.save();
         }).catch(function (err) {
             return err;

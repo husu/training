@@ -22,7 +22,7 @@ chai.use(chaiHttp);
 describe('测试关于培训的RESTful API',function() {
     const request = chai.request.agent('http://localhost:3261');
 
-
+    let tid;
 
 
     it('测试RESTful API',function(done){
@@ -31,7 +31,7 @@ describe('测试关于培训的RESTful API',function() {
             content:'测试新增需求',
             trainDate:new Date(),
             tag:['test111'],
-            thumbUpNum:5
+            thumbUpNum:8
         };
 
 
@@ -81,7 +81,7 @@ describe('测试关于培训的RESTful API',function() {
                      done(e);
                  })
              }).then(function(res0){
-                 let tid= res0.body.result.objectId;
+                  tid= res0.body.result.objectId;
 
                  let t={
                      objectId:tid
@@ -100,7 +100,7 @@ describe('测试关于培训的RESTful API',function() {
                  })
 
              }).then(res0=>{
-                 let tid= res0.body.result.objectId;
+                 // let tid= res0.body.result.objectId;
 
                  let t={
                      objectId:tid,
@@ -117,7 +117,7 @@ describe('测试关于培训的RESTful API',function() {
                      done(e);
                  })
              }).then(res0=>{
-                 let tid= res0.body.result.objectId;
+                 // let tid= res0.body.result.objectId;
 
                  let t={
                      objectId:tid,
@@ -147,7 +147,7 @@ describe('测试关于培训的RESTful API',function() {
                     return res0;
                 })
             }).then(function(res1){
-                let tid= res1.body.result.objectId;
+                // let tid= res1.body.result.objectId;
 
                 return request.get(`/v1/training/detail/${tid}`).send({}).then(resDetail=>{
                     expect(resDetail.body).haveOwnProperty("code");
@@ -156,7 +156,7 @@ describe('测试关于培训的RESTful API',function() {
                     //console.log(resDetail.body);
                     return res1;
                 }).then(res1=>{
-                    let tid= res1.body.result.objectId;
+                    // let tid= res1.body.result.objectId;
                     request.delete(`/v1/training/${tid}`).then(res1=>{
                         expect(res1.body).haveOwnProperty("code");
                         expect(res1.body).haveOwnProperty("message");

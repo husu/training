@@ -20,21 +20,17 @@ chai.use(chaiHttp);
 
 
 describe('测试关于培训的RESTful API',function() {
+
+    let tid;
     const request = chai.request.agent('http://localhost:3261');
-
-
-
-
     it('测试RESTful API',function(done){
         let t = {title:'测试Restful API新增',
             status:1,
             content:'测试新增需求',
             trainDate:new Date(),
             tag:['test111'],
-            thumbUpNum:5
+            thumbUpNum:9
         };
-
-
         request.post(`/login`).send({"username":"test","password":"123456"}).then((resUser)=> {
             request.post(`/v1/training`).send(t).then(res=>{
                 expect(res).to.have.status(200);
@@ -47,7 +43,7 @@ describe('测试关于培训的RESTful API',function() {
                 return res;
 
             }).then(function(res0){
-                let tid= res0.body.result.objectId;
+                 tid= res0.body.result.objectId;
 
                 let t={
                     objectId:tid
@@ -66,7 +62,6 @@ describe('测试关于培训的RESTful API',function() {
                 })
 
             }).then(res0=>{
-                let tid= res0.body.result.objectId;
 
                 let t={
                     objectId:tid,
@@ -83,7 +78,6 @@ describe('测试关于培训的RESTful API',function() {
                     done(e);
                 })
             }).then(res0=>{
-                let tid= res0.body.result.objectId;
 
                 let t={
                     objectId:tid,
@@ -100,15 +94,14 @@ describe('测试关于培训的RESTful API',function() {
                 }).catch(e=>{
                     done(e);
                 })
-            }).then(function(res1){
-                let tid= res1.body.result.objectId;
-
+            }).then(function(res0){
+                // let tid= res0.body.result.objectId;
                 return request.get(`/v1/training/detail/${tid}`).send({}).then(resDetail=>{
                     expect(resDetail.body).haveOwnProperty("code");
                     expect(resDetail.body.code).to.be.equal(0,'测试是否返回查询成功的状态值');
                     assert.equal(resDetail.body.result.creator.username,'test','Test training detail creator');
                     //console.log(resDetail.body);
-                    return res1;
+                    return res0;
                 }).then(res1=>{
                     let tid= res1.body.result.objectId;
                     request.delete(`/v1/training/${tid}`).then(res1=>{

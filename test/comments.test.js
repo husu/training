@@ -42,8 +42,12 @@ describe('测试评论、点赞的接口',function(){
     it('测试评论RESTful API',function(done) {
         let comment = {
             content:'测试回复',
-            author:request.currentUser
+            author:request.currentUser,
+            recipient:'583525c061ff4b0061ee0d18'
         };
+
+
+
         request.post(`/v1/comments/${trainId}`).send(comment).then((res)=>{
             expect(res).to.have.status(200);
             expect(res.body).to.be.an("object", "返回对象");
