@@ -16,6 +16,9 @@ var multipart = require('connect-multiparty');
 
 var app = global.app = express();
 
+
+
+
 // 设置模板引擎
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -81,6 +84,7 @@ app.use('/v1/thumbUp', require('./router/thumbUp'));
 app.use('/v1/upload',require('./router/uploadImg'));
 app.use('/v1/rank',require('./router/rank'));
 app.use('/v1/notification',require('./router/notification'));
+app.use('/client',require('./router/mock'))
 
 
 
