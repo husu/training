@@ -16,10 +16,7 @@ const events =  require('events');
 
 
 function NotificationService(){
-
     events.EventEmitter.call(this);
-
-
 
 }
 
