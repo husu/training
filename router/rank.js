@@ -33,12 +33,22 @@ router.get('/:type',function(req,res){
             var user  = o.get('creator');
 
             o= _.pick(util.avObjectToJson(o),['commentNum','tags','content','createdAt','creator','status','imgURL','objectId','thumbUpNum','trainDate','title']);
-            o.creator = {
-                id:user.id,
-                username:user.get('username'),
-                nickName:user.get('nickName')
+            if(user){
+                o.creator = {
+                    id:user.id,
+                    username:user.get('username'),
+                    nickName:user.get('nickName')
 
-            };
+                };
+            }else{
+                o.creator = {
+                    id:'',
+                    username:'已注销',
+                    nickName:'已注销'
+
+                };
+            }
+
             return o;
         });
 

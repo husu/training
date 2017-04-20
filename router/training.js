@@ -18,12 +18,21 @@ router.get('/detail/:id', function(req, res) {
     ts.get(id).then(obj=>{
 
         var training =  util.avObjectToJson(obj);
-        var creator = obj.get('creator');
-        training.creator = {
-            objectId:creator.id,
-            username:creator.get('username'),
-            nickName:creator.get('nickName')
-        };
+        var creator = obj.get('creator') ;
+        if(creator){
+            training.creator = {
+                objectId:creator.id,
+                username:creator.get('username'),
+                nickName:creator.get('nickName')
+            };
+        }else{
+            training.creator = {
+                objectId:"",
+                username:"已注销",
+                nickName:"已注销"
+            };
+        }
+
 
 
         result.code = 0;
@@ -59,11 +68,21 @@ router.get('/list',function(req,res){
             var user  = o.get('creator');
 
            o= _.pick(util.avObjectToJson(o),['commentNum','tags','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
-             o.creator = {
-                id:user.id,
-                username:user.get('username'),
-                nickName:user.get('nickName')
-           };
+
+           if(user){
+               o.creator = {
+                   id:user.id,
+                   username:user.get('username'),
+                   nickName:user.get('nickName')
+               };
+           }else{
+               o.creator = {
+                   id:'',
+                   username:'已注销',
+                   nickName:'已注销'
+               };
+           }
+
            return o;
        });
 
@@ -121,15 +140,23 @@ router.get('/noScheduled/:type',function(req,res){
         var trainList =  _.map(list,o=>{
             var user  = o.get('creator');
 
-
+            
 
 
             o= _.pick(util.avObjectToJson(o),['commentNum','status','tags','content','createdAt','creator','imgURL','objectId','thumbUpNum','trainDate','title']);
-            o.creator = {
-                id:user.id || '',
-                username:user.get('username'),
-                nickName:user.get('nickName')
-            };
+            if(user) {
+                o.creator = {
+                    id: user.id || '',
+                    username: user.get('username'),
+                    nickName: user.get('nickName')
+                };
+            }else{
+                o.creator = {
+                    id:  '',
+                    username: '已注销',
+                    nickName: '已注销'
+                }
+            }
             return o;
         });
 

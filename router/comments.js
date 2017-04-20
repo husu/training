@@ -50,13 +50,28 @@ router.get('/list/:id',function(req,res){
         var commentList = _.map(list,o=>{
             var curObj= myUtil.avObjectToJson(o);
             var user = o.get('creator');
-            curObj.creator = {
-                objectId:user.id,
-                username:user.get('username'),
-                nickName:user.get('nickName'),
-                icon:user.get('icon')
+
+
+            var c = {
+                objectId:'',
+                username:'已注销',
+                nickName:'已注销',
+                icon:''
 
             };
+
+            if(user){
+                c = {
+                    objectId:user.id,
+                    username:user.get('username'),
+                    nickName:user.get('nickName'),
+                    icon:user.get('icon')
+
+                };
+            }
+
+
+            curObj.creator = c;
             return curObj;
         });
 
